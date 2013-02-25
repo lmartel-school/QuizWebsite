@@ -7,7 +7,6 @@ public class User extends DataBaseObject {
 	String name;
 	String hashedPassword;
 	boolean isAdmin;
-	int dbID;
 
 	public User(String[] args, Connection conn) {
 		super(args, conn);
@@ -18,7 +17,9 @@ public class User extends DataBaseObject {
 	}
 
 	public void saveToDataBase(Connection conn) {
-		// TODO Auto-generated method stub
+		
+		//Write a query to save this User object back into the database.
+		//Use the dbID to check if it it is a new entry or an update.
 		
 	}
 

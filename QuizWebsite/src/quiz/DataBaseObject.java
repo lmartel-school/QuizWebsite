@@ -3,13 +3,13 @@ package quiz;
 import java.sql.Connection;
 
 public abstract class DataBaseObject {
-	
-	
+	protected int dbID;
 	
 	/**
-	 * Templatized factory constructor. Receives an array of strings from 
+	 * Constructor. Receives an array of strings from 
 	 * a database row, and returns an object with those values. Uses the 
-	 * sql connection to parse and create any child objects.
+	 * sql connection to parse and create any child objects, as required
+	 * by different sub-classes
 	 * @param args
 	 * @return
 	 */
