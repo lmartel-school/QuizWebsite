@@ -23,7 +23,7 @@ public class Note extends Message {
 	 * Constructor of new Note, not read from database.
 	 */
 	public Note(String sender, String recipient, String text) {
-		super(sender, recipient);
+		super(sender, recipient); //set sender/recip/dbID
 		this.text = text;
 	}
 	

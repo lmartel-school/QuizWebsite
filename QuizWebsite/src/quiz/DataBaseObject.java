@@ -16,15 +16,11 @@ public abstract class DataBaseObject {
 	public DataBaseObject(String[] args, Connection conn){
 		dbID = Integer.parseInt(args[0]);
 	}
-<<<<<<< HEAD
 	
-	public DataBaseObject() {
-=======
 	/**
 	 * Alternate constructor: called for new instances. sets ID to -1.
 	 */
 	public DataBaseObject(){
->>>>>>> c1dcfd1b5b64ef8ac27bef76407962db8b81cd31
 		dbID = -1;
 	}
 	

@@ -22,8 +22,11 @@ public class FriendRequest extends Message {
 		return isAccepted;
 	}
 	
-	public void setStatus(boolean newStatus) {
-		isAccepted = newStatus;
+	/* Friends requests can only be accepted, if one user removes someone from
+	 * thier friend's list then the message will be deleted entirely, and m
+	 */
+	public void acceptRequest() {
+		isAccepted = true;
 	}
 	@Override
 	public void saveToDataBase(Connection conn) {
