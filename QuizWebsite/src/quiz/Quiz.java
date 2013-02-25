@@ -1,6 +1,7 @@
 package quiz;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -54,7 +55,38 @@ public class Quiz extends DataBaseObject {
 		//TODO: save to database.
 		//If dbid == -1, it's a new entry;
 		//otherwise, it's an update
+		
+		try {
+			Statement stmt = conn.createStatement();
+			String query;
+			if (dbID == -1) {
+				generateID(conn);
+				query = "Insert into Quiz VALUES (" + dbID + "'" + name + "', " + inOrder + ", " + type + ", '" + author + "', '" + description + "');";
+				
+			} else {
+				query = "UPDATE Quiz set name='" + name + "', inOrder=" + inOrder + ", type=" + type + ", author ='" + author + "', description='" + description + "' WHERE id=" + dbID;
+			}
+			
+			stmt.executeUpdate(query);
+			stmt.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
+	
+	private void generateID(Connection conn) {
+		try {
+			Statement stmt = conn.createStatement();
+			String query = "SELECT max(id) from Quiz";
+			ResultSet rs = stmt.executeQuery(query);
+			int id = rs.getInt("Max(id)"); //needs to be checked
+			dbID = id + 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+	} 
 	
 	/* Begin setters/getters */
 	
