@@ -18,16 +18,16 @@ create table Question (
 	id integer PRIMARY KEY,
 	quiz_id integer references Quiz(id),
 	question_number integer,
-	question_type integer, /* multi-choice, fill-in/response, pic */
+	question_type integer /* multi-choice, fill-in/response, pic */
 );
 
 DROP TABLE if exists Question_Attribute;
 
 create table Question_Attribute (
 	id integer PRIMARY KEY,
-	question_id references Question(id),
-	attr_type text, /* "correct", "wrong", "prompt" */
-	attr_value text
+	question_id integer references Question(id),
+	attr_type text, 
+	attr_value text /* "correct", "wrong", "prompt" */
 );
 
 DROP TABLE if exists Quiz_Result;

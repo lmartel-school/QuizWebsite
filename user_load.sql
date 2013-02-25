@@ -4,7 +4,7 @@ DROP TABLE if exists User;
 
 create table User (
 	id integer unique,
-	username text PRIMARY KEY,
+	username CHAR(64) PRIMARY KEY,
 	password_hash text,
 	isAdmin boolean
 );
