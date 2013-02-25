@@ -15,8 +15,9 @@ public class Note extends Message {
 	
 	public Note(String[] args, Connection conn) {
 		super(args, conn);
-		
+	
 		//TODO: set text to value retrieved by finding Note with correct dbID
+
 	}
 	
 	/**
