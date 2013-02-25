@@ -13,7 +13,13 @@ public abstract class DataBaseObject {
 	 * @param args
 	 * @return
 	 */
-	public DataBaseObject(String[] args, Connection conn){}
+	public DataBaseObject(String[] args, Connection conn){
+		dbID = Integer.parseInt(args[0]);
+	}
+	
+	public DataBaseObject() {
+		dbID = -1;
+	}
 	
 	
 	/**

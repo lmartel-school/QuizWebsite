@@ -1,3 +1,5 @@
+package quiz;
+
 import java.sql.Connection;
 
 import quiz.DataBaseObject;
