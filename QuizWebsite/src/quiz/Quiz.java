@@ -5,9 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class Quiz {
+public class Quiz extends DataBaseObject {
 	
-	private int id;
 	private String name;
 	private boolean inOrder;
 	private int type; //TODO: enumerate
@@ -20,11 +19,11 @@ public class Quiz {
 	 * constructs a quiz object.
 	 */
 	public Quiz(String[] attrs, Connection con){
-		id = Integer.parseInt(attrs[0]);
+		super(attrs, con);
 		name = attrs[1];
 		inOrder = Boolean.parseBoolean(attrs[2]);
 		type = Integer.parseInt(attrs[3]);
-		author = attrs[4];
+		setAuthor(attrs[4]);
 		description = attrs[5];
 		questions = findQuestions();
 	}
@@ -42,18 +41,18 @@ public class Quiz {
 	 * sets id to "does not exist yet" value
 	 */
 	public Quiz(String name, boolean inOrder, int type, String author, String description){
-		super(); //set id = -1
+		super(); //set dbid = -1
 		this.name = name;
 		this.inOrder = inOrder;
 		this.type = type;
-		this.author = author;
+		this.setAuthor(author);
 		this.description = description;
 	}
 	
 	
-	public void save(){
+	public void saveToDataBase(Connection conn){
 		//TODO: save to database.
-		//If id == -1, it's a new entry;
+		//If dbid == -1, it's a new entry;
 		//otherwise, it's an update
 	}
 	
@@ -85,6 +84,16 @@ public class Quiz {
 
 	public void setType(int type) {
 		this.type = type;
+	}
+	
+
+	public String getAuthor() {
+		return author;
+	}
+
+
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 	public String getDescription() {

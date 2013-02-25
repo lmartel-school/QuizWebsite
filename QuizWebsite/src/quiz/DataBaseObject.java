@@ -13,7 +13,15 @@ public abstract class DataBaseObject {
 	 * @param args
 	 * @return
 	 */
-	public DataBaseObject(String[] args, Connection conn){}
+	public DataBaseObject(String[] args, Connection conn){
+		dbID = Integer.parseInt(args[0]);
+	}
+	/**
+	 * Alternate constructor: called for new instances. sets ID to -1.
+	 */
+	public DataBaseObject(){
+		dbID = -1;
+	}
 	
 	
 	/**
