@@ -21,6 +21,8 @@ public class User extends DataBaseObject {
 		isAdmin = Boolean.parseBoolean(args[3]);
 	}
 
+	//Writes a query to save this User object back into the database.
+	//Use the dbID to check if it it is a new entry or an update.
 	public void saveToDataBase(Connection conn) {
 		try {
 			Statement stmt = conn.createStatement();
@@ -36,8 +38,7 @@ public class User extends DataBaseObject {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		//Write a query to save this User object back into the database.
-		//Use the dbID to check if it it is a new entry or an update.
+		
 	}
 
 	private void generateID(Connection conn) {

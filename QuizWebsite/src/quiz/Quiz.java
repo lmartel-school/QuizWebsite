@@ -10,10 +10,22 @@ public class Quiz extends DataBaseObject {
 	
 	private String name;
 	private boolean inOrder;
-	private int type; //TODO: enumerate
+	private int type; 
 	private String author;
 	private String description;
 	private List<Question> questions;
+	
+	/**
+	 * Enumerations
+	 * PAGE_TYPE: what format the quiz takes. Either all on one page, multi-page with
+	 * immediate feedback, or a multi-page with feedback once it's entirely complete.
+	 */
+	
+	public static enum PAGE_TYPE {
+		SINGLE_PAGE,
+		MULTI_IMMEDIATE,
+		MULTI_PAGE;
+	}
 	
 	/*
 	 * Given an array of attributes from the Quiz table,
