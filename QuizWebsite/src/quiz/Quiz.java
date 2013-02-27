@@ -72,7 +72,7 @@ public class Quiz extends DataBaseObject {
 			Statement stmt = conn.createStatement();
 			String query;
 			if (dbID == -1) {
-				generateID(conn);
+				generateID(conn, "Quiz");
 				query = "Insert into Quiz VALUES (" + dbID + "'" + name + "', " + inOrder + ", " + type + ", '" + author + "', '" + description + "');";
 				
 			} else {
@@ -87,18 +87,6 @@ public class Quiz extends DataBaseObject {
 		}
 	}
 	
-	private void generateID(Connection conn) {
-		try {
-			Statement stmt = conn.createStatement();
-			String query = "SELECT max(id) from Quiz";
-			ResultSet rs = stmt.executeQuery(query);
-			int id = rs.getInt("Max(id)"); //needs to be checked
-			dbID = id + 1;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			
-		}
-	} 
 	
 	/* Begin setters/getters */
 	

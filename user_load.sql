@@ -44,9 +44,10 @@ create table Challenge (
 	result_id integer
 );
 
-/* DROP TABLE if exists friend_requests;
+DROP TABLE if exists Friend_Request;
 
-create table friend_requests (
-	id integer
-); */
+create table Friend_Request (
+	id integer PRIMARY KEY,
+	isAccepted boolean
+); 
 

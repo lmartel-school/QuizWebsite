@@ -28,10 +28,10 @@ public class User extends DataBaseObject {
 			Statement stmt = conn.createStatement();
 			String query;
 			if (dbID == -1) {
-				generateID(conn);
+				generateID(conn, "User");
 				query = "Insert into User VALUES (" + dbID + "'" + name + "', '" + hashedPassword + "', " + isAdmin + ");";
 			} else {
-				query = "UPDATE User set isAdmin=" + isAdmin + "WHERE id=" + dbID;
+				query = "UPDATE User set isAdmin=" + isAdmin + "WHERE id=" + dbID + ";";
 			}
 			stmt.executeUpdate(query);
 			stmt.close();
@@ -41,15 +41,4 @@ public class User extends DataBaseObject {
 		
 	}
 
-	private void generateID(Connection conn) {
-		try {
-			Statement stmt = conn.createStatement();      
-			String query = "SELECT max(id) from User";     
-			ResultSet rs = stmt.executeQuery(query);     
-			int id = rs.getInt("Max(id)"); //needs to be checked      
-			dbID = id + 1;    
-		} catch (SQLException e) {     
-			e.printStackTrace();
-		}
-	}
 }

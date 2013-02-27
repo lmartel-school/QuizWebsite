@@ -1,6 +1,9 @@
 package quiz;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class FriendRequest extends Message {
 	private boolean isAccepted;
@@ -8,7 +11,7 @@ public class FriendRequest extends Message {
 	public FriendRequest(String[] args, Connection conn) {
 		super(args, conn);
 		
-		//TODO set isAccepted from FriendReq table
+		getAcceptance(args[0], conn);
 	}
 	
 	public FriendRequest(String sender, String recipient) {
@@ -30,7 +33,62 @@ public class FriendRequest extends Message {
 	}
 	@Override
 	public void saveToDataBase(Connection conn) {
-		//TODO: Save this request in the messages and FriendReq tables
+		saveToMsg(conn);
+		saveToFriends(conn);
+	}
+	
+	
+	/** 
+	 * This db query assumes that there already exists an 
+	 * entry in the friend request table for this id. PLEASE VERIFY
+	 */
+	private void getAcceptance(String id, Connection conn) {
+		try {
+			Statement stmt = conn.createStatement();      
+			String query = "SELECT isAccepted from Friend_Request WHERE id=" + id + ";";     
+			
+			ResultSet rs = stmt.executeQuery(query);     
+			isAccepted = rs.getBoolean("isAccepted");	      
+			   
+		} catch (SQLException e) {     
+			e.printStackTrace();
+		}
+	}
+	
+	private void saveToMsg(Connection conn) {
+		try {
+			Statement stmt = conn.createStatement();
+			String query;
+			if (dbID == -1) { //need to ask Truman about sharing of dbID
+				generateID(conn, "Message");
+				query = "Insert into Message VALUES (" + dbID + "'" + sender + "', '" + recipient + "', " + beenRead + ");"; //what happened to type?
+				stmt.executeUpdate(query);
+			} else {
+				/* currently no way to update */
+			}
+			
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void saveToFriends(Connection conn) {
+		try {
+			Statement stmt = conn.createStatement();
+			String query;
+			if (dbID == -1) {
+				generateID(conn, "Friend_Request");
+				query = "Insert into Friend_Request VALUES (" + dbID + ", " + isAccepted + ");";
+				stmt.executeUpdate(query);
+			} else {
+				query = "UPDATE Friend_Request set isAccepted=" + isAccepted + "WHERE id=" + dbID + ";";
+			}
+			
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

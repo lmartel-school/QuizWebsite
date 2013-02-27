@@ -1,6 +1,9 @@
 package quiz;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public abstract class DataBaseObject {
 	protected int dbID;
@@ -31,5 +34,19 @@ public abstract class DataBaseObject {
 	 * @param obj
 	 */
 	public abstract void saveToDataBase(Connection conn);
+	
+	
+	
+	public void generateID(Connection conn, String table) {
+		try {
+			Statement stmt = conn.createStatement();      
+			String query = "SELECT max(id) from " + table;     
+			ResultSet rs = stmt.executeQuery(query);     
+			int id = rs.getInt("Max(id)"); //needs to be checked      
+			dbID = id + 1;    
+		} catch (SQLException e) {     
+			e.printStackTrace();
+		}
+	}
 
 }

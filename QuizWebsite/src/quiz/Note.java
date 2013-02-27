@@ -1,9 +1,12 @@
 package quiz;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Note extends Message {
-	String text;
+	private String text;
 
 	
 	/**
@@ -16,8 +19,7 @@ public class Note extends Message {
 	public Note(String[] args, Connection conn) {
 		super(args, conn);
 	
-		//TODO: set text to value retrieved by finding Note with correct dbID
-
+		setTextFromDB(args[0], conn);
 	}
 	
 	/**
@@ -32,11 +34,27 @@ public class Note extends Message {
 	public void saveToDataBase(Connection conn) {
 		// TODO This save function has to update both the Notes table, and 
 		// the generic messages table. 
+		
+		saveToNotes();
+		saveToMsg();
 
 	}
 	
 	public String getText() {
 		return text;
+	}
+	
+	private void setTextFromDB(String id, Connection conn) {
+		try {
+			Statement stmt = conn.createStatement();      
+			String query = "SELECT msg from Note WHERE id=" + id + ";";     
+			
+			ResultSet rs = stmt.executeQuery(query);     
+			text = rs.getString("msg");	      
+			   
+		} catch (SQLException e) {     
+			e.printStackTrace();
+		}
 	}
 
 }
