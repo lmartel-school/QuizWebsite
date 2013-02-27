@@ -23,7 +23,6 @@ create table Message (
 	id integer PRIMARY KEY,
 	sender text references User(username),
 	recipient text references User(username),
-	type integer,
 	beenRead boolean
 );
 
@@ -31,7 +30,6 @@ DROP TABLE if exists Note;
 
 create table Note (
 	id integer PRIMARY KEY,
-	message_id integer references Message(id),
 	msg text
 );
 

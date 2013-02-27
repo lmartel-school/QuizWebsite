@@ -1,5 +1,7 @@
 package quiz;
 
+import java.sql.Connection;
+
 public class Question {
 	
 	public static enum QUESTION_TYPE {
@@ -12,4 +14,8 @@ public class Question {
 		
 	}
 
+	
+	public Question(String[] attrs, Connection conn) {
+		
+	}
 }

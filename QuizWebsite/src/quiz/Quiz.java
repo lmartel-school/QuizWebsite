@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
+import java.util.*;
 
 public class Quiz extends DataBaseObject {
+	
+	private static final int NUM_COLUMNS = 6;
 	
 	private String name;
 	private boolean inOrder;
@@ -31,21 +33,36 @@ public class Quiz extends DataBaseObject {
 	 * Given an array of attributes from the Quiz table,
 	 * constructs a quiz object.
 	 */
-	public Quiz(String[] attrs, Connection con){
-		super(attrs, con);
+	public Quiz(String[] attrs, Connection conn){
+		super(attrs, conn);
 		name = attrs[1];
 		inOrder = Boolean.parseBoolean(attrs[2]);
 		type = Integer.parseInt(attrs[3]);
 		setAuthor(attrs[4]);
 		description = attrs[5];
-		questions = findQuestions();
+		questions = findQuestions(conn);
 	}
 	
 	
-	private List<Question> findQuestions(){
-		//TODO: find all questions from database whose quiz_id = this.id
-		//Use the Question class' database constructor, add them to
-		//an arraylist, and return it
+	private List<Question> findQuestions(Connection conn){
+		List<Question> questions = new ArrayList<Question>();
+		try {
+			Statement stmt = conn.createStatement();      
+			String query = "SELECT * from Quiz WHERE quiz_id=" + dbID + ";";     
+			
+			ResultSet rs = stmt.executeQuery(query);     
+			while (rs.next()) {
+				String[] attrs = new String[NUM_COLUMNS];
+				for (int i = 0; i < attrs.length; i++) {
+					attrs[i] = rs.getNString(i);
+				}
+				questions.add(new Question(attrs, conn));
+			}
+			
+			return questions;
+		} catch (SQLException e) {     
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
@@ -64,10 +81,6 @@ public class Quiz extends DataBaseObject {
 	
 	
 	public void saveToDataBase(Connection conn){
-		//TODO: save to database.
-		//If dbid == -1, it's a new entry;
-		//otherwise, it's an update
-		
 		try {
 			Statement stmt = conn.createStatement();
 			String query;

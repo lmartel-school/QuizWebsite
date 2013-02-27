@@ -1,6 +1,8 @@
 package quiz;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public abstract class Message extends DataBaseObject {
 	protected String sender;
@@ -30,6 +32,18 @@ public abstract class Message extends DataBaseObject {
 		return recipient;
 	}
 	
+	public void saveToMsg(Connection conn) {
+		try {
+			Statement stmt = conn.createStatement();
+			String query;
+			generateID(conn, "Message");
+			query = "Insert into Message VALUES (" + dbID + "'" + sender + "', '" + recipient + "', " + beenRead + ");";
+			stmt.executeUpdate(query);
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 
 }

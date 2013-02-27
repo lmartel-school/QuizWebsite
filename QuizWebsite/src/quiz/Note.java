@@ -31,12 +31,9 @@ public class Note extends Message {
 	}
 	
 	@Override
-	public void saveToDataBase(Connection conn) {
-		// TODO This save function has to update both the Notes table, and 
-		// the generic messages table. 
-		
-		saveToNotes();
-		saveToMsg();
+	public void saveToDataBase(Connection conn) { 
+		saveToNotes(conn);
+		saveToMsg(conn);
 
 	}
 	
@@ -56,5 +53,25 @@ public class Note extends Message {
 			e.printStackTrace();
 		}
 	}
+	
+	private void saveToNotes(Connection conn) {
+		try {
+			Statement stmt = conn.createStatement();
+			String query;
+			if (dbID == -1) {
+				generateID(conn, "Message");
+				query = "Insert into Note VALUES (" + dbID + ", '" + text + "');";
+				stmt.executeUpdate(query);
+			} else {
+				query = "UPDATE Note set msg='" + text + "' WHERE id=" + dbID + ";";
+			}
+			
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 
 }
