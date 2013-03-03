@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
+import question.Question;
+
 public class Quiz extends DataBaseObject {
 	
 	private static final int NUM_COLUMNS = 6;
