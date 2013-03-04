@@ -12,10 +12,10 @@
 	
 	Log in if you wish to accept the challenge.
 
-	<form action="LoginServlet" method="post">
+	<form action="LoginServlet" method="POST">
 	
 		<p>User Name: <input type="text" name="username" />
-		<p>Password: <input type="text" name="password" />
+		<p>Password: <input type="password" name="password" />
 		<input type="submit" /></p>
 	
 	</form>

@@ -17,7 +17,7 @@ public class User extends DataBaseObject {
 
 	public User(String[] args, Connection conn) {
 		super(args, conn);
-		dbID = Integer.parseInt(args[0]);
+		//dbID = Integer.parseInt(args[0]);
 		name = args[1];
 		hashedPassword = args[2];
 		isAdmin = Boolean.parseBoolean(args[3]);

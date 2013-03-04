@@ -29,6 +29,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		doPost(request, response);
 	}
 
 	/**
@@ -36,7 +37,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection conn = (Connection) getServletContext().getAttribute("database");
-		
+	
 		String usr = request.getParameter("username");
 		String pass = request.getParameter("password");
 		String hash = PasswordHash.generationMode(pass);
@@ -45,15 +46,17 @@ public class LoginServlet extends HttpServlet {
 		
 		try {
 			Statement stmt = conn.createStatement();
-			String query = "SELECT * FROM User WHERE username='" + usr + "' AND password='" + hash + "';";
+			String query = "SELECT * FROM User WHERE username='" + usr + "' AND password_hash='" + hash + "';";
 			ResultSet rs = stmt.executeQuery(query);
-			if (rs == null) {
+			
+			
+			if (!rs.last()) {
 				dispatch = request.getRequestDispatcher("invalid_login.html");
 			} else {
 				
 				String[] attrs = new String[User.NUM_COLUMNS];
 				for (int i = 0; i < attrs.length; i++) {
-					attrs[i] = rs.getNString(i);
+					attrs[i] = rs.getString(i + 1);
 				}
 				User user = new User(attrs, conn);
 				

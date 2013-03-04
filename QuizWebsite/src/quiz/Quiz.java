@@ -56,7 +56,7 @@ public class Quiz extends DataBaseObject {
 			while (rs.next()) {
 				String[] attrs = new String[NUM_COLUMNS];
 				for (int i = 0; i < attrs.length; i++) {
-					attrs[i] = rs.getNString(i);
+					attrs[i] = rs.getString(i + 1);
 				}
 
 				questions.add(Question.build(attrs, conn));

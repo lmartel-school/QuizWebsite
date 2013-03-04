@@ -10,15 +10,15 @@
 
 	<% 
 		
-	Quiz quiz = request.getParameter("quiz");
+	//Quiz quiz = request.getParameter("quiz");
 	
-	out.println("<h1>" + quiz.getName() + "</h1>");
+	//out.println("<h1>" + quiz.getName() + "</h1>");
 	
-	out.println(quiz.getAuthor());
+	//out.println(quiz.getAuthor());
 	out.println("<br>");
 	
 	
-	out.println(quiz.getDescription());
+	//out.println(quiz.getDescription());
 	
 	
 	%>
