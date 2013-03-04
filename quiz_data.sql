@@ -6,10 +6,10 @@ USE c_cs108_jfneff;
 	(1, "States and Cities", false, 1, "test_1", "Testing you on states and their cities");
 
 INSERT INTO Question VALUES
-	(1, 1, 1, 1),
-	(2, 1, 2, 1),
-	(3, 1, 3, 2),
-	(4, 1, 4, 3);
+	(1, 1, 1, 0),
+	(2, 1, 2, 0),
+	(3, 1, 3, 1),
+	(4, 1, 4, 2);
 
 INSERT INTO Question_Attribute VALUES 
 

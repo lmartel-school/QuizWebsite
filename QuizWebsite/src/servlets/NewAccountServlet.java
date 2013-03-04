@@ -1,4 +1,4 @@
-package quiz;
+package servlets;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -19,7 +19,6 @@ public class NewAccountServlet extends HttpServlet {
      */
     public NewAccountServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

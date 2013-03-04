@@ -9,9 +9,11 @@ import quiz.DataBaseObject;
 
 
 public class User extends DataBaseObject {
-	String name;
-	String hashedPassword;
-	boolean isAdmin;
+	public static final int NUM_COLUMNS = 4;
+	
+	private String name;
+	private String hashedPassword;
+	private boolean isAdmin;
 
 	public User(String[] args, Connection conn) {
 		super(args, conn);
@@ -39,6 +41,14 @@ public class User extends DataBaseObject {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public boolean isAdmin() {
+		return isAdmin;
 	}
 
 }

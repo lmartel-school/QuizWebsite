@@ -1,4 +1,4 @@
-package quiz;
+package servlets;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import javax.servlet.*;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.*;
+
+import quiz.MyDB;
 
 
 /**
@@ -43,8 +45,9 @@ public class QuizListener implements ServletContextListener, HttpSessionListener
     public void sessionCreated(HttpSessionEvent arg0) {
     	HttpSession session = arg0.getSession();    	
     	
-        session.setAttribute("isLoggedIn", false);
-        session.setAttribute("isAdmin", false);
+//        session.setAttribute("isLoggedIn", false);
+//        session.setAttribute("isAdmin", false);
+    	session.setAttribute("user", null);
         session.setAttribute("currentQuiz", null);
     }
 

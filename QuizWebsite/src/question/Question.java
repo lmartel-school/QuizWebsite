@@ -1,6 +1,9 @@
 package question;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +24,16 @@ public abstract class Question extends DataBaseObject{
 	}
 	
 	public static enum QUESTION_ATTRIBUTE {
+		CORRECT("correct"),
+		WRONG("wrong"),
+		PROMPT("prompt");
 		
+		private QUESTION_ATTRIBUTE(final String text) {
+			this.text = text;
+		}
+		private final String text;
+		
+		public String toString() { return text; }
 	}
 	
 	/**
@@ -56,11 +68,33 @@ public abstract class Question extends DataBaseObject{
 		type = serializeType(attrs[3]);
 		
 		attributes = new HashMap<String, String>();
-		//TODO: SELECT * FROM Question_Attribute WHERE question_id = dbID
-		//then put <attr_type, attr value> pairs into attributes map
+		getAttributes(conn);
+		
 	}
 	
-	private static QUESTION_TYPE serializeType(String attr){ //small note: pretty sure it starts with 1, not 0
+	private void getAttributes(Connection conn) {
+		try {
+			Statement stmt = conn.createStatement();
+			String query;
+			query = "SELECT * FROM Question_Attribute WHERE question_id =" + dbID + ";";
+			
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String attrType = rs.getNString("attr_type");
+				String attrValue = rs.getNString("attr_value");
+				attributes.put(attrType, attrValue);
+				
+			}
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	
+	private static QUESTION_TYPE serializeType(String attr){
 		int val = Integer.parseInt(attr);
 		switch(val){ 
 		case 0: return QUESTION_TYPE.MULTI_CHOICE; 
@@ -73,7 +107,25 @@ public abstract class Question extends DataBaseObject{
 
 	@Override
 	public void saveToDataBase(Connection conn) {
-		// TODO Auto-generated method stub
+		try {
+			Statement stmt = conn.createStatement();
+			String query;
+			if (dbID == -1) {
+				generateID(conn, "Question");
+				query = "Insert into Question VALUES (" + dbID + ", " + quizID + ", " + 
+					questionNumber + ", " + type + ");";
+				
+			} else {
+				query = "UPDATE Question set question_number=" + questionNumber + ", question_type=" + 
+					type + " WHERE id=" + dbID + ";";
+			}
+			
+			stmt.executeUpdate(query);
+			stmt.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -81,7 +133,7 @@ public abstract class Question extends DataBaseObject{
 		return quizID;
 	}
 
-	public void setQuizID(int quizID) {
+	public void setQuizID(int quizID) { // I don't think we want to allow this??
 		this.quizID = quizID;
 	}
 

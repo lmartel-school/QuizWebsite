@@ -58,7 +58,8 @@ public class Quiz extends DataBaseObject {
 				for (int i = 0; i < attrs.length; i++) {
 					attrs[i] = rs.getNString(i);
 				}
-				questions.add(new Question(attrs, conn)); //we need to tell it what type of question to make.
+
+				questions.add(Question.build(attrs, conn));
 			}
 			
 			return questions;
@@ -88,13 +89,13 @@ public class Quiz extends DataBaseObject {
 			String query;
 			if (dbID == -1) {
 				generateID(conn, "Quiz");
-				query = "Insert into Quiz VALUES (" + dbID + "'" + name + "', " + 
+				query = "Insert into Quiz VALUES (" + dbID + ", '" + name + "', " + 
 					inOrder + ", " + type + ", '" + author + "', '" + description + "');";
 				
 			} else {
 				query = "UPDATE Quiz set name='" + name + "', inOrder=" + 
 					inOrder + ", type=" + type + ", author ='" + author + "', description='" + 
-					description + "' WHERE id=" + dbID;
+					description + "' WHERE id=" + dbID + ";";
 			}
 			
 			stmt.executeUpdate(query);

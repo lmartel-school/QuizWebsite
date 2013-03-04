@@ -18,7 +18,7 @@ create table Question (
 	id integer PRIMARY KEY,
 	quiz_id integer references Quiz(id),
 	question_number integer,
-	question_type integer /* multi-choice, fill-in/response, pic */
+	question_type integer /* multi-choice = 0, fill-in/response, pic */
 );
 
 DROP TABLE if exists Question_Attribute;
