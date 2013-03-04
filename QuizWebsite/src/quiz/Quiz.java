@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
-import question.Question;
+import question.*;
 
 public class Quiz extends DataBaseObject {
 	
@@ -58,7 +58,7 @@ public class Quiz extends DataBaseObject {
 				for (int i = 0; i < attrs.length; i++) {
 					attrs[i] = rs.getNString(i);
 				}
-				questions.add(new Question(attrs, conn));
+				questions.add(new Question(attrs, conn)); //we need to tell it what type of question to make.
 			}
 			
 			return questions;
@@ -88,10 +88,13 @@ public class Quiz extends DataBaseObject {
 			String query;
 			if (dbID == -1) {
 				generateID(conn, "Quiz");
-				query = "Insert into Quiz VALUES (" + dbID + "'" + name + "', " + inOrder + ", " + type + ", '" + author + "', '" + description + "');";
+				query = "Insert into Quiz VALUES (" + dbID + "'" + name + "', " + 
+					inOrder + ", " + type + ", '" + author + "', '" + description + "');";
 				
 			} else {
-				query = "UPDATE Quiz set name='" + name + "', inOrder=" + inOrder + ", type=" + type + ", author ='" + author + "', description='" + description + "' WHERE id=" + dbID;
+				query = "UPDATE Quiz set name='" + name + "', inOrder=" + 
+					inOrder + ", type=" + type + ", author ='" + author + "', description='" + 
+					description + "' WHERE id=" + dbID;
 			}
 			
 			stmt.executeUpdate(query);

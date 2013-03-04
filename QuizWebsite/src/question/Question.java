@@ -60,9 +60,9 @@ public abstract class Question extends DataBaseObject{
 		//then put <attr_type, attr value> pairs into attributes map
 	}
 	
-	private static QUESTION_TYPE serializeType(String attr){
+	private static QUESTION_TYPE serializeType(String attr){ //small note: pretty sure it starts with 1, not 0
 		int val = Integer.parseInt(attr);
-		switch(val){
+		switch(val){ 
 		case 0: return QUESTION_TYPE.MULTI_CHOICE; 
 		case 1: return QUESTION_TYPE.FILL_IN;
 		case 2: return QUESTION_TYPE.PICTURE;
