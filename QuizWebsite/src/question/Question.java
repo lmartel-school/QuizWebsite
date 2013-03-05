@@ -4,8 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import quiz.DataBaseObject;
 
@@ -14,7 +13,7 @@ public abstract class Question extends DataBaseObject{
 	private int quizID;
 	private int questionNumber;
 	private QUESTION_TYPE type;
-	protected Map<String, String> attributes;
+	protected AttributeMap attributes;
 	
 	
 	public static enum QUESTION_TYPE {
@@ -67,7 +66,7 @@ public abstract class Question extends DataBaseObject{
 		questionNumber = Integer.parseInt(attrs[2]);
 		type = serializeType(attrs[3]);
 		
-		attributes = new HashMap<String, String>();
+		attributes = new AttributeMap();
 		getAttributes(conn);
 		
 	}
@@ -82,8 +81,7 @@ public abstract class Question extends DataBaseObject{
 			while (rs.next()) {
 				String attrType = rs.getNString("attr_type");
 				String attrValue = rs.getNString("attr_value");
-				attributes.put(attrType, attrValue);
-				
+				attributes.put(attrType, new QuestionAttribute(dbID, attrType, attrValue));
 			}
 						
 		} catch (SQLException e) {
@@ -107,6 +105,13 @@ public abstract class Question extends DataBaseObject{
 
 	@Override
 	public void saveToDataBase(Connection conn) {
+		List<QuestionAttribute> allAttrs = attributes.getAll();
+		//TODO: save all modified attributes to attributes table somehow.
+		//Possible simple approach: update (if ID found) / insert (if ID not found) all attributes
+			//in map on save
+		//Possible more complex approach: maintain Map of "dirty" (changed) attributes,
+			//update those and clear the map on save
+		
 		try {
 			Statement stmt = conn.createStatement();
 			String query;
@@ -131,10 +136,6 @@ public abstract class Question extends DataBaseObject{
 
 	public int getQuizID() {
 		return quizID;
-	}
-
-	public void setQuizID(int quizID) { // I don't think we want to allow this??
-		this.quizID = quizID;
 	}
 
 	public int getQuestionNumber() {

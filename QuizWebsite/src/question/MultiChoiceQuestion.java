@@ -1,6 +1,9 @@
 package question;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class MultiChoiceQuestion extends Question {
 
@@ -8,5 +11,46 @@ public class MultiChoiceQuestion extends Question {
 		super(attrs, conn);
 		// TODO Auto-generated constructor stub
 	}
+	
+	/**
+	 * Defaults to ordered rather than random.
+	 * @return
+	 */
+	public List<String> getChoices(){
+		return getChoices(false);
+	}
+	
+	/**
+	 * Returns a list of the choices, as strings, for the question. Namely, every right or wrong answer.
+	 * @param randomize: whether we want random ordering (true), or lexicographical ordering (false)
+	 * @return
+	 */
+	public List<String> getChoices(boolean randomize){
+		List<String> choices = new ArrayList<String>();
+		for(QuestionAttribute attr : getCorrectChoices()){
+			choices.add(attr.toString());
+		}
+		for(QuestionAttribute attr : getWrongChoices()){
+			choices.add(attr.toString());
+		}
+		if(randomize){
+			Collections.shuffle(choices);
+		} else {
+			Collections.sort(choices);
+		}
+		return choices;
+	}
+	
+	private List<QuestionAttribute> getCorrectChoices(){
+		return attributes.get(Question.QUESTION_ATTRIBUTE.CORRECT);
+	}
+	
+	private List<QuestionAttribute> getWrongChoices(){
+		return attributes.get(Question.QUESTION_ATTRIBUTE.WRONG);
+	}
+	
+	 public boolean checkAnswer(String answer){
+		 return AnswerChecker.check(answer, getCorrectChoices());
+	 }
 	
 }
