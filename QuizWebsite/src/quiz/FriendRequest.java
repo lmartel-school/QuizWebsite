@@ -10,8 +10,7 @@ public class FriendRequest extends Message {
 
 	public FriendRequest(String[] args, Connection conn) {
 		super(args, conn);
-		
-		getAcceptance(args[0], conn);
+		isAccepted = Boolean.parseBoolean(args[4]); //accepted field was joined onto this db row (1-to-1 relationship)
 	}
 	
 	public FriendRequest(String sender, String recipient) {

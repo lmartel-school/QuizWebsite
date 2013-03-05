@@ -18,8 +18,7 @@ public class Note extends Message {
 	
 	public Note(String[] args, Connection conn) {
 		super(args, conn);
-	
-		setTextFromDB(args[0], conn);
+		text = args[4]; //1-to-1 relationship guarentees this will be ok
 	}
 	
 	/**

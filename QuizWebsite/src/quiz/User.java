@@ -22,6 +22,13 @@ public class User extends DataBaseObject {
 		hashedPassword = args[2];
 		isAdmin = Boolean.parseBoolean(args[3]);
 	}
+	
+	public User(String name, String hashedPwd) {
+		super();
+		this.name = name;
+		hashedPassword = hashedPwd;
+		isAdmin = false;
+	}
 
 	//Writes a query to save this User object back into the database.
 	//Use the dbID to check if it it is a new entry or an update.

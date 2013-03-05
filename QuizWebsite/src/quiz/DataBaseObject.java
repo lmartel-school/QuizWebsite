@@ -43,7 +43,7 @@ public abstract class DataBaseObject {
 			String query = "SELECT max(id) from " + table + ";";     
 			ResultSet rs = stmt.executeQuery(query);     
 			int id = rs.getInt(1); //needs to be checked      
-			dbID = id + 1;    
+			dbID = id + 1;
 		} catch (SQLException e) {     
 			e.printStackTrace();
 		}

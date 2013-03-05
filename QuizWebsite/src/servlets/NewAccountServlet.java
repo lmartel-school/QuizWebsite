@@ -59,12 +59,7 @@ public class NewAccountServlet extends HttpServlet {
 				dispatch = request.getRequestDispatcher("account_exists.jsp");
 			} else {
 				
-				String[] attrs = new String[User.NUM_COLUMNS];
-				attrs[1] = usr;
-				attrs[2] = hash;
-				attrs[3] = "false"; //isAdmin
-				
-				User user = new User(attrs, conn); //this isn't correct: what am i supposed to call?
+				User user = new User(usr, hash);
 				user.saveToDataBase(conn);
 				
 				request.getSession().setAttribute("user", user);
