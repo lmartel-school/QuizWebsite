@@ -28,7 +28,6 @@ public class MessageServlet extends HttpServlet {
      */
     public MessageServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -46,9 +45,7 @@ public class MessageServlet extends HttpServlet {
 			String query = "SELECT * FROM Message WHERE recipient='" + user.getName() + "';";
 			ResultSet rs = stmt.executeQuery(query);
 			
-			List<Challenge> challenges = new ArrayList<Challenge>();
-			List<FriendRequest> requests = new ArrayList<FriendRequest>();
-			List<Note> notes = new ArrayList<Note>();
+			List<Message> messages = new ArrayList<Message>();
 			
 			while (rs.next()) {
 				int id = rs.getInt("id");
@@ -60,7 +57,7 @@ public class MessageServlet extends HttpServlet {
 				//this is a bit of a cheat: max size if it's a challenge
 				
 				while (result.next()) {
-					String[] attrs = new String[7];
+					String[] attrs = new String[5];
 					attrs[0] = result.getString("id");
 					attrs[1] = result.getString("sender");
 					attrs[2] = result.getString("recipient");
@@ -70,24 +67,27 @@ public class MessageServlet extends HttpServlet {
 					String challenge = result.getString("message_id");
 					if (note != null) {
 						attrs[4] = note;
-						notes.add(new Note(attrs, conn));
+						messages.add(new Note(attrs, conn));
 						
 					} else if (challenge != null) {
 						attrs[4] = challenge;
-						attrs[5] = result.getString("quiz_id");
-						attrs[6] = result.getString("result_id");
-						challenges.add(new Challenge(attrs, conn));
+						messages.add(new Challenge(attrs, conn));
 						
 					} else {
-						attrs[4] = result.getString("isAccepted");
-						requests.add(new FriendRequest(attrs, conn));
+						String acceptance = result.getString("isAccepted");
+						attrs[4] = acceptance;
+						if (acceptance.equals("false"))
+							messages.add(new FriendRequest(attrs, conn));
 					}
 				}
 				
 			}
-			request.setAttribute("notes", notes);
-			request.setAttribute("requests", requests);
-			request.setAttribute("challenges", challenges);
+			Collections.sort(messages, new Comparator<Message>() {
+				public int compare(Message one, Message two) {
+					return two.getID()-one.getID();
+				}
+			});
+			request.setAttribute("messages", messages);
 			RequestDispatcher dispatch = request.getRequestDispatcher("messages.jsp");
 			dispatch.forward(request, response);
 

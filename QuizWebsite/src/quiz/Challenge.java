@@ -1,13 +1,18 @@
 package quiz;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 
 public class Challenge extends Message {
 	private QuizResult result;
 
 	public Challenge(String[] args, Connection conn) {
 		super(args, conn);
-		// TODO set result from ChallengeTable
+		int resultId = Integer.parseInt(args[4]);
+		getResult(conn, resultId);
 	}
 	
 	public Challenge(String sender, String recipient, QuizResult result) {
@@ -17,8 +22,39 @@ public class Challenge extends Message {
 
 	@Override
 	public void saveToDataBase(Connection conn) {
-		// TODO Save this challenge in the messages table, and the challenges table
+		saveToMsg(conn);
+		saveToChallenge(conn);
 
 	}
 
+	
+	private void getResult(Connection conn, int id) {
+		try {
+			Statement stmt = conn.createStatement();      
+			String query = "SELECT * from Quiz_Result WHERE id=" + id + ";";     
+			
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String[] row = DataBaseObject.getRow(rs, QuizConstants.CHALLENGE_N_COLS);
+				result = new QuizResult(row, conn);
+			}
+			   
+		} catch (SQLException e) {     
+			e.printStackTrace();
+		}
+	}
+	
+	private void saveToChallenge(Connection conn) {
+		try {
+			Statement stmt = conn.createStatement();
+			String query;
+			generateID(conn, "Challenge");
+			query = "Insert into Note VALUES (" + dbID + ", " + result.getID() + ");";
+			stmt.executeUpdate(query);
+			
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -132,6 +132,10 @@ public abstract class Question extends DataBaseObject{
 			e.printStackTrace();
 		}
 		
+		for (int i = 0; i < allAttrs.size(); i++) {
+			allAttrs.get(i).saveToDataBase(conn);
+		}
+		
 	}
 
 	public int getQuizID() {

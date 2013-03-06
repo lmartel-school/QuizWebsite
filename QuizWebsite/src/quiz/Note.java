@@ -40,18 +40,18 @@ public class Note extends Message {
 		return text;
 	}
 	
-	private void setTextFromDB(String id, Connection conn) {
-		try {
-			Statement stmt = conn.createStatement();      
-			String query = "SELECT msg from Note WHERE id=" + id + ";";     
-			
-			ResultSet rs = stmt.executeQuery(query);     
-			text = rs.getString("msg");	      
-			   
-		} catch (SQLException e) {     
-			e.printStackTrace();
-		}
-	}
+//	private void setTextFromDB(String id, Connection conn) {
+//		try {
+//			Statement stmt = conn.createStatement();      
+//			String query = "SELECT msg from Note WHERE id=" + id + ";";     
+//			
+//			ResultSet rs = stmt.executeQuery(query);     
+//			text = rs.getString("msg");	      
+//			   
+//		} catch (SQLException e) {     
+//			e.printStackTrace();
+//		}
+//	}
 	
 	private void saveToNotes(Connection conn) {
 		try {

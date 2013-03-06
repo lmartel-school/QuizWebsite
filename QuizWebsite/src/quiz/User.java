@@ -9,7 +9,6 @@ import quiz.DataBaseObject;
 
 
 public class User extends DataBaseObject {
-	public static final int NUM_COLUMNS = 4;
 	
 	private String name;
 	private String hashedPassword;

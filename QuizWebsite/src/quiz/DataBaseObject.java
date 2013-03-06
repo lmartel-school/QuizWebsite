@@ -48,5 +48,17 @@ public abstract class DataBaseObject {
 			e.printStackTrace();
 		}
 	}
+	
+	public static String[] getRow(ResultSet rs, int numCol) {
+		String[] row = new String[numCol];
+		try {
+			for (int i = 0; i < row.length; i++) {
+				row[i] = rs.getString(i + 1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return row;
+	}
 
 }

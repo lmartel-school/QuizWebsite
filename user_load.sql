@@ -39,7 +39,7 @@ create table Challenge (
 	id integer PRIMARY KEY,
 	message_id integer references Message(id),
 	quiz_id integer,
-	result_id integer
+	result_id integer references Quiz_Result(id);
 );
 
 DROP TABLE if exists Friend_Request;

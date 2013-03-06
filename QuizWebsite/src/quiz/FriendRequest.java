@@ -42,18 +42,18 @@ public class FriendRequest extends Message {
 	 * This db query assumes that there already exists an 
 	 * entry in the friend request table for this id. PLEASE VERIFY
 	 */
-	private void getAcceptance(String id, Connection conn) {
-		try {
-			Statement stmt = conn.createStatement();      
-			String query = "SELECT isAccepted from Friend_Request WHERE id=" + id + ";";     
-			
-			ResultSet rs = stmt.executeQuery(query);     
-			isAccepted = rs.getBoolean("isAccepted");	      
-			   
-		} catch (SQLException e) {     
-			e.printStackTrace();
-		}
-	}
+//	private void getAcceptance(String id, Connection conn) {
+//		try {
+//			Statement stmt = conn.createStatement();      
+//			String query = "SELECT isAccepted from Friend_Request WHERE id=" + id + ";";     
+//			
+//			ResultSet rs = stmt.executeQuery(query);     
+//			isAccepted = rs.getBoolean("isAccepted");	      
+//			   
+//		} catch (SQLException e) {     
+//			e.printStackTrace();
+//		}
+//	}
 	
 	
 	private void saveToFriends(Connection conn) {
