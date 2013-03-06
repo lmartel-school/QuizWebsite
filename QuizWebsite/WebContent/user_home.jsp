@@ -18,7 +18,7 @@
 	int numMsg = (Integer) request.getAttribute("unreadMsg");
 	out.println("You have " + numMsg + " unread messages.");
 	
-	out.println("<a href=\"MessageServlet\">View Messages</a>");
+	out.println("<a href=\"MessageInboxServlet\">View Message Inbox</a>");
 	
 	
 	out.println("<h3>Your Recently Taken Quizzes</h3>");

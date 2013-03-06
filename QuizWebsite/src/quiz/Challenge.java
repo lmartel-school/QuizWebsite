@@ -26,6 +26,10 @@ public class Challenge extends Message {
 		saveToChallenge(conn);
 
 	}
+	
+	public QuizResult getChallengerResult() {
+		return result;
+	}
 
 	
 	private void getResult(Connection conn, int id) {
