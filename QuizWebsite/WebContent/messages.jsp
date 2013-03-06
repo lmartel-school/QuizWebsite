@@ -10,10 +10,10 @@
 <body>
 	<%
 	List<Message> messages = (List<Message>) request.getAttribute("messages");	
-	for (int i = 0; i < messages.size(); i++) {
-		messages.get(i).getHTMLSummary();
+	//for (int i = 0; i < messages.size(); i++) {
+		//messages.get(i).getHTMLSummary();
 		
-	}
+	//}
 	
 	%>
 
