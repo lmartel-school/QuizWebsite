@@ -119,7 +119,7 @@ public class LoginServlet extends HttpServlet {
 		List<Quiz> authored = new ArrayList<Quiz>();
 		try {
 			Statement stmt = conn.createStatement();
-			String query = "SELECT * FROM Quiz WHERE quthor='" + user.getName() + 
+			String query = "SELECT * FROM Quiz WHERE author='" + user.getName() + 
 			"';";
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs != null) {

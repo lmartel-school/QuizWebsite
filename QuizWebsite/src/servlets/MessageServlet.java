@@ -51,13 +51,15 @@ public class MessageServlet extends HttpServlet {
 				int id = rs.getInt("id");
 				
 				Statement next = conn.createStatement();
-				String join1 = "SELECT * FROM Message inner join Friend_Request on Message.id=Friend_Request.id WHERE id=" + id + ";";
-				String join2 = "SELECT * FROM Message inner join Challenge WHERE id=" + id + ";";
-				String join3 = "SELECT * FROM Message inner join Note where id=" + id + ";";
+				String join1 = "SELECT * FROM Message inner join Friend_Request on Message.id=Friend_Request.id WHERE Message.id=" + id + ";";
+				Statement chal = conn.createStatement();
+				String join2 = "SELECT * FROM Message inner join Challenge WHERE Message.id=" + id + ";";
+				Statement noteStmt = conn.createStatement();
+				String join3 = "SELECT * FROM Message inner join Note where Message.id=" + id + ";";
 				
 				ResultSet result = next.executeQuery(join1);
-				ResultSet resultChal = next.executeQuery(join2);
-				ResultSet resultNote = next.executeQuery(join3);
+				ResultSet resultChal = chal.executeQuery(join2);
+				ResultSet resultNote = noteStmt.executeQuery(join3);
 				
 				//this is a bit of a cheat: max size if it's a challenge
 				String[] attrs = new String[5];
@@ -69,12 +71,12 @@ public class MessageServlet extends HttpServlet {
 						messages.add(new FriendRequest(attrs, conn));
 				} else if (resultChal.next()) {
 					generalMessage(attrs, resultChal);
-					String challenge = result.getString("message_id");
+					String challenge = resultChal.getString("result_id");
 					attrs[4] = challenge;
 					messages.add(new Challenge(attrs, conn));
-				} else {
+				} else if (resultNote.next()){
 					generalMessage(attrs, resultNote);
-					String note = result.getString("msg");
+					String note = resultNote.getString("msg");
 					attrs[4] = note;
 					messages.add(new Note(attrs, conn));
 						
