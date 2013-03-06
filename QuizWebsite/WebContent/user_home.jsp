@@ -22,11 +22,14 @@
 	
 	
 	out.println("<h3>Your Recently Taken Quizzes</h3>");
-	List<QuizResult> recents = (List<QuizResult>) request.getAttribute("userRecent");
+	List<QuizResult> usrRecents = (List<QuizResult>) request.getAttribute("userRecent");
+	List<Quiz> authored = (List<Quiz>) request.getAttribute("authored");
+	List<Quiz> recents = (List<Quiz>) request.getAttribute("recent");
+	List<Activity> activities = (List<Activity>) request.getAttribute("activities");
 	
-	//for (int i = 0; i < recents.size(); i++) {
-		//out.println("THIS IS RESULT" + i);
-	//}
+	for (int i = 0; i < usrRecents.size(); i++) {
+		out.println("THIS IS RESULT" + i);
+	}
 	%>
 
 </body>

@@ -51,34 +51,33 @@ public class MessageServlet extends HttpServlet {
 				int id = rs.getInt("id");
 				
 				Statement next = conn.createStatement();
-				String join = "SELECT * FROM Message natural join Challenge natural join Friend_Request natural join Note WHERE id=" + id + ";";
-				ResultSet result = next.executeQuery(join);
+				String join1 = "SELECT * FROM Message inner join Friend_Request on Message.id=Friend_Request.id WHERE id=" + id + ";";
+				String join2 = "SELECT * FROM Message inner join Challenge WHERE id=" + id + ";";
+				String join3 = "SELECT * FROM Message inner join Note where id=" + id + ";";
+				
+				ResultSet result = next.executeQuery(join1);
+				ResultSet resultChal = next.executeQuery(join2);
+				ResultSet resultNote = next.executeQuery(join3);
 				
 				//this is a bit of a cheat: max size if it's a challenge
-				
-				while (result.next()) {
-					String[] attrs = new String[5];
-					attrs[0] = result.getString("id");
-					attrs[1] = result.getString("sender");
-					attrs[2] = result.getString("recipient");
-					attrs[3] = result.getString("beenRead");
-					
-					String note = result.getString("msg");
+				String[] attrs = new String[5];
+				if (result.next()) {
+					generalMessage(attrs, result);
+					String acceptance = result.getString("isAccepted");
+					attrs[4] = acceptance;
+					if (acceptance.equals("false"))
+						messages.add(new FriendRequest(attrs, conn));
+				} else if (resultChal.next()) {
+					generalMessage(attrs, resultChal);
 					String challenge = result.getString("message_id");
-					if (note != null) {
-						attrs[4] = note;
-						messages.add(new Note(attrs, conn));
+					attrs[4] = challenge;
+					messages.add(new Challenge(attrs, conn));
+				} else {
+					generalMessage(attrs, resultNote);
+					String note = result.getString("msg");
+					attrs[4] = note;
+					messages.add(new Note(attrs, conn));
 						
-					} else if (challenge != null) {
-						attrs[4] = challenge;
-						messages.add(new Challenge(attrs, conn));
-						
-					} else {
-						String acceptance = result.getString("isAccepted");
-						attrs[4] = acceptance;
-						if (acceptance.equals("false"))
-							messages.add(new FriendRequest(attrs, conn));
-					}
 				}
 				
 			}
@@ -95,6 +94,18 @@ public class MessageServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void generalMessage(String[] attrs, ResultSet rs) {
+		try {
+			attrs[0] = rs.getString("id");
+			attrs[1] = rs.getString("sender");
+			attrs[2] = rs.getString("recipient");
+			attrs[3] = rs.getString("beenRead");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**

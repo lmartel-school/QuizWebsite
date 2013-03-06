@@ -30,7 +30,6 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doPost(request, response);
 	}
 
 	/**
@@ -59,11 +58,10 @@ public class LoginServlet extends HttpServlet {
 				request.getSession().setAttribute("user", user);
 				getUserRecentQuizzes(request, conn, user);
 				getMessages(request, conn, user);
-//				getPopQuizzes(request, conn);
-//				getRecentQuizzes(request, conn);
-//				getAuthoring(request, conn, user);
-//				getFriendActivity(request, conn, user);
-//				System.out.println("end");
+				HomePageQueries.getPopQuizzes(request, conn);
+				HomePageQueries.getRecentQuizzes(request, conn);
+				getAuthoring(request, conn, user);
+				getFriendActivity(request, conn, user);
 				
 				dispatch = request.getRequestDispatcher("user_home.jsp");
 			}
@@ -93,71 +91,6 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 	
-	
-	private void getPopQuizzes(HttpServletRequest request, Connection conn) {
-		List<Quiz> popular = new ArrayList<Quiz>();
-		try {
-			Statement stmt = conn.createStatement();
-			String query = "SELECT quiz_id, count(quiz_id) " +
-					"FROM Quiz_Result " +
-					"GROUP by quiz_id " + 
-					"ORDER by count(quiz_id) DESC;";
-			ResultSet rs = stmt.executeQuery(query);
-			if (rs != null) {
-				int count = 0;
-				while (rs.next() && count < QuizConstants.N_TOP_RATED) {
-					int quizId = rs.getInt(1);
-					Quiz quiz = getQuizFromId(quizId, conn);
-					popular.add(quiz);
-					count++;
-				}
-			}	
-			request.setAttribute("popular", popular);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	private Quiz getQuizFromId(int id, Connection conn) {
-		try {
-			Statement stmt = conn.createStatement();
-			String query = "SELECT * FROM Quiz WHERE id=" + id + ";";
-			ResultSet rs = stmt.executeQuery(query);
-			if (rs != null) {
-				if (rs.next()) {
-					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
-					return new Quiz(attrs, conn);
-				}
-			}	
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;	
-	}
-	
-	private void getRecentQuizzes(HttpServletRequest request, Connection conn) {
-		List<Quiz> recents = new ArrayList<Quiz>();
-		try {
-			Statement stmt = conn.createStatement();
-			String query = "SELECT * FROM Quiz;";
-			ResultSet rs = stmt.executeQuery(query);
-			if (rs != null) {
-				int count = 0;
-				rs.afterLast();
-				while (rs.previous() && count < QuizConstants.N_TOP_RATED) {
-					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
-					Quiz quiz = new Quiz(attrs, conn);
-					recents.add(quiz);
-					count++;
-				}
-			}	
-			request.setAttribute("recents", recents);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	private void getUserRecentQuizzes(HttpServletRequest request, Connection conn, User user) {
 		List<QuizResult> recents = new ArrayList<QuizResult>();
 		try {
@@ -175,7 +108,6 @@ public class LoginServlet extends HttpServlet {
 				}
 			}
 			request.setAttribute("userRecent", recents);
-			System.out.println(request.getAttribute("userRecent"));
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -210,7 +142,7 @@ public class LoginServlet extends HttpServlet {
 		List<Activity> activities = new ArrayList<Activity>();
 		try {
 			Statement stmt = conn.createStatement();
-			String query = "SELECT * FROM Message natural join Friend_Request WHERE sender='" + user.getName() + 
+			String query = "SELECT * FROM Message inner join Friend_Request on Message.id=Friend_Request.id WHERE sender='" + user.getName() + 
 			"' OR recipient='" + user.getName() + "' AND isAccepted=true;";
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs != null) {
@@ -224,7 +156,7 @@ public class LoginServlet extends HttpServlet {
 					
 					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
 					Quiz quiz = new Quiz(attrs, conn);
-					//activities.add(quiz);
+					
 					count++;
 				}
 			}
