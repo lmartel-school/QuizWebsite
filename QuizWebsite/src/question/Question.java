@@ -49,6 +49,7 @@ public abstract class Question extends DataBaseObject{
 		case FILL_IN: return new FillInQuestion(attrs, conn);
 		case PICTURE: return new PictureQuestion(attrs, conn);
 		}
+		assert(false);
 		return null;
 	}
 
@@ -79,8 +80,8 @@ public abstract class Question extends DataBaseObject{
 			
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				String attrType = rs.getNString("attr_type");
-				String attrValue = rs.getNString("attr_value");
+				String attrType = rs.getString("attr_type");
+				String attrValue = rs.getString("attr_value");
 				attributes.put(attrType, new QuestionAttribute(dbID, attrType, attrValue));
 			}
 						
@@ -152,6 +153,11 @@ public abstract class Question extends DataBaseObject{
 
 	public void setType(QUESTION_TYPE type) {
 		this.type = type;
+	}
+	
+	//Temporary getter for testing
+	public AttributeMap getAttrs(){
+		return attributes;
 	}
 
 }

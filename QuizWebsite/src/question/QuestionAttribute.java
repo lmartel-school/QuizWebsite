@@ -37,8 +37,15 @@ public class QuestionAttribute extends DataBaseObject {
 		
 	}
 
-	public String getValue() {
-		return attrValue;
+	public int getQuestion_id() {
+		return question_id;
 	}
 
+	public String getAttrType() {
+		return attrType;
+	}
+
+	public String getAttrValue() {
+		return attrValue;
+	}
 }

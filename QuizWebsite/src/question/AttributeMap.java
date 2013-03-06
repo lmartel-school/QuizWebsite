@@ -100,7 +100,7 @@ public class AttributeMap implements Map<String, List<QuestionAttribute>> {
 	}
 
 	@Override
-	public Set entrySet() {
+	public Set<Map.Entry<String, List<QuestionAttribute>>> entrySet() {
 		return attrs.entrySet();
 	}
 

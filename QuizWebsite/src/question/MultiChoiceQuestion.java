@@ -42,7 +42,7 @@ public class MultiChoiceQuestion extends Question {
 	
 	public String getPrompt(){
 		QuestionAttribute prompt = attributes.getFirst(Question.QUESTION_ATTRIBUTE.PROMPT);
-		return prompt.getValue();
+		return prompt.getAttrValue();
 	}
 	
 	public boolean checkAnswer(String answer){

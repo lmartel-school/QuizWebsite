@@ -6,10 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.junit.Test;
 
+import question.AttributeMap;
 import question.Question;
+import question.QuestionAttribute;
 import quiz.MyDB;
 
 public class QuestionTests {
@@ -22,7 +25,7 @@ public class QuestionTests {
 		try {
 			Connection conn = MyDB.getConnection();
 			Statement stmt = conn.createStatement();      
-			String query = "SELECT * from Questions;"; 
+			String query = "SELECT * from Question;"; 
 			ResultSet rs = stmt.executeQuery(query);     
 			while (rs.next()) {
 				String[] attrs = new String[NUM_COLUMNS];
@@ -37,7 +40,11 @@ public class QuestionTests {
 			e.printStackTrace();
 		}
 		for(int i = 0; i < questions.size(); i++){
-			System.out.println("question " + i + ": quiz_id=" + questions.get(i).getQuizID() + ", question_number=" + questions.get(i).getQuestionNumber() + ", question_type=" + questions.get(i).getType());
+			System.out.println("question " + (i+1) + ": quiz_id=" + questions.get(i).getQuizID() + ", question_number=" + questions.get(i).getQuestionNumber() + ", question_type=" + questions.get(i).getType());
+			AttributeMap attrs = questions.get(i).getAttrs();
+			for(QuestionAttribute a : attrs.getAll()){
+				System.out.println("has attribute with question_id=" + a.getQuestion_id() + ", attr_type=" + a.getAttrType() + ", attr_value=" + a.getAttrValue());
+			}
 		}
 	}
 }

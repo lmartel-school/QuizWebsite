@@ -21,7 +21,7 @@ public class AnswerChecker {
 	}
 	
 	public static boolean check(String input, QuestionAttribute correct){
-		return check(input, correct.getValue());
+		return check(input, correct.getAttrValue());
 	}
 	
 	public static boolean check(String input, List<QuestionAttribute> correctAnswers){
