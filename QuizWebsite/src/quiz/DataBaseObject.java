@@ -60,5 +60,9 @@ public abstract class DataBaseObject {
 		}
 		return row;
 	}
+	
+	public int getID() {
+		return dbID;
+	}
 
 }

@@ -22,10 +22,10 @@
 	
 	
 	out.println("<h3>Your Recently Taken Quizzes</h3>");
-	List<Quiz> recents = (List<Quiz>) request.getAttribute("userRecent");
+	List<QuizResult> recents = (List<QuizResult>) request.getAttribute("userRecent");
 	
 	//for (int i = 0; i < recents.size(); i++) {
-	//	out.println(recents.get(i).getName());
+		//out.println("THIS IS RESULT" + i);
 	//}
 	%>
 

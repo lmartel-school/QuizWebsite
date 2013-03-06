@@ -159,7 +159,7 @@ public class LoginServlet extends HttpServlet {
 	}
 	
 	private void getUserRecentQuizzes(HttpServletRequest request, Connection conn, User user) {
-		List<Quiz> recents = new ArrayList<Quiz>();
+		List<QuizResult> recents = new ArrayList<QuizResult>();
 		try {
 			Statement stmt = conn.createStatement();
 			String query = "SELECT * FROM Quiz_Result WHERE username='" + user.getName() + 
@@ -169,7 +169,7 @@ public class LoginServlet extends HttpServlet {
 				int count = 0;
 				while (rs.next() && count < QuizConstants.N_TOP_RATED) {
 					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
-					Quiz quiz = new Quiz(attrs, conn);
+					QuizResult quiz = new QuizResult(attrs, conn);
 					recents.add(quiz);
 					count++;
 				}
@@ -224,7 +224,7 @@ public class LoginServlet extends HttpServlet {
 					
 					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
 					Quiz quiz = new Quiz(attrs, conn);
-					activities.add(quiz);
+					//activities.add(quiz);
 					count++;
 				}
 			}
