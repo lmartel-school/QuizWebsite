@@ -9,7 +9,6 @@ public class MultiChoiceQuestion extends Question {
 
 	protected MultiChoiceQuestion(String[] attrs, Connection conn) {
 		super(attrs, conn);
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**
@@ -41,16 +40,20 @@ public class MultiChoiceQuestion extends Question {
 		return choices;
 	}
 	
-	private List<QuestionAttribute> getCorrectChoices(){
-		return attributes.get(Question.QUESTION_ATTRIBUTE.CORRECT);
+	public String getPrompt(){
+		QuestionAttribute prompt = attributes.getFirst(Question.QUESTION_ATTRIBUTE.PROMPT);
+		return prompt.getAttrValue();
 	}
 	
+	public boolean checkAnswer(String answer){
+		 return AnswerChecker.check(answer, getCorrectChoices());
+	}
+	 
+	private List<QuestionAttribute> getCorrectChoices(){
+			return attributes.get(Question.QUESTION_ATTRIBUTE.CORRECT);
+	}
+		
 	private List<QuestionAttribute> getWrongChoices(){
 		return attributes.get(Question.QUESTION_ATTRIBUTE.WRONG);
 	}
-	
-	 public boolean checkAnswer(String answer){
-		 return AnswerChecker.check(answer, getCorrectChoices());
-	 }
-	
 }

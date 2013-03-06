@@ -16,5 +16,5 @@
 
 # Ignore eclipse config and build-related files
 .org.eclipse.*
-/QuizWebsite/build
-/QuizWebsite/.classpath
+*.class
+*.classpath
