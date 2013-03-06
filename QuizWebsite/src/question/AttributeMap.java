@@ -70,6 +70,10 @@ public class AttributeMap implements Map<String, List<QuestionAttribute>> {
 	 * @param type
 	 * @return
 	 */
+	public QuestionAttribute getFirst(Question.QUESTION_ATTRIBUTE type){
+		return getFirst(type.toString());
+	}
+	
 	public QuestionAttribute getFirst(String type){
 		List<QuestionAttribute> values = this.get(type);
 		if(values != null && values.size() > 0){
