@@ -9,4 +9,10 @@ public class FillInQuestion extends Question {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String render() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

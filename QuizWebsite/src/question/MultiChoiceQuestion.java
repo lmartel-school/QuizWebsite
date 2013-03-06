@@ -56,4 +56,15 @@ public class MultiChoiceQuestion extends Question {
 	private List<QuestionAttribute> getWrongChoices(){
 		return attributes.get(Question.QUESTION_ATTRIBUTE.WRONG);
 	}
+
+	@Override
+	public String render() {
+		String HTML = "";
+		HTML += "<p>" + getPrompt() + "</p><br>" + '\n';
+		for(String choice : getChoices()){
+			HTML += "<input type=\"radio\" name=\"answer\" value=\"" + choice + "\">" + choice + "<br>" + '\n';
+		}
+		HTML += "input type=\"submit\" value=\"Submit\"" + '\n';
+		return HTML;
+	}
 }

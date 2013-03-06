@@ -134,6 +134,13 @@ public abstract class Question extends DataBaseObject{
 		}
 		
 	}
+	
+	/**
+	 * This renders the question into HTML. Creates form elements assuming that render()
+	 * is called from within a <form> tag. Slightly janky, but you don't know my life
+	 * @return
+	 */
+	public abstract String render();
 
 	public int getQuizID() {
 		return quizID;
