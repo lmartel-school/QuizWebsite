@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import quiz.*;
-import java.util.*;
 
 /**
  * Servlet implementation class MessageServlet
@@ -28,73 +26,56 @@ public class MessageServlet extends HttpServlet {
      */
     public MessageServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
+		
 		Connection conn = (Connection) getServletContext().getAttribute("database");
-
+		int messageid =  Integer.parseInt(request.getParameter("messageid"));
+		
 		try {
-			Statement stmt = conn.createStatement();
-
-			User user = (User) request.getSession().getAttribute("user");
-			String query = "SELECT * FROM Message WHERE recipient='" + user.getName() + "';";
-			ResultSet rs = stmt.executeQuery(query);
 			
-			List<Message> messages = new ArrayList<Message>();
+			Statement next = conn.createStatement();
+			String join1 = "SELECT * FROM Message inner join Friend_Request on Message.id=Friend_Request.id WHERE Message.id=" + messageid + ";";
+			Statement chal = conn.createStatement();
+			String join2 = "SELECT * FROM Message inner join Challenge WHERE Message.id=" + messageid + ";";
+			Statement noteStmt = conn.createStatement();
+			String join3 = "SELECT * FROM Message inner join Note where Message.id=" + messageid + ";";
 			
-			while (rs.next()) {
-				int id = rs.getInt("id");
-				
-				Statement next = conn.createStatement();
-				String join = "SELECT * FROM Message natural join Challenge natural join Friend_Request natural join Note WHERE id=" + id + ";";
-				ResultSet result = next.executeQuery(join);
-				
-				//this is a bit of a cheat: max size if it's a challenge
-				
-				while (result.next()) {
-					String[] attrs = new String[5];
-					attrs[0] = result.getString("id");
-					attrs[1] = result.getString("sender");
-					attrs[2] = result.getString("recipient");
-					attrs[3] = result.getString("beenRead");
+			ResultSet result = next.executeQuery(join1);
+			ResultSet resultChal = chal.executeQuery(join2);
+			ResultSet resultNote = noteStmt.executeQuery(join3);
+			
+			//this is a bit of a cheat: max size if it's a challenge
+			String[] attrs = new String[5];
+			if (result.next()) {
+				MessageQueries.generalMessage(attrs, result);
+				String acceptance = result.getString("isAccepted");
+				attrs[4] = acceptance;
+				request.setAttribute("friend", new FriendRequest(attrs, conn));
+			} else if (resultChal.next()) {
+				MessageQueries.generalMessage(attrs, resultChal);
+				String challenge = resultChal.getString("result_id");
+				attrs[4] = challenge;
+				request.setAttribute("challenge", new Challenge(attrs, conn));
+			} else if (resultNote.next()){
+				MessageQueries.generalMessage(attrs, resultNote);
+				String note = resultNote.getString("msg");
+				attrs[4] = note;
+				request.setAttribute("note", new Note(attrs, conn));
 					
-					String note = result.getString("msg");
-					String challenge = result.getString("message_id");
-					if (note != null) {
-						attrs[4] = note;
-						messages.add(new Note(attrs, conn));
-						
-					} else if (challenge != null) {
-						attrs[4] = challenge;
-						messages.add(new Challenge(attrs, conn));
-						
-					} else {
-						String acceptance = result.getString("isAccepted");
-						attrs[4] = acceptance;
-						if (acceptance.equals("false"))
-							messages.add(new FriendRequest(attrs, conn));
-					}
-				}
-				
 			}
-//			Collections.sort(messages, new Comparator<Message>() {
-//				public int compare(Message one, Message two) {
-//					return two.getID()-one.getID();
-//				}
-//			});
-			request.setAttribute("messages", messages);
-			RequestDispatcher dispatch = request.getRequestDispatcher("messages.jsp");
-			dispatch.forward(request, response);
-
-
+			
+			
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
 	/**

@@ -10,10 +10,12 @@
 <body>
 	<%
 	List<Message> messages = (List<Message>) request.getAttribute("messages");	
-	//for (int i = 0; i < messages.size(); i++) {
-		//messages.get(i).getHTMLSummary();
+	for (int i = 0; i < messages.size(); i++) {
+		Message message = messages.get(i);
+		//message.getHTMLSummary();
+		out.println("<a href=\"MessageServlet?messageid=" + message.getID() + "\">View Message Details</a>");
 		
-	//}
+	}
 	
 	%>
 
