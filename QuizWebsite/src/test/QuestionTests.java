@@ -54,6 +54,10 @@ public class QuestionTests {
 				System.out.println("Not multi choice :(");
 				break;
 			}
+			System.out.println("End HTML");
 		}
+		
+		//TODO: test rendering, fix the "eclipse executes wrong code" bug
+		//Theory: if code has errors, it runs last working build
 	}
 }
