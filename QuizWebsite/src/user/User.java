@@ -1,15 +1,15 @@
-package quiz;
+package user;
 
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import quiz.DataBaseObject;
+import database.DataBaseObject;
+
 
 
 public class User extends DataBaseObject {
-	public static final int NUM_COLUMNS = 4;
 	
 	private String name;
 	private String hashedPassword;

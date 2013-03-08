@@ -13,8 +13,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import quiz.PasswordHash;
-import quiz.User;
+import quiz.*;
+import user.Activity;
+import user.PasswordHash;
+import user.User;
+
+import java.util.*;
 
 /**
  * Servlet implementation class NewAccountServlet
@@ -64,6 +68,12 @@ public class NewAccountServlet extends HttpServlet {
 				
 				request.getSession().setAttribute("user", user);
 				request.setAttribute("unreadMsg", 0);
+				HomePageQueries.getPopQuizzes(request, conn);
+				HomePageQueries.getRecentQuizzes(request, conn);
+				
+				request.setAttribute("authored", new ArrayList<Quiz>());
+				request.setAttribute("userRecent", new ArrayList<QuizResult>());
+				request.setAttribute("activities", new ArrayList<Activity>());
 				
 				dispatch = request.getRequestDispatcher("user_home.jsp");
 			}

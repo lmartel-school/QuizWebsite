@@ -1,8 +1,11 @@
 package question;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import quiz.DataBaseObject;
+import database.DataBaseObject;
+
 
 public class QuestionAttribute extends DataBaseObject {
 
@@ -22,6 +25,10 @@ public class QuestionAttribute extends DataBaseObject {
 		return attrValue;
 	}
 	
+	public void setValue(String value) {
+		attrValue = value;
+	}
+	
 	/**
 	 * We're (at least, for now) forbidding loading these from the database individually.
 	 * The Question class is responsible for creating its Attribute objects on construction.
@@ -33,7 +40,24 @@ public class QuestionAttribute extends DataBaseObject {
 	
 	@Override
 	public void saveToDataBase(Connection conn) {
-		// TODO Auto-generated method stub
+		try {
+			Statement stmt = conn.createStatement();
+			String query;
+			if (dbID == -1) {
+				generateID(conn, "Question_Attribute");
+				query = "Insert into Question_Attribute VALUES (" + dbID + ", " + question_id + ", '" + 
+					attrType + "', '" + attrValue + "');";
+				
+			} else {
+				query = "UPDATE Question_Attribute set attr_value='" + attrValue + "' WHERE id=" + dbID + ";";
+			}
+			
+			stmt.executeUpdate(query);
+			stmt.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 

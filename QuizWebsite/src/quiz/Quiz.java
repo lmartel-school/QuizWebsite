@@ -6,11 +6,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
+import database.DataBaseObject;
+
 import question.*;
 
 public class Quiz extends DataBaseObject {
 	
-	private static final int NUM_COLUMNS = 6;
 	
 	private String name;
 	private boolean inOrder;
@@ -50,11 +51,11 @@ public class Quiz extends DataBaseObject {
 		List<Question> questions = new ArrayList<Question>();
 		try {
 			Statement stmt = conn.createStatement();      
-			String query = "SELECT * from Quiz WHERE quiz_id=" + dbID + ";";     
+			String query = "SELECT * from Question WHERE id=" + dbID + ";";     
 			
 			ResultSet rs = stmt.executeQuery(query);     
 			while (rs.next()) {
-				String[] attrs = new String[NUM_COLUMNS];
+				String[] attrs = new String[QuizConstants.QUESTION_N_COLS];
 				for (int i = 0; i < attrs.length; i++) {
 					attrs[i] = rs.getString(i + 1);
 				}

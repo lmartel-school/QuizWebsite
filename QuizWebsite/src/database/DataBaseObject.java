@@ -1,4 +1,4 @@
-package quiz;
+package database;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -47,6 +47,22 @@ public abstract class DataBaseObject {
 		} catch (SQLException e) {     
 			e.printStackTrace();
 		}
+	}
+	
+	public static String[] getRow(ResultSet rs, int numCol) {
+		String[] row = new String[numCol];
+		try {
+			for (int i = 0; i < row.length; i++) {
+				row[i] = rs.getString(i + 1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return row;
+	}
+	
+	public int getID() {
+		return dbID;
 	}
 
 }

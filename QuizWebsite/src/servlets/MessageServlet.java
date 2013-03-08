@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import quiz.*;
-import java.util.*;
+import user.Challenge;
+import user.FriendRequest;
+import user.Note;
 
 /**
  * Servlet implementation class MessageServlet
@@ -35,66 +37,56 @@ public class MessageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
+		
 		Connection conn = (Connection) getServletContext().getAttribute("database");
-
+		int messageid =  Integer.parseInt(request.getParameter("messageid"));
+		
 		try {
-			Statement stmt = conn.createStatement();
-
-			User user = (User) request.getSession().getAttribute("user");
-			String query = "SELECT * FROM Message WHERE recipient='" + user.getName() + "';";
-			ResultSet rs = stmt.executeQuery(query);
 			
-			List<Challenge> challenges = new ArrayList<Challenge>();
-			List<FriendRequest> requests = new ArrayList<FriendRequest>();
-			List<Note> notes = new ArrayList<Note>();
+			Statement next = conn.createStatement();
+			String join1 = "SELECT * FROM Message inner join Friend_Request on Message.id=Friend_Request.id WHERE Message.id=" + messageid + ";";
+			Statement chal = conn.createStatement();
+			String join2 = "SELECT * FROM Message inner join Challenge WHERE Message.id=" + messageid + ";";
+			Statement noteStmt = conn.createStatement();
+			String join3 = "SELECT * FROM Message inner join Note where Message.id=" + messageid + ";";
 			
-			while (rs.next()) {
-				int id = rs.getInt("id");
-				
-				Statement next = conn.createStatement();
-				String join = "SELECT * FROM Message natural join Challenge natural join Friend_Request natural join Note WHERE id=" + id + ";";
-				ResultSet result = next.executeQuery(join);
-				
-				//this is a bit of a cheat: max size if it's a challenge
-				
-				while (result.next()) {
-					String[] attrs = new String[7];
-					attrs[0] = result.getString("id");
-					attrs[1] = result.getString("sender");
-					attrs[2] = result.getString("recipient");
-					attrs[3] = result.getString("beenRead");
+			ResultSet result = next.executeQuery(join1);
+			ResultSet resultChal = chal.executeQuery(join2);
+			ResultSet resultNote = noteStmt.executeQuery(join3);
+			
+			//this is a bit of a cheat: max size if it's a challenge
+			String[] attrs = new String[5];
+			if (result.next()) {
+				MessageQueries.generalMessage(attrs, result);
+				String acceptance = result.getString("isAccepted");
+				attrs[4] = acceptance;
+				FriendRequest friend = new FriendRequest(attrs, conn);
+				friend.setBeenRead();
+				request.setAttribute("friend", friend);
+			} else if (resultChal.next()) {
+				MessageQueries.generalMessage(attrs, resultChal);
+				String challenge = resultChal.getString("result_id");
+				attrs[4] = challenge;
+				Challenge chall = new Challenge(attrs, conn);
+				chall.setBeenRead();
+				request.setAttribute("challenge", chall);
+			} else if (resultNote.next()){
+				MessageQueries.generalMessage(attrs, resultNote);
+				String note = resultNote.getString("msg");
+				attrs[4] = note;
+				Note msg = new Note(attrs, conn);
+				msg.setBeenRead();
+				request.setAttribute("note", msg);
 					
-					String note = result.getString("msg");
-					String challenge = result.getString("message_id");
-					if (note != null) {
-						attrs[4] = note;
-						notes.add(new Note(attrs, conn));
-						
-					} else if (challenge != null) {
-						attrs[4] = challenge;
-						attrs[5] = result.getString("quiz_id");
-						attrs[6] = result.getString("result_id");
-						challenges.add(new Challenge(attrs, conn));
-						
-					} else {
-						attrs[4] = result.getString("isAccepted");
-						requests.add(new FriendRequest(attrs, conn));
-					}
-				}
-				
 			}
-			request.setAttribute("notes", notes);
-			request.setAttribute("requests", requests);
-			request.setAttribute("challenges", challenges);
-			RequestDispatcher dispatch = request.getRequestDispatcher("messages.jsp");
+			RequestDispatcher dispatch = request.getRequestDispatcher("message.jsp");
 			dispatch.forward(request, response);
-
-
+			
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
 	/**
