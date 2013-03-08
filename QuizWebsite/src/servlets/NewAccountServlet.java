@@ -13,8 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import quiz.PasswordHash;
 import quiz.*;
+import user.Activity;
+import user.PasswordHash;
+import user.User;
+
 import java.util.*;
 
 /**

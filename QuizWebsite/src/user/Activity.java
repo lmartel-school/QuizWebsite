@@ -1,13 +1,16 @@
-package quiz;
+package user;
+
 
 public class Activity {
 	
 	private User user;
 	private String message;
+	private int quizId;
 	
-	public Activity(User user, String text) {
+	public Activity(User user, String text, int quiz) {
 		this.user = user;
 		message = text;
+		quizId = quiz;
 	}
 
 	
@@ -17,5 +20,9 @@ public class Activity {
 	
 	public String getActivity() {
 		return message;
+	}
+	
+	public int getQuizID() {
+		return quizId;
 	}
 }

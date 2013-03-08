@@ -6,7 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import quiz.DataBaseObject;
+import database.DataBaseObject;
+
 
 public abstract class Question extends DataBaseObject{
 	

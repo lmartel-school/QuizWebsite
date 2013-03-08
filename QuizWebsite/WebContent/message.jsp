@@ -30,7 +30,7 @@
 		
 		</form>
 		<br><br>
-		<form action="RejectFriendServlet" method="post">
+		<form action="DeclineFriendServlet" method="post">
 		
 		<% out.println("<input name=requestID type=hidden value=" + req.getID() + " />"); %>
 		<input type="submit" value="Reject Friend Request"/>

@@ -9,10 +9,11 @@ import java.util.List;
 
 import org.junit.Test;
 
+import database.MyDB;
+
 import question.AttributeMap;
 import question.Question;
 import question.QuestionAttribute;
-import quiz.MyDB;
 
 public class QuestionTests {
 	

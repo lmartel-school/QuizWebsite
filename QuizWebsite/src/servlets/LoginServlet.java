@@ -8,7 +8,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import database.DataBaseObject;
 import quiz.*;
+import user.Activity;
+import user.PasswordHash;
+import user.User;
+
 import java.util.*;
 
 /**
@@ -151,13 +157,21 @@ public class LoginServlet extends HttpServlet {
 					
 					String username = rs.getString("sender").equals(user.getName()) ? rs.getString("recipient") : rs.getString("sender");
 					User friend = getFriend(conn, username);
-					
-					
-					
-					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
-					Quiz quiz = new Quiz(attrs, conn);
-					
-					count++;
+					if (friend != null) {
+						String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
+						Quiz quiz = new Quiz(attrs, conn);
+						
+						String msg = friend.getName();
+						if (quiz.getAuthor().equals(friend.getName())) {
+							msg += " recently authored " + quiz.getName();
+						} else {
+							msg += " recently took" + quiz.getName();
+						}
+						
+						Activity act = new Activity(friend, msg, quiz.getID());
+						activities.add(act);
+						count++;
+					}
 				}
 			}
 			request.setAttribute("activities", activities);
@@ -168,6 +182,17 @@ public class LoginServlet extends HttpServlet {
 	}
 	
 	private User getFriend(Connection conn, String username) {
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			String query = "SELECT * FROM User WHERE username='" + username + "';";
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs.next()) {
+				return new User(DataBaseObject.getRow(rs, QuizConstants.USER_N_COLUMNS), conn);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
