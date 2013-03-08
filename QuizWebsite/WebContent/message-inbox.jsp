@@ -9,14 +9,18 @@
 </head>
 <body>
 	<%
-	List<Message> messages = (List<Message>) request.getAttribute("messages");	
+	List<Message> messages = (List<Message>) request.getAttribute("messages");
+	if (messages.isEmpty()) {
+		out.println("<h1> You have no messages in your inbox </h1>");
+	}
 	for (int i = 0; i < messages.size(); i++) {
 		Message message = messages.get(i);
 		out.println("<a href=\"MessageServlet?messageid=" + message.getID() + "\">"
 				+message.getHTMLSummary()+"</a>");
 		out.println("<hr/>");
-
 	}
+	
+	out.println("<a href=\"compose_message.jsp\"> <h2> Compose a new message </h2> </a>");
 	
 	%>
 

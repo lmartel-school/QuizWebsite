@@ -42,7 +42,7 @@ public class QuizResultServlet extends HttpServlet {
 		
 		try {
 			Statement stmt = conn.createStatement();
-			String query = "SELECT * FROM Quiz_Result WHERE id='" + resultID +";";
+			String query = "SELECT * FROM Quiz_Result WHERE id='" + resultID +"';";
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs.next()) {
 				String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_RESULT_N_COLS);

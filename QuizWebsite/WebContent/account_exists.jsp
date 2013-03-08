@@ -15,7 +15,7 @@
 	<form action="NewAccountServlet" method="post">
 		
 		<p>User Name: <input type="text" name="username" />
-		<p>Password: <input type="text" name="password" />
+		<p>Password: <input type="password" name="password" />
 		<input type="submit" /></p>
 		
 	</form>

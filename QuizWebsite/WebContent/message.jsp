@@ -39,7 +39,7 @@
 	<%	
 	
 	} else if (note != null) {
-		out.println("<h2>Your note:</h2>");
+		out.println("<h2>Your note from " + note.getSender() + "</h2>");
 		out.println(note.getText());
 	}
 	

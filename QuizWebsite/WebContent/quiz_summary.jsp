@@ -15,7 +15,7 @@
 	//out.println("<h1>" + quiz.getName() + "</h1>");
 	
 	//out.println(quiz.getAuthor());
-	out.println("<br>");
+	out.println("<h1> TODO: this page (quiz_summary.jsp)</h1>");
 	
 	
 	//out.println(quiz.getDescription());

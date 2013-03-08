@@ -4,9 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Quiz Results</title>
+<title>New Message</title>
 </head>
 <body>
 <h1> TODO: Write this page.</h1>
+<p> Please put TODO notes in unwritten jsps, so we 
+can tell the difference between no-response and an empty page.
+</p>
 </body>
 </html>

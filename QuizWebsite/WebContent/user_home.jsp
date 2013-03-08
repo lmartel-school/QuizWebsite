@@ -24,12 +24,14 @@
 	
 	out.println("<h3>Recently Made Quizzes</h3>");
 	List<Quiz> recents = (List<Quiz>) request.getAttribute("recents");
-	
-	out.println("<h3>Popular Quizzes</h3>");
 	for (int i = 0; i < recents.size(); i++) {
 		Quiz quiz = recents.get(i);
 		out.println("<a href=\"QuizServlet?id=" + quiz.getID() + "\">" + quiz.getName() + "</a>");
 	}
+	
+	
+	out.println("<h3>Popular Quizzes</h3>");
+	out.println("<p> Need to sort quizzes by number of QuizResult fields referring to it.</p>");
 	
 	out.println("<h3>Your Recently Taken Quizzes</h3>");
 	List<QuizResult> usrRecents = (List<QuizResult>) request.getAttribute("userRecent");
