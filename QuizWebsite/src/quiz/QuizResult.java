@@ -1,6 +1,11 @@
 package quiz;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import database.DataBaseObject;
 
 public final class QuizResult extends DataBaseObject {
 	
@@ -8,14 +13,14 @@ public final class QuizResult extends DataBaseObject {
 	private int score;
 	private String timeTaken;
 	private String elapsedTime;
-	private int quizID;
+	private Quiz quiz;
 	
-	public QuizResult(String username, int score, String timeTaken, String elapsedTime, int quizID){
+	public QuizResult(String username, int score, String timeTaken, String elapsedTime, Quiz quiz){
 		this.username = username;
 		this.score = score;
 		this.timeTaken = timeTaken;
 		this.elapsedTime = elapsedTime;
-		this.quizID = quizID;
+		this.quiz = quiz;
 	}
 
 	public QuizResult(String[] attrs, Connection conn){
@@ -24,7 +29,7 @@ public final class QuizResult extends DataBaseObject {
 		score = Integer.parseInt(attrs[2]);
 		timeTaken = attrs[3];
 		elapsedTime = attrs[4];
-		quizID = Integer.parseInt(attrs[5]);
+		quiz = getQuiz(Integer.parseInt(attrs[5]), conn);
 	}
 	
 	@Override
@@ -49,10 +54,24 @@ public final class QuizResult extends DataBaseObject {
 		return elapsedTime;
 	}
 
-	public int getQuizID() {
-		return quizID;
+	public Quiz getQuiz() {
+		return quiz;
 	}
 	
+	private Quiz getQuiz(int id, Connection conn) {
+		try {
+			Statement stmt = conn.createStatement();
+			String query = "SELECT * FROM Quiz WHERE id=" + id + ";";
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs.next()) {
+				String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
+				return new Quiz(attrs, conn);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 
 }

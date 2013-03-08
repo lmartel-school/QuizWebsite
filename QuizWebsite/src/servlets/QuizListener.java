@@ -7,7 +7,8 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.*;
 
-import quiz.MyDB;
+import database.MyDB;
+
 
 
 /**

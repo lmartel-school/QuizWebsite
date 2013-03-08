@@ -4,7 +4,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import quiz.DataBaseObject;
+import database.DataBaseObject;
+
 
 public class QuestionAttribute extends DataBaseObject {
 

@@ -6,7 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import quiz.DataBaseObject;
+import database.DataBaseObject;
+
 
 public abstract class Question extends DataBaseObject{
 	
@@ -138,6 +139,13 @@ public abstract class Question extends DataBaseObject{
 		}
 		
 	}
+	
+	/**
+	 * This renders the question into HTML. Creates form elements assuming that render()
+	 * is called from within a <form> tag. Slightly janky, but you don't know my life
+	 * @return
+	 */
+	public abstract String render();
 
 	public int getQuizID() {
 		return quizID;

@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import quiz.DataBaseObject;
+import database.DataBaseObject;
 import quiz.Quiz;
 import quiz.QuizConstants;
 

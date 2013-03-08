@@ -1,9 +1,14 @@
-package quiz;
+package user;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import database.DataBaseObject;
+
+import quiz.QuizConstants;
+import quiz.QuizResult;
 
 
 public class Challenge extends Message {

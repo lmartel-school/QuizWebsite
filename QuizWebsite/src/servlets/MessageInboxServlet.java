@@ -14,6 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import quiz.*;
+import user.Challenge;
+import user.FriendRequest;
+import user.Message;
+import user.Note;
+import user.User;
+
 import java.util.*;
 
 /**

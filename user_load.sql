@@ -11,11 +11,11 @@ create table User (
 
 DROP TABLE if exists Friendship;
 
-create table Friendship (
+/*create table Friendship (
 	id integer unique,
 	req_user text,
 	acc_user text
-);
+); */
 
 DROP TABLE if exists Message;
 
@@ -37,8 +37,6 @@ DROP TABLE if exists Challenge;
 
 create table Challenge (
 	id integer PRIMARY KEY,
-	message_id integer references Message(id),
-	quiz_id integer,
 	result_id integer references Quiz_Result(id);
 );
 

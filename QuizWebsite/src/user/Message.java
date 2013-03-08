@@ -1,8 +1,11 @@
-package quiz;
+package user;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import database.DataBaseObject;
+
 
 public abstract class Message extends DataBaseObject {
 	protected String sender;
@@ -30,6 +33,10 @@ public abstract class Message extends DataBaseObject {
 	
 	public String getRecipient() {
 		return recipient;
+	}
+	
+	public void setBeenRead() {
+		beenRead = true; //can never "unread" something
 	}
 	
 	public void saveToMsg(Connection conn) {

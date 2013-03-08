@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import quiz.*;
+import user.Challenge;
+import user.FriendRequest;
+import user.Note;
 
 /**
  * Servlet implementation class MessageServlet
@@ -56,20 +60,27 @@ public class MessageServlet extends HttpServlet {
 				MessageQueries.generalMessage(attrs, result);
 				String acceptance = result.getString("isAccepted");
 				attrs[4] = acceptance;
-				request.setAttribute("friend", new FriendRequest(attrs, conn));
+				FriendRequest friend = new FriendRequest(attrs, conn);
+				friend.setBeenRead();
+				request.setAttribute("friend", friend);
 			} else if (resultChal.next()) {
 				MessageQueries.generalMessage(attrs, resultChal);
 				String challenge = resultChal.getString("result_id");
 				attrs[4] = challenge;
-				request.setAttribute("challenge", new Challenge(attrs, conn));
+				Challenge chall = new Challenge(attrs, conn);
+				chall.setBeenRead();
+				request.setAttribute("challenge", chall);
 			} else if (resultNote.next()){
 				MessageQueries.generalMessage(attrs, resultNote);
 				String note = resultNote.getString("msg");
 				attrs[4] = note;
-				request.setAttribute("note", new Note(attrs, conn));
+				Note msg = new Note(attrs, conn);
+				msg.setBeenRead();
+				request.setAttribute("note", msg);
 					
 			}
-			
+			RequestDispatcher dispatch = request.getRequestDispatcher("message.jsp");
+			dispatch.forward(request, response);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

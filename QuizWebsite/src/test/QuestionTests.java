@@ -9,10 +9,11 @@ import java.util.List;
 
 import org.junit.Test;
 
+import database.MyDB;
+
 import question.AttributeMap;
 import question.Question;
 import question.QuestionAttribute;
-import quiz.MyDB;
 
 public class QuestionTests {
 	
@@ -41,9 +42,23 @@ public class QuestionTests {
 		for(int i = 0; i < questions.size(); i++){
 			System.out.println("question " + (i+1) + ": quiz_id=" + questions.get(i).getQuizID() + ", question_number=" + questions.get(i).getQuestionNumber() + ", question_type=" + questions.get(i).getType());
 			AttributeMap attrs = questions.get(i).getAttrs();
-			for(QuestionAttribute a : attrs.getAll()){
-				System.out.println("has attribute with question_id=" + a.getQuestion_id() + ", attr_type=" + a.getAttrType() + ", attr_value=" + a.getAttrValue());
+//			for(QuestionAttribute a : attrs.getAll()){
+//				System.out.println("has attribute with question_id=" + a.getQuestion_id() + ", attr_type=" + a.getAttrType() + ", attr_value=" + a.getAttrValue());
+//			}
+			System.out.println("End attributes");
+			switch(questions.get(i).getType()){
+			case MULTI_CHOICE:
+				System.out.println("Question HTML:");
+				System.out.println(questions.get(i).render());
+				break;
+			default:
+				System.out.println("Not multi choice :(");
+				break;
 			}
+			System.out.println("End HTML");
 		}
+		
+		//TODO: test rendering, fix the "eclipse executes wrong code" bug
+		//Theory: if code has errors, it runs last working build
 	}
 }
