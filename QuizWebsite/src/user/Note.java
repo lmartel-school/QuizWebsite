@@ -71,6 +71,11 @@ public class Note extends Message {
 		}
 	}
 	
+	public String getHTMLSummary() {
+		return sender + " says: " + 
+		(text.length() <= 32 ? text : (text.substring(0, 30)+ "..."));
+	}
+	
 	
 
 }

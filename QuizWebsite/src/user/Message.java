@@ -52,5 +52,9 @@ public abstract class Message extends DataBaseObject {
 		}
 	}
 	
+	public String getHTMLSummary() {
+		return "This is the deault message summary. <br/>";
+	}
+	
 
 }

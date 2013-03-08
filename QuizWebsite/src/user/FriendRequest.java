@@ -27,8 +27,9 @@ public class FriendRequest extends Message {
 	/* Friends requests can only be accepted, if one user removes someone from
 	 * thier friend's list then the message will be deleted entirely, and m
 	 */
-	public void acceptRequest() {
+	public void acceptRequest(Connection conn) {
 		isAccepted = true;
+		saveToDataBase(conn);
 	}
 	@Override
 	public void saveToDataBase(Connection conn) {
@@ -42,18 +43,18 @@ public class FriendRequest extends Message {
 	 * This db query assumes that there already exists an 
 	 * entry in the friend request table for this id. PLEASE VERIFY
 	 */
-//	private void getAcceptance(String id, Connection conn) {
-//		try {
-//			Statement stmt = conn.createStatement();      
-//			String query = "SELECT isAccepted from Friend_Request WHERE id=" + id + ";";     
-//			
-//			ResultSet rs = stmt.executeQuery(query);     
-//			isAccepted = rs.getBoolean("isAccepted");	      
-//			   
-//		} catch (SQLException e) {     
-//			e.printStackTrace();
-//		}
-//	}
+	private void getAcceptance(String id, Connection conn) {
+		try {
+			Statement stmt = conn.createStatement();      
+			String query = "SELECT isAccepted from Friend_Request WHERE id=" + id + ";";     
+			
+			ResultSet rs = stmt.executeQuery(query);     
+			isAccepted = rs.getBoolean("isAccepted");	      
+			   
+		} catch (SQLException e) {     
+			e.printStackTrace();
+		}
+	}
 	
 	
 	private void saveToFriends(Connection conn) {
@@ -72,6 +73,10 @@ public class FriendRequest extends Message {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public String getHTMLSummary() {
+		return sender + " wants to be your friend.";
 	}
 
 }

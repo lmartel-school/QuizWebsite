@@ -44,11 +44,11 @@ public class MessageServlet extends HttpServlet {
 		try {
 			
 			Statement next = conn.createStatement();
-			String join1 = "SELECT * FROM Message inner join Friend_Request on Message.id=Friend_Request.id WHERE Message.id=" + messageid + ";";
+			String join1 = "SELECT * FROM Message inner join Friend_Request on Message.id=Friend_Request.id WHERE Message.id='" + messageid + "';";
 			Statement chal = conn.createStatement();
-			String join2 = "SELECT * FROM Message inner join Challenge WHERE Message.id=" + messageid + ";";
+			String join2 = "SELECT * FROM Message inner join Challenge WHERE Message.id='" + messageid + "';";
 			Statement noteStmt = conn.createStatement();
-			String join3 = "SELECT * FROM Message inner join Note where Message.id=" + messageid + ";";
+			String join3 = "SELECT * FROM Message inner join Note where Message.id='" + messageid + "';";
 			
 			ResultSet result = next.executeQuery(join1);
 			ResultSet resultChal = chal.executeQuery(join2);

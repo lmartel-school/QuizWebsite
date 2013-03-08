@@ -57,11 +57,11 @@ public class MessageInboxServlet extends HttpServlet {
 				int id = rs.getInt("id");
 				
 				Statement next = conn.createStatement();
-				String join1 = "SELECT * FROM Message inner join Friend_Request on Message.id=Friend_Request.id WHERE Message.id=" + id + ";";
+				String join1 = "SELECT * FROM Message inner join Friend_Request on Message.id=Friend_Request.id WHERE Message.id='" + id + "';";
 				Statement chal = conn.createStatement();
-				String join2 = "SELECT * FROM Message inner join Challenge WHERE Message.id=" + id + ";";
+				String join2 = "SELECT * FROM Message inner join Challenge WHERE Message.id='" + id + "';";
 				Statement noteStmt = conn.createStatement();
-				String join3 = "SELECT * FROM Message inner join Note where Message.id=" + id + ";";
+				String join3 = "SELECT * FROM Message inner join Note where Message.id='" + id + "';";
 				
 				ResultSet result = next.executeQuery(join1);
 				ResultSet resultChal = chal.executeQuery(join2);
@@ -73,7 +73,7 @@ public class MessageInboxServlet extends HttpServlet {
 					MessageQueries.generalMessage(attrs, result);
 					String acceptance = result.getString("isAccepted");
 					attrs[4] = acceptance;
-					if (acceptance.equals("false"))
+					if (acceptance.equals("0"))
 						messages.add(new FriendRequest(attrs, conn));
 				} else if (resultChal.next()) {
 					MessageQueries.generalMessage(attrs, resultChal);
@@ -89,11 +89,11 @@ public class MessageInboxServlet extends HttpServlet {
 				}
 				
 			}
-//			Collections.sort(messages, new Comparator<Message>() {
-//				public int compare(Message one, Message two) {
-//					return two.getID()-one.getID();
-//				}
-//			});
+			Collections.sort(messages, new Comparator<Message>() {
+				public int compare(Message one, Message two) {
+					return two.getID()-one.getID();
+				}
+			});
 			request.setAttribute("messages", messages);
 			RequestDispatcher dispatch = request.getRequestDispatcher("message-inbox.jsp");
 			dispatch.forward(request, response);

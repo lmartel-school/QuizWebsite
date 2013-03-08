@@ -38,7 +38,7 @@ public class User extends DataBaseObject {
 			String query;
 			if (dbID == -1) {
 				generateID(conn, "User");
-				query = "Insert into User VALUES (" + dbID + "'" + name + "', '" + hashedPassword + "', " + isAdmin + ");";
+				query = "Insert into User VALUES (" + dbID + ",'" + name + "', '" + hashedPassword + "', " + isAdmin + ");";
 			} else {
 				query = "UPDATE User set isAdmin=" + isAdmin + "WHERE id=" + dbID + ";";
 			}

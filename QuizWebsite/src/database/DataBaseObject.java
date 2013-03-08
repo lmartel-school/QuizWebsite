@@ -40,8 +40,9 @@ public abstract class DataBaseObject {
 	public void generateID(Connection conn, String table) {
 		try {
 			Statement stmt = conn.createStatement();      
-			String query = "SELECT max(id) from " + table + ";";     
-			ResultSet rs = stmt.executeQuery(query);     
+			String query = "SELECT MAX(id) from " + table + ";";     
+			ResultSet rs = stmt.executeQuery(query);   
+			rs.next();
 			int id = rs.getInt(1); //needs to be checked      
 			dbID = id + 1;
 		} catch (SQLException e) {     

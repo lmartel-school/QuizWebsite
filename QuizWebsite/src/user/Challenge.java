@@ -66,4 +66,8 @@ public class Challenge extends Message {
 			e.printStackTrace();
 		}
 	}
+	
+	public String getHTMLSummary() {
+		return sender + " has challenged you to take: " + this.result.getQuiz().getName();
+	}
 }
