@@ -6,27 +6,41 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import quiz.Quiz;
+
 import database.DataBaseObject;
 
 
 public abstract class Question extends DataBaseObject{
-	
+	//if we're pulling from the database, we just store the parent's
+	//database ID to avoid having to query for it.
 	private int quizID;
+	//if we're making a new database object, we pass a pointer to 
+	//the parent to enable lazy-setting the database ID
+	private Quiz parentQuiz;
+	//NOTE: access quizID only through getQuizID(), because sometimes you want quizID and sometimes you want parentQuiz
+	
 	private int questionNumber;
 	private QUESTION_TYPE type;
 	protected AttributeMap attributes;
 	
 	
 	public static enum QUESTION_TYPE {
-		MULTI_CHOICE,
-		FILL_IN,
-		PICTURE;
+		MULTI_CHOICE(0),
+		FILL_IN(1),
+		PICTURE(2);
+		
+		private QUESTION_TYPE(final int value){
+			this.value = value;
+		}
+		public final int value;
 	}
 	
 	public static enum QUESTION_ATTRIBUTE {
 		CORRECT("correct"),
 		WRONG("wrong"),
-		PROMPT("prompt");
+		PROMPT("prompt"),
+		PICTURE_URL("picture_url");
 		
 		private QUESTION_ATTRIBUTE(final String text) {
 			this.text = text;
@@ -72,6 +86,18 @@ public abstract class Question extends DataBaseObject{
 		getAttributes(conn);
 		
 	}
+	/**
+	 * "New" constructor for questions not yet in database
+	 * @param quizID
+	 * @param questionNumber
+	 */
+	protected Question(Quiz parentQuiz, int questionNumber, QUESTION_TYPE type){
+		super();
+		this.parentQuiz = parentQuiz;
+		this.questionNumber = questionNumber;
+		this.type = type;
+		attributes = new AttributeMap();
+	}
 	
 	private void getAttributes(Connection conn) {
 		try {
@@ -83,7 +109,7 @@ public abstract class Question extends DataBaseObject{
 			while (rs.next()) {
 				String attrType = rs.getString("attr_type");
 				String attrValue = rs.getString("attr_value");
-				attributes.put(attrType, new QuestionAttribute(dbID, attrType, attrValue));
+				attributes.put(attrType, new QuestionAttribute(this, attrType, attrValue));
 			}
 						
 		} catch (SQLException e) {
@@ -108,19 +134,14 @@ public abstract class Question extends DataBaseObject{
 	@Override
 	public void saveToDataBase(Connection conn) {
 		List<QuestionAttribute> allAttrs = attributes.getAll();
-		//TODO: save all modified attributes to attributes table somehow.
-		//Possible simple approach: update (if ID found) / insert (if ID not found) all attributes
-			//in map on save
-		//Possible more complex approach: maintain Map of "dirty" (changed) attributes,
-			//update those and clear the map on save
 		
 		try {
 			Statement stmt = conn.createStatement();
 			String query;
 			if (dbID == -1) {
 				generateID(conn, "Question");
-				query = "Insert into Question VALUES (" + dbID + ", " + quizID + ", " + 
-					questionNumber + ", " + type + ");";
+				query = "Insert into Question VALUES (" + dbID + ", " + getQuizID() + ", " + 
+					questionNumber + ", " + type.value + ");";
 				
 			} else {
 				query = "UPDATE Question set question_number=" + questionNumber + ", question_type=" + 
@@ -141,14 +162,23 @@ public abstract class Question extends DataBaseObject{
 	}
 	
 	/**
-	 * This renders the question into HTML. Creates form elements assuming that render()
+	 * These render the question into HTML: one HTML rendering for taking a quiz,
+	 * and one for creating a quiz. Creates form elements assuming that render()
 	 * is called from within a <form> tag. Slightly janky, but you don't know my life
 	 * @return
 	 */
-	public abstract String render();
+	public abstract String renderQuizMode();
+	public abstract String renderCreateMode();
+	
+	/**
+	 * Questions must be able to check whether an answer is correct or not.
+	 * @param answer
+	 * @return
+	 */
+	public abstract boolean checkAnswer(String answer);
 
 	public int getQuizID() {
-		return quizID;
+		return parentQuiz != null ? parentQuiz.getID() : quizID;
 	}
 
 	public int getQuestionNumber() {

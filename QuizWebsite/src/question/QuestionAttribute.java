@@ -9,13 +9,13 @@ import database.DataBaseObject;
 
 public class QuestionAttribute extends DataBaseObject {
 
-	private int question_id;
+	private Question parentQuestion;
 	private String attrType;
 	private String attrValue;
 	
-	public QuestionAttribute(int question, String type, String value){
+	public QuestionAttribute(Question parentQuestion, String type, String value){
 		super();
-		question_id = question;
+		this.parentQuestion = parentQuestion;
 		attrType = type;
 		attrValue = value;
 	}
@@ -45,7 +45,7 @@ public class QuestionAttribute extends DataBaseObject {
 			String query;
 			if (dbID == -1) {
 				generateID(conn, "Question_Attribute");
-				query = "Insert into Question_Attribute VALUES (" + dbID + ", " + question_id + ", '" + 
+				query = "Insert into Question_Attribute VALUES (" + dbID + ", " + parentQuestion.getID() + ", '" + 
 					attrType + "', '" + attrValue + "');";
 				
 			} else {
@@ -61,15 +61,15 @@ public class QuestionAttribute extends DataBaseObject {
 		
 	}
 
-	public int getQuestion_id() {
-		return question_id;
-	}
-
 	public String getAttrType() {
 		return attrType;
 	}
 
 	public String getAttrValue() {
 		return attrValue;
+	}
+
+	public int getQuestion_id() {
+		return parentQuestion.getID();
 	}
 }
