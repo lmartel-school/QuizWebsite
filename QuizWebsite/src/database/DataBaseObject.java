@@ -25,6 +25,7 @@ public abstract class DataBaseObject {
 	public DataBaseObject(){
 
 		dbID = -1;
+
 	}
 	
 	
