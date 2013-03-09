@@ -25,14 +25,14 @@
 		
 		<form action="AcceptFriendServlet" method="post">
 		
-		<% out.println("<input name=requestID type=hidden value=" + req.getID() + " />"); %>
+		<% out.println("<input name=requestID type=hidden value=true/>"); %>
 		<input type="submit" value="Accept Friend Request"/>
 		
 		</form>
 		<br><br>
 		<form action="DeclineFriendServlet" method="post">
 		
-		<% out.println("<input name=requestID type=hidden value=" + req.getID() + " />"); %>
+		<% out.println("<input name=requestID type=hidden value=false/>"); %>
 		<input type="submit" value="Reject Friend Request"/>
 		
 		</form>

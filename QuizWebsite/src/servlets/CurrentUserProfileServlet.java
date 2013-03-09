@@ -42,19 +42,7 @@ public class CurrentUserProfileServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Connection conn = (Connection) getServletContext().getAttribute("database");
-		
-		RequestDispatcher dispatch;
-		User user = (User) request.getSession().getAttribute("user");
-		getUserRecentQuizzes(request, conn, user);
-		getMessages(request, conn, user);
-		HomePageQueries.getPopQuizzes(request, conn);
-		HomePageQueries.getRecentQuizzes(request, conn);
-		getAuthoring(request, conn, user);
-		getFriendActivity(request, conn, user);
-
-		dispatch = request.getRequestDispatcher("user_home.jsp");
-		dispatch.forward(request, response);
+		doPost(request, response);
 
 	}
 	

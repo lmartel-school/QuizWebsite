@@ -31,6 +31,12 @@ public class FriendRequest extends Message {
 		isAccepted = true;
 		saveToDataBase(conn);
 	}
+	
+	public void rejectRequest(Connection conn) {
+		
+	}
+	
+	
 	@Override
 	public void saveToDataBase(Connection conn) {
 		saveToFriends(conn);
