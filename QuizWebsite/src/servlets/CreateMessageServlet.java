@@ -1,28 +1,23 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.Connection;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import user.*;
-
 /**
- * Servlet implementation class FriendRequestResponse
+ * Servlet implementation class CreateMessageServlet
  */
-@WebServlet("/FriendRequestResponse")
-public class FriendRequestResponse extends HttpServlet {
+@WebServlet("/CreateMessageServlet")
+public class CreateMessageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FriendRequestResponse() {
+    public CreateMessageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,16 +33,7 @@ public class FriendRequestResponse extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Connection conn = (Connection) getServletContext().getAttribute("database");
-		String confirmed = (request.getParameter("confirmation"));
-		FriendRequest req = (FriendRequest) request.getSession().getAttribute("friend");
-		if (confirmed.equals("true")) {
-			req.acceptRequest(conn);
-		} else {
-			req.rejectRequest(conn);
-		}
-		RequestDispatcher disp = request.getRequestDispatcher("MessageInboxServlet");
-		disp.forward(request, response);
+		// TODO Auto-generated method stub
 	}
 
 }

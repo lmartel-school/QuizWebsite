@@ -62,7 +62,7 @@ public class Note extends Message {
 				query = "Insert into Note VALUES (" + dbID + ", '" + text + "');";
 				stmt.executeUpdate(query);
 			} else {
-				query = "UPDATE Note set msg='" + text + "' WHERE id=" + dbID + ";";
+				query = "UPDATE Note set msg='" + text + "' WHERE id='" + dbID + "';";
 			}
 			
 			stmt.close();

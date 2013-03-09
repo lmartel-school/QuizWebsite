@@ -33,7 +33,17 @@ public class FriendRequest extends Message {
 	}
 	
 	public void rejectRequest(Connection conn) {
+		isAccepted = false;
+		try {
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate("DELETE from Friend_Request WHERE id='" + dbID + "';");
+			stmt.executeUpdate("DELETE from Message WHERE id='" + dbID + "';");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+
 	}
 	
 	
@@ -73,6 +83,7 @@ public class FriendRequest extends Message {
 				stmt.executeUpdate(query);
 			} else {
 				query = "UPDATE Friend_Request set isAccepted=" + isAccepted + " WHERE id=" + dbID + ";";
+				stmt.executeUpdate(query);
 			}
 			
 			stmt.close();

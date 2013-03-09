@@ -21,18 +21,20 @@
 	
 	} else if (req != null) {
 		out.println(req.getSender() + " has sent you a friend request");
+		session.setAttribute("friend", req);
 		%>
 		
-		<form action="AcceptFriendServlet" method="post">
+		<form action="FriendRequestResponse" method="post">
 		
-		<% out.println("<input name=requestID type=hidden value=true/>"); %>
+		<input name=confirmation type=hidden value=true>
+		<input name=friend type=hidden value=/>
 		<input type="submit" value="Accept Friend Request"/>
 		
 		</form>
 		<br><br>
-		<form action="DeclineFriendServlet" method="post">
+		<form action="FriendRequestResponse" method="post">
 		
-		<% out.println("<input name=requestID type=hidden value=false/>"); %>
+		<% out.println("<input name=confirmation type=hidden value=false/>"); %>
 		<input type="submit" value="Reject Friend Request"/>
 		
 		</form>

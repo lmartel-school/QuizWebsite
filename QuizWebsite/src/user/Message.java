@@ -44,9 +44,14 @@ public abstract class Message extends DataBaseObject {
 		try {
 			Statement stmt = conn.createStatement();
 			String query;
-			generateID(conn, "Message");
-			query = "Insert into Message VALUES (" + dbID + "'" + sender + "', '" + recipient + "', " + beenRead + ");";
-			stmt.executeUpdate(query);
+			if (dbID == -1) {
+				generateID(conn, "Message");
+				query = "Insert into Message VALUES ('" + dbID + "', '" + sender + "', '" + recipient + "', " + beenRead + ");";
+				stmt.executeUpdate(query);
+			} else {
+				query = "UPDATE Message set beenRead="+ beenRead +" WHERE id='" + dbID + "';";
+				stmt.executeUpdate(query);
+			}
 			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
