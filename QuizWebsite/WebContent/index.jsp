@@ -8,19 +8,15 @@
 </head>
 <body>
 
-	<h1><b>Welcome to Quiz Master Extraordinaire</b></h1>
-	
-	Log in if you wish to accept the challenge.
-
-	<form action="LoginServlet" method="POST">
-	
-		<p>User Name: <input type="text" name="username" />
-		<p>Password: <input type="password" name="password" />
-		<input type="submit" /></p>
-	
-	</form>
-	
-		<a href="create_account.html">Create New Account</a>
+	<%
+		RequestDispatcher dispatch;
+		if (session.getAttribute("user") == null) {
+			dispatch = request.getRequestDispatcher("log_in.jsp");
+		} else {
+			dispatch = request.getRequestDispatcher("CurrentUserProfileServlet");
+		}
+		dispatch.forward(request, response);
+	%>
 
 </body>
 </html>

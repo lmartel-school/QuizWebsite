@@ -82,5 +82,32 @@ public class HomePageQueries {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public static List<String> getFriends(String username, Connection conn) {
+		List<String> friends = new ArrayList<String>();
+		try {
+			Statement stmt = conn.createStatement();
+			String query = "SELECT sender FROM Message inner join Friend_Request on Message.id=Friend_Request.id WHERE recipient='"
+				+ username + "' AND isAccepted=true;";
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs != null) {
+				while (rs.next()) {
+					friends.add(rs.getString(1));
+				}
+			}	
+			
+			query = "SELECT recipient FROM Message inner join Friend_Request on Message.id=Friend_Request.id WHERE sender='"
+				+ username + "' AND isAccepted=true;";
+			rs = stmt.executeQuery(query);
+			if (rs != null) {
+				while (rs.next()) {
+					friends.add(rs.getString(1));
+				}
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return friends;
+	}
 }
+

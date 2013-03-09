@@ -35,8 +35,9 @@ public abstract class Message extends DataBaseObject {
 		return recipient;
 	}
 	
-	public void setBeenRead() {
+	public void setBeenRead(Connection conn) {
 		beenRead = true; //can never "unread" something
+		saveToDataBase(conn);
 	}
 	
 	public void saveToMsg(Connection conn) {

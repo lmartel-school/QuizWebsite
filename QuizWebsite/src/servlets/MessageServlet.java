@@ -61,21 +61,21 @@ public class MessageServlet extends HttpServlet {
 				String acceptance = result.getString("isAccepted");
 				attrs[4] = acceptance;
 				FriendRequest friend = new FriendRequest(attrs, conn);
-				friend.setBeenRead();
+				friend.setBeenRead(conn);
 				request.setAttribute("friend", friend);
 			} else if (resultChal.next()) {
 				MessageQueries.generalMessage(attrs, resultChal);
 				String challenge = resultChal.getString("result_id");
 				attrs[4] = challenge;
 				Challenge chall = new Challenge(attrs, conn);
-				chall.setBeenRead();
+				chall.setBeenRead(conn);
 				request.setAttribute("challenge", chall);
 			} else if (resultNote.next()){
 				MessageQueries.generalMessage(attrs, resultNote);
 				String note = resultNote.getString("msg");
 				attrs[4] = note;
 				Note msg = new Note(attrs, conn);
-				msg.setBeenRead();
+				msg.setBeenRead(conn);
 				request.setAttribute("note", msg);
 					
 			}
