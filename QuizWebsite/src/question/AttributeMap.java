@@ -24,11 +24,29 @@ public class AttributeMap implements Map<String, List<QuestionAttribute>> {
 	}
 	
 	/**
+	 * Creates a new question attribute from the given parameters and adds it to the attribute map.
+	 * @param question_id
+	 * @param attrType
+	 * @param attrValue
+	 * @return
+	 */
+	public List<QuestionAttribute> putNew(Question question, Question.QUESTION_ATTRIBUTE attrType, String attrValue){
+		return putNew(question, attrType.toString(), attrValue);
+	}
+	private List<QuestionAttribute> putNew(Question question, String attrType, String attrValue) {
+		QuestionAttribute newAttr = new QuestionAttribute(question, attrType, attrValue);
+		return put(attrType, newAttr);
+	}
+
+	/**
 	 * Allows client to put a single item into the map, to be appended to the list of values.
 	 * @param attrType
 	 * @param attrValue
 	 * @return
 	 */
+	public List<QuestionAttribute> put(Question.QUESTION_ATTRIBUTE attrType, QuestionAttribute attrValue){
+		return put(attrType.toString(), attrValue);
+	}
 	public List<QuestionAttribute> put(String attrType, QuestionAttribute attrValue){
 		List<QuestionAttribute> values;
 		if(attrs.containsKey(attrType)){
@@ -42,6 +60,9 @@ public class AttributeMap implements Map<String, List<QuestionAttribute>> {
 	/**
 	 * Puts by appending to the old list instead of replacing.
 	 */
+	public List<QuestionAttribute> put(Question.QUESTION_ATTRIBUTE attrType, List<QuestionAttribute> newValues){
+		return put(attrType.toString(), newValues);
+	}
 	@Override
 	public List<QuestionAttribute> put(String key, List<QuestionAttribute> newValues) {
 		if(attrs.containsKey(key)){
@@ -82,6 +103,19 @@ public class AttributeMap implements Map<String, List<QuestionAttribute>> {
 		return null;
 	}
 	
+	public List<QuestionAttribute> get(Question.QUESTION_ATTRIBUTE type){
+		return attrs.get(type.toString());
+	}
+	
+	public boolean containsKey(Question.QUESTION_ATTRIBUTE type){
+		return attrs.containsKey(type.toString());
+	}
+	
+	public List<QuestionAttribute> remove(Question.QUESTION_ATTRIBUTE type){
+		return attrs.remove(type.toString());
+	}
+
+	
 	/* Begin delegates for Map interface */
 	
 	@Override
@@ -103,7 +137,7 @@ public class AttributeMap implements Map<String, List<QuestionAttribute>> {
 	public Set<Map.Entry<String, List<QuestionAttribute>>> entrySet() {
 		return attrs.entrySet();
 	}
-
+	
 	@Override
 	public List<QuestionAttribute> get(Object key) {
 		return attrs.get(key);

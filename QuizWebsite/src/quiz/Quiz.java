@@ -33,6 +33,20 @@ public class Quiz extends DataBaseObject {
 	}
 	
 	/*
+	 * Constructs new Quiz object,
+	 * sets id to "does not exist yet" value
+	 */
+	public Quiz(String name, boolean inOrder, int type, String author, String description){
+		super(); //set dbid = -1
+		this.name = name;
+		this.inOrder = inOrder;
+		this.type = type;
+		this.author = author;
+		this.description = description;
+		this.questions = new ArrayList<Question>();
+	}
+	
+	/*
 	 * Given an array of attributes from the Quiz table,
 	 * constructs a quiz object.
 	 */
@@ -70,19 +84,6 @@ public class Quiz extends DataBaseObject {
 		return null;
 	}
 	
-	/*
-	 * Constructs new Quiz object,
-	 * sets id to "does not exist yet" value
-	 */
-	public Quiz(String name, boolean inOrder, int type, String author, String description){
-		super(); //set dbid = -1
-		this.name = name;
-		this.inOrder = inOrder;
-		this.type = type;
-		this.setAuthor(author);
-		this.description = description;
-	}
-	
 	
 	public void saveToDataBase(Connection conn){
 		try {
@@ -105,13 +106,25 @@ public class Quiz extends DataBaseObject {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		//save all associated questions
+		for(Question q : getQuestions()){
+			q.saveToDataBase(conn);
+		}
 	}
-	
 	
 	/* Begin setters/getters */
 	
 	public List<Question> getQuestions(){
 		return questions;
+	}
+	
+	public void addQuestion(Question q){
+		questions.add(q);
+	}
+	
+	public int countQuestions() {
+		return questions.size();
 	}
 
 	public String getName() {
