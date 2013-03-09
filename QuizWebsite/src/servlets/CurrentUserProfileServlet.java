@@ -65,52 +65,6 @@ public class CurrentUserProfileServlet extends HttpServlet {
 		}
 	}
 	
-	private void getUserRecentQuizzes(HttpServletRequest request, Connection conn, User user) {
-		List<QuizResult> recents = new ArrayList<QuizResult>();
-		try {
-			Statement stmt = conn.createStatement();
-			String query = "SELECT * FROM Quiz_Result WHERE username='" + user.getName() + 
-			"' ORDER by id desc;";
-			ResultSet rs = stmt.executeQuery(query);
-			if (rs != null) {
-				int count = 0;
-				while (rs.next() && count < QuizConstants.N_TOP_RATED) {
-					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
-					QuizResult quiz = new QuizResult(attrs, conn);
-					recents.add(quiz);
-					count++;
-				}
-			}
-			request.setAttribute("userRecent", recents);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	private void getAuthoring(HttpServletRequest request, Connection conn, User user) {
-		List<Quiz> authored = new ArrayList<Quiz>();
-		try {
-			Statement stmt = conn.createStatement();
-			String query = "SELECT * FROM Quiz WHERE author='" + user.getName() + 
-			"';";
-			ResultSet rs = stmt.executeQuery(query);
-			if (rs != null) {
-				int count = 0;
-				while (rs.next() && count < QuizConstants.N_TOP_RATED) {
-					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
-					Quiz quiz = new Quiz(attrs, conn);
-					authored.add(quiz);
-					count++;
-				}
-			}
-			request.setAttribute("authored", authored);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	private void getFriendActivity(HttpServletRequest request, Connection conn, User user) {
 		List<Activity> activities = new ArrayList<Activity>();
@@ -126,20 +80,31 @@ public class CurrentUserProfileServlet extends HttpServlet {
 					String username = rs.getString("sender").equals(user.getName()) ? rs.getString("recipient") : rs.getString("sender");
 					User friend = getFriend(conn, username);
 					if (friend != null) {
-						String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
-						Quiz quiz = new Quiz(attrs, conn);
-						
-						String msg = friend.getName();
-						if (quiz.getAuthor().equals(friend.getName())) {
-							msg += " recently authored " + quiz.getName();
-						} else {
-							msg += " recently took" + quiz.getName();
+						int infoCounter = 0;
+						Statement quizStmt = conn.createStatement();
+						String quizResults = "SELECT * from Quiz_Result WHERE username='" + friend.getName() + "' order by id DESC;";
+						ResultSet results = quizStmt.executeQuery(quizResults);
+						while (results.next() && infoCounter < QuizConstants.N_TOP_RATED) {
+							activities.add(new Activity(friend, friend.getName() + "recently took a quiz.", results.getInt("quiz_id")));
+							infoCounter++;
 						}
 						
-						Activity act = new Activity(friend, msg, quiz.getID());
-						activities.add(act);
-						count++;
+						infoCounter = 0;
+						
+						String authored = "SELECT * FROM Quiz WHERE author='" + friend.getName() + "' order by id DESC;"; 
+						results = quizStmt.executeQuery(authored);
+						while (results.next() && infoCounter < QuizConstants.N_TOP_RATED) {
+							String[] attrs = DataBaseObject.getRow(results, QuizConstants.QUIZ_N_COLS);
+							Quiz quiz = new Quiz(attrs, conn);
+							
+							String msg = friend.getName() + " recently authored " + quiz.getName();
+							Activity act = new Activity(friend, msg, quiz.getID());
+							activities.add(act);
+							infoCounter++;
+						}
+						
 					}
+					count++;
 				}
 			}
 			request.setAttribute("activities", activities);
@@ -172,11 +137,11 @@ public class CurrentUserProfileServlet extends HttpServlet {
 		
 		RequestDispatcher dispatch;
 		User user = (User) request.getSession().getAttribute("user");
-		getUserRecentQuizzes(request, conn, user);
+		HomePageQueries.getUserRecentQuizzes(request, conn, user);
 		getMessages(request, conn, user);
 		HomePageQueries.getPopQuizzes(request, conn);
 		HomePageQueries.getRecentQuizzes(request, conn);
-		getAuthoring(request, conn, user);
+		HomePageQueries.getAuthoring(request, conn, user);
 		getFriendActivity(request, conn, user);
 
 		dispatch = request.getRequestDispatcher("user_home.jsp");

@@ -36,8 +36,8 @@ public class FriendRequest extends Message {
 		isAccepted = false;
 		try {
 			Statement stmt = conn.createStatement();
-			stmt.executeUpdate("DELETE from Friend_Request WHERE id='" + dbID + "';");
-			stmt.executeUpdate("DELETE from Message WHERE id='" + dbID + "';");
+			stmt.executeUpdate("DELETE from Friend_Request WHERE id=" + dbID + ";");
+			stmt.executeUpdate("DELETE from Message WHERE id=" + dbID + ";");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

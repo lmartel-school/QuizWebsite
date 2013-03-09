@@ -59,9 +59,9 @@ public class MessageInboxServlet extends HttpServlet {
 				Statement next = conn.createStatement();
 				String join1 = "SELECT * FROM Message inner join Friend_Request on Message.id=Friend_Request.id WHERE Message.id='" + id + "';";
 				Statement chal = conn.createStatement();
-				String join2 = "SELECT * FROM Message inner join Challenge WHERE Message.id='" + id + "';";
+				String join2 = "SELECT * FROM Message inner join Challenge on Message.id=Challenge.id WHERE Message.id='" + id + "';";
 				Statement noteStmt = conn.createStatement();
-				String join3 = "SELECT * FROM Message inner join Note where Message.id='" + id + "';";
+				String join3 = "SELECT * FROM Message inner join Note on Message.id=Note.id where Message.id='" + id + "';";
 				
 				ResultSet result = next.executeQuery(join1);
 				ResultSet resultChal = chal.executeQuery(join2);

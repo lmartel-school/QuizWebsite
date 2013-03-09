@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import database.DataBaseObject;
 import quiz.Quiz;
 import quiz.QuizConstants;
+import quiz.QuizResult;
+import user.User;
 
 public class HomePageQueries {
 	
@@ -108,6 +110,53 @@ public class HomePageQueries {
 			e.printStackTrace();
 		}
 		return friends;
+	}
+	
+	public static void getUserRecentQuizzes(HttpServletRequest request, Connection conn, User user) {
+		List<QuizResult> recents = new ArrayList<QuizResult>();
+		try {
+			Statement stmt = conn.createStatement();
+			String query = "SELECT * FROM Quiz_Result WHERE username='" + user.getName() + 
+			"' ORDER by id desc;";
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs != null) {
+				int count = 0;
+				while (rs.next() && count < QuizConstants.N_TOP_RATED) {
+					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
+					QuizResult quiz = new QuizResult(attrs, conn);
+					recents.add(quiz);
+					count++;
+				}
+			}
+			request.setAttribute("userRecent", recents);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void getAuthoring(HttpServletRequest request, Connection conn, User user) {
+		List<Quiz> authored = new ArrayList<Quiz>();
+		try {
+			Statement stmt = conn.createStatement();
+			String query = "SELECT * FROM Quiz WHERE author='" + user.getName() + 
+			"';";
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs != null) {
+				int count = 0;
+				while (rs.next() && count < QuizConstants.N_TOP_RATED) {
+					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
+					Quiz quiz = new Quiz(attrs, conn);
+					authored.add(quiz);
+					count++;
+				}
+			}
+			request.setAttribute("authored", authored);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
 
