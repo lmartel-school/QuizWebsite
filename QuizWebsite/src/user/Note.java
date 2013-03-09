@@ -32,7 +32,6 @@ public class Note extends Message {
 	@Override
 	public void saveToDataBase(Connection conn) { 
 		saveToNotes(conn);
-		saveToMsg(conn);
 
 	}
 	
@@ -61,8 +60,13 @@ public class Note extends Message {
 				generateID(conn, "Message");
 				query = "Insert into Note VALUES (" + dbID + ", '" + text + "');";
 				stmt.executeUpdate(query);
+				query = "Insert into Message VALUES ('" + dbID + "', '" + sender + "', '" + recipient + "', " + beenRead + ");";
+				stmt.executeUpdate(query);
 			} else {
 				query = "UPDATE Note set msg='" + text + "' WHERE id='" + dbID + "';";
+				stmt.executeUpdate(query); 
+				query = "UPDATE Message set beenRead='"+ beenRead +"' WHERE id='" + dbID + "';";
+				stmt.executeUpdate(query);
 			}
 			
 			stmt.close();

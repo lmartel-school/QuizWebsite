@@ -10,6 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import database.DataBaseObject;
+import database.MyDB;
 import quiz.Quiz;
 import quiz.QuizConstants;
 
@@ -85,6 +86,7 @@ public class HomePageQueries {
 	
 	public static List<String> getFriends(String username, Connection conn) {
 		List<String> friends = new ArrayList<String>();
+		conn = MyDB.getConnection();
 		try {
 			Statement stmt = conn.createStatement();
 			String query = "SELECT sender FROM Message inner join Friend_Request on Message.id=Friend_Request.id WHERE recipient='"

@@ -11,8 +11,7 @@
 <h1> Compose a new message:</h1>
 
 <form action="CreateMessageServlet" method="post">
-<input type="hidden" name="user" value=" 
-<%User u = (User)session.getAttribute("user"); out.print(u.getName()); %>">
+<input type="hidden" name="sender" value="<%User u = (User)session.getAttribute("user"); out.print(u.getName()); %>">
 <select name="recipient">
 <% Connection conn = (Connection) application.getAttribute("con");
 List<String> friendsList = HomePageQueries.getFriends(u.getName(), conn);
