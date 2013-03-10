@@ -15,7 +15,7 @@
 	Note note = (Note) request.getAttribute("note");
 	if (chal != null) {
 		out.println(chal.getSender() + " has sent you a challenge");
-		out.println("<a href=\"UserServlet?username=" + chal.getSender() + "\">View Challenger's Profile</a>");
+		out.println("<a href=\"UserProfileServlet?username=" + chal.getSender() + "\">View Challenger's Profile</a>");
 		QuizResult result = chal.getChallengerResult();
 		out.println("<a href=\"QuizResultServlet?id=" + result.getID() + "\">View Challenger's Result</a>");
 	
@@ -43,6 +43,9 @@
 	} else if (note != null) {
 		out.println("<h2>Your note from " + note.getSender() + "</h2>");
 		out.println(note.getText());
+	
+		out.println("<br><br>");
+		out.println("<a href=\"UserProfileServlet?username=" + note.getSender() + "\">View " + note.getSender() + "'s Profile</a>");
 	}
 	
 	%>

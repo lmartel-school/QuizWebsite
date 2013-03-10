@@ -68,7 +68,7 @@ public class UserProfileServlet extends HttpServlet {
 				HomePageQueries.getAuthoring(request, conn, usr);
 				getActivity(usr, request);
 				
-				dispatch = request.getRequestDispatcher("user_home.jsp");
+				dispatch = request.getRequestDispatcher("profile.jsp");
 				dispatch.forward(request, response);
 			}
 			
@@ -95,7 +95,7 @@ public class UserProfileServlet extends HttpServlet {
 		try {
 			Statement stmt = conn.createStatement();
 			String query = "SELECT * FROM Message inner join Friend_Request on Message.id=Friend_Request.id" +
-						"WHERE recipient='" + profile.getName() + "' AND sender='" + curUser.getName() + "';";
+						" WHERE recipient='" + profile.getName() + "' AND sender='" + curUser.getName() + "';";
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs.next()) {
 				request.setAttribute("friend_status", 1); //you sent a friend request to this person
@@ -103,7 +103,7 @@ public class UserProfileServlet extends HttpServlet {
 			}
 			
 			query = "SELECT * FROM Message inner join Friend_Request on Message.id=Friend_Request.id" +
-			"WHERE recipient='" + curUser.getName() + "' AND sender='" + profile.getName() + "';";
+			" WHERE recipient='" + curUser.getName() + "' AND sender='" + profile.getName() + "';";
 			rs = stmt.executeQuery(query);
 			if (rs.next()) {
 				request.setAttribute("friend_status", 2); //this person sent a friend request to you
