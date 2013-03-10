@@ -15,7 +15,6 @@
 <select name="recipient">
 <% Connection conn = (Connection) application.getAttribute("con");
 List<String> friendsList = HomePageQueries.getFriends(u.getName(), conn);
-friendsList.add("Truman");
 for (String name : friendsList){
 	out.println("<option value=\"" + name + "\">" + name + "</option>");
 }

@@ -89,11 +89,11 @@ public class MessageInboxServlet extends HttpServlet {
 				}
 				
 			}
-//			Collections.sort(messages, new Comparator<Message>() {
-//				public int compare(Message one, Message two) {
-//					return two.getID()-one.getID();
-//				}
-//			});
+			Collections.sort(messages, new Comparator<Message>() {
+				public int compare(Message one, Message two) {
+					return two.getID()-one.getID();
+				}
+			});
 			request.setAttribute("messages", messages);
 			RequestDispatcher dispatch = request.getRequestDispatcher("message-inbox.jsp");
 			dispatch.forward(request, response);

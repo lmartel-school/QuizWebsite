@@ -59,7 +59,7 @@ public class UserProfileServlet extends HttpServlet {
 			if (rs.next()) {
 				String[] attrs = DataBaseObject.getRow(rs, QuizConstants.USER_N_COLUMNS);
 				User usr = new User(attrs, conn);
-				request.getSession().setAttribute("user", usr);
+				request.setAttribute("user", usr);
 				
 				if (!sameUser)
 					setFriendStatus(usr, curUser, request);
