@@ -47,3 +47,10 @@ create table Friend_Request (
 	isAccepted boolean
 ); 
 
+DROP TABLE if exists Announcement;
+
+create table Announcement {
+	id integer PRIMARY KEY,
+	msg text
+};
+

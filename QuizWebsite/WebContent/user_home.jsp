@@ -21,6 +21,11 @@
 	
 	out.println("<a href=\"MessageInboxServlet\">View Message Inbox</a>");
 	
+	out.println("<h3>Announcements</h3>");
+	List<Announcement> announce = (List<Announcement>) request.getAttribute("announcements");
+	for (int i = 0; i < announce.size(); i++) {
+		out.println(announce.get(i).getMsg());
+	}
 	
 	out.println("<h3>Recently Made Quizzes</h3>");
 	List<Quiz> recents = (List<Quiz>) request.getAttribute("recents");
@@ -73,9 +78,13 @@
 		}
 		out.println();
 	}
-	
+	if (user.isAdmin()) {
+		out.println("<a href=\"AdminServlet\">Administration</a>");
+	}
 	
 	%>
+	<br>
+	<a href=SearchServlet>Search All Users</a>
 
 </body>
 </html>

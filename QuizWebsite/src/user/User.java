@@ -1,16 +1,18 @@
 package user;
 
-import java.sql.Statement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.Serializable;
+import java.sql.*;
 
 import database.DataBaseObject;
 
 
 
-public class User extends DataBaseObject {
+public class User extends DataBaseObject implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String hashedPassword;
 	private boolean isAdmin;
@@ -20,7 +22,7 @@ public class User extends DataBaseObject {
 		//dbID = Integer.parseInt(args[0]);
 		name = args[1];
 		hashedPassword = args[2];
-		isAdmin = Boolean.parseBoolean(args[3]);
+		isAdmin = (Integer.parseInt(args[3]) == 1);
 	}
 	
 	public User(String name, String hashedPwd) {
@@ -40,7 +42,7 @@ public class User extends DataBaseObject {
 				generateID(conn, "User");
 				query = "Insert into User VALUES (" + dbID + ",'" + name + "', '" + hashedPassword + "', " + isAdmin + ");";
 			} else {
-				query = "UPDATE User set isAdmin=" + isAdmin + "WHERE id=" + dbID + ";";
+				query = "UPDATE User set isAdmin=" + isAdmin + " WHERE id=" + dbID + ";";
 			}
 			stmt.executeUpdate(query);
 			stmt.close();
@@ -56,6 +58,10 @@ public class User extends DataBaseObject {
 	
 	public boolean isAdmin() {
 		return isAdmin;
+	}
+	
+	public void makeAdmin() {
+		isAdmin = true;
 	}
 
 }

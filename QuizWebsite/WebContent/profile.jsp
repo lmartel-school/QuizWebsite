@@ -15,8 +15,37 @@
 	
 	out.println("<h1>Welcome to " + user.getName() + "'s profile page.</h1>");
 	
-	out.println("TODO: FRIEND REQUEST BUTTON DEPENDING ON PARAM");
+	int friendStatus = (Integer) request.getAttribute("friend_status");
 	
+	switch (friendStatus) {
+	
+		case 0: break;
+		case 1: 
+			out.println("You have a pending friend request for " + name);
+			break;	
+		
+		case 2: %>
+			<form action="FriendRequestResponse" method="post">
+	
+			<% out.println("<input name=confirmation type=hidden value=true/>");  %>
+			<input type="submit" value="Accept Friend Request"/>
+			</form>
+			<% break;
+		case 3: %>
+			<form action="SendFriendRequest" method="post">
+			<input name=friend type=hidden value=<%= name %>/>
+			<input type="submit" value="Request as Friend"/>
+			</form>
+	<%		 break;
+	default: out.println("You are friends with " + name); %>
+			<form action="FriendRequestResponse" method="post">
+	
+			<% out.println("<input name=confirmation type=hidden value=false/>");  %>
+			<input type="submit" value="Remove From Friends"/>
+			</form>
+	<% break;
+	}
+		
 	
 	out.println("<h3>" + name + "'s Recently Taken Quizzes</h3>");
 	List<QuizResult> usrRecents = (List<QuizResult>) request.getAttribute("userRecent");
@@ -51,8 +80,9 @@
 		out.println();
 	}
 	
-	
 	%>
+	
+	<a href=SearchServlet>Search All Users</a>
 
 </body>
 </html>

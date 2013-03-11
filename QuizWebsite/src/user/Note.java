@@ -65,7 +65,7 @@ public class Note extends Message {
 			} else {
 				query = "UPDATE Note set msg='" + text + "' WHERE id='" + dbID + "';";
 				stmt.executeUpdate(query); 
-				query = "UPDATE Message set beenRead='"+ beenRead +"' WHERE id='" + dbID + "';";
+				query = "UPDATE Message set beenRead="+ beenRead +" WHERE id=" + dbID + ";";
 				stmt.executeUpdate(query);
 			}
 			

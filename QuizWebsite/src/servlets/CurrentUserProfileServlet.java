@@ -142,6 +142,7 @@ public class CurrentUserProfileServlet extends HttpServlet {
 		HomePageQueries.getPopQuizzes(request, conn);
 		HomePageQueries.getRecentQuizzes(request, conn);
 		HomePageQueries.getAuthoring(request, conn, user);
+		HomePageQueries.getAnnouncements(request);
 		getFriendActivity(request, conn, user);
 
 		dispatch = request.getRequestDispatcher("user_home.jsp");

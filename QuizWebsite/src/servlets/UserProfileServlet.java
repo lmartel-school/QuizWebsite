@@ -98,7 +98,11 @@ public class UserProfileServlet extends HttpServlet {
 						" WHERE recipient='" + profile.getName() + "' AND sender='" + curUser.getName() + "';";
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs.next()) {
-				request.setAttribute("friend_status", 1); //you sent a friend request to this person
+				if (rs.getBoolean("isAccepted")) {
+					request.setAttribute("friend_status", 4);
+				} else {
+					request.setAttribute("friend_status", 1); //you sent a friend request to this person
+				}
 				return;
 			}
 			
@@ -106,7 +110,12 @@ public class UserProfileServlet extends HttpServlet {
 			" WHERE recipient='" + curUser.getName() + "' AND sender='" + profile.getName() + "';";
 			rs = stmt.executeQuery(query);
 			if (rs.next()) {
-				request.setAttribute("friend_status", 2); //this person sent a friend request to you
+				if (rs.getBoolean("isAccepted")) {
+					request.setAttribute("friend_status", 4);
+				} else {
+					request.setAttribute("friend_status", 2); //this person sent a friend request to you				}
+				}
+				
 				return;
 			}
 			request.setAttribute("friend_status", 3); //no friend relationship with this person

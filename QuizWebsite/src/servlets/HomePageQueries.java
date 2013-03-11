@@ -11,10 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import database.DataBaseObject;
 import database.MyDB;
-import quiz.Quiz;
-import quiz.QuizConstants;
-import quiz.QuizResult;
-import user.User;
+import quiz.*;
+import user.*;
 
 public class HomePageQueries {
 	
@@ -159,6 +157,43 @@ public class HomePageQueries {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void getAllUsers(HttpServletRequest request) {
+		Connection conn = MyDB.getConnection();	
+		List<String> users = new ArrayList<String>();
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			String query = "SELECT username from User;";
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				users.add(rs.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		request.setAttribute("all_users", users);
+	}
+	
+	public static void getAnnouncements(HttpServletRequest request) {
+		Connection conn = MyDB.getConnection();	
+		List<Announcement> announce = new ArrayList<Announcement>();
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			String query = "SELECT * from Announcement;";
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String[] attrs = DataBaseObject.getRow(rs, QuizConstants.ANNOUNCE_N_COL);
+				announce.add(new Announcement(attrs, conn));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		request.setAttribute("announcements", announce);
 	}
 }
 

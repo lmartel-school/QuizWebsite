@@ -21,7 +21,7 @@
 	
 	} else if (req != null) {
 		out.println(req.getSender() + " has sent you a friend request");
-		session.setAttribute("friend", req);
+		session.setAttribute("friend", req); //why did you make this in session?
 		%>
 		
 		<form action="FriendRequestResponse" method="post">
@@ -47,6 +47,9 @@
 		out.println("<br><br>");
 		out.println("<a href=\"UserProfileServlet?username=" + note.getSender() + "\">View " + note.getSender() + "'s Profile</a>");
 	}
+	
+	out.println("<a href=\"CurrentUserProfileServlet\"> <h2> Go to your Profile </h2> </a>");
+
 	
 	%>
 

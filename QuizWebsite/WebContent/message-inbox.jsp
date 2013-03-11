@@ -21,6 +21,7 @@
 	}
 	
 	out.println("<a href=\"compose_message.jsp\"> <h2> Compose a new message </h2> </a>");
+	out.println("<a href=\"CurrentUserProfileServlet\"> <h2> Go to your Profile </h2> </a>");
 	
 	%>
 
