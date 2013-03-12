@@ -82,17 +82,15 @@ public class MultiChoiceQuestion extends Question {
 		return HTML;
 	}
 	
-	@Override
-	public String renderCreateMode(){
+	public static String renderCreateMode(){
 		String HTML = "";
-		HTML += "<input type=\"hidden\" name=\"type\" value=\"" + Question.QUESTION_TYPE.MULTI_CHOICE + "\">" + '\n';
+		HTML += "<input type=\"hidden\" name=\"type\" value=\"" + Question.QUESTION_TYPE.MULTI_CHOICE.value + "\">" + '\n';
 		HTML += "<p>Prompt:</p>" + '\n';
 		HTML += "<textarea cols=\"40\" rows=\"5\" name=\"prompt\">Enter question prompt here</textarea>" + '\n';
 		HTML += "<p>Correct answers:</p>" + '\n';
 		HTML += "<textarea cols=\"40\" rows=\"5\" name=\"correct\">Enter correct answers to display here,\n one per line</textarea>" + '\n';
 		HTML += "<p>Wrong answers:</p>" + '\n';
 		HTML += "<textarea cols=\"40\" rows=\"5\" name=\"wrong\">Enter wrong answers to display here,\n one per line</textarea><br>" + '\n';
-		HTML += "<input type=\"submit\" value=\"Submit\">" + '\n';
 		return HTML;
 	}
 }
