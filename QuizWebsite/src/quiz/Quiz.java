@@ -27,9 +27,17 @@ public class Quiz extends DataBaseObject {
 	 */
 	
 	public static enum PAGE_TYPE {
-		SINGLE_PAGE,
-		MULTI_IMMEDIATE,
-		MULTI_PAGE;
+		SINGLE_PAGE(0, "All questions on a single page, corrected after submit"),
+		MULTI_IMMEDIATE(1, "Each question on its own page, with immediate feedback for the user"),
+		MULTI_PAGE(2, "Each question on its own page, with no correction until the end");
+		
+		private PAGE_TYPE(final int value, final String description){
+			this.value = value;
+			this.description = description;
+		}
+		
+		public final String description;
+		public final int value;
 	}
 	
 	/*
@@ -115,12 +123,33 @@ public class Quiz extends DataBaseObject {
 	
 	/* Begin setters/getters */
 	
+	
+	/**
+	 * If we don't want the ordered list, clone the list of questions, then shuffle and return the clone.
+	 * @return
+	 */
 	public List<Question> getQuestions(){
-		return questions;
+		if(inOrder) return questions;
+		List<Question> shuffled = new ArrayList<Question>(questions);
+		Collections.shuffle(shuffled);
+		return shuffled;
 	}
 	
+	/**
+	 * Adds the new question to the end of the list, then sorts the questions
+	 * in ascending order of question number. Will never be called enough to be a bottleneck.
+	 * @param q
+	 */
 	public void addQuestion(Question q){
 		questions.add(q);
+		Collections.sort(questions, new Comparator<Question>(){
+
+			@Override
+			public int compare(Question arg0, Question arg1) {
+				return arg0.getQuestionNumber() - arg1.getQuestionNumber();
+			}
+			
+		});
 	}
 	
 	public int countQuestions() {

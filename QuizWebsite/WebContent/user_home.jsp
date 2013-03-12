@@ -60,6 +60,7 @@
 	out.println("<a href=\"HistoryServlet\">View Complete History</a>");
 	
 	out.println("<h3>Quizzes You Authored</h3>");
+	out.println("<a href=\"create_quiz.jsp\">Create a new quiz!</a>");
 	List<Quiz> authored = (List<Quiz>) request.getAttribute("authored");
 	
 	for (int i = 0; i < authored.size(); i++) {
