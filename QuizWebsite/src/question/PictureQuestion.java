@@ -46,8 +46,7 @@ public class PictureQuestion extends Question {
 		return HTML;
 	}
 
-	@Override
-	public String renderCreateMode() {
+	public static String renderCreateMode() {
 		String HTML = "";
 		HTML += "<input type=\"hidden\" name=\"type\" value=\"" + Question.QUESTION_TYPE.PICTURE + "\">" + '\n';
 		HTML += "<p>Picture URL: <input type=\"text\" name=\"picture_url\"></p>" + '\n';
@@ -55,7 +54,7 @@ public class PictureQuestion extends Question {
 		HTML += "<textarea cols=\"40\" rows=\"5\" name=\"prompt\">Enter question prompt here</textarea>" + '\n';
 		HTML += "<p>Correct answer:</p>" + '\n';
 		HTML += "<input type=\"text\" name=\"answer\"><br>" + '\n';
-		HTML += "<input type=\"submit\" value=\"Submit\">" + '\n';
+		//HTML += "<input type=\"submit\" value=\"Submit\">" + '\n';
 		return HTML;
 	}
 }
