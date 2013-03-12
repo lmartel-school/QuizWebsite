@@ -20,6 +20,7 @@ public class QuizConstants {
 	
 	
 	public static final int N_TOP_SCORERS = 5;
+	public static final long RECENT_INTERVAL = 900000;
 	
 	public static final String FILL_IN_DELIMITER = "[_]";
 
