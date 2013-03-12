@@ -18,7 +18,7 @@ for(QUESTION_TYPE t : QUESTION_TYPE.values()){
 <% 
 for(QUESTION_TYPE t : QUESTION_TYPE.values()){
 	out.println("<div id=\"form" + t.value + "\">");
-	out.println("<form action=\"CreateQuestionServlet\" method=\"POST\"");
+	out.println("<form action=\"CreateQuestionServlet\" method=\"POST\">");
 	out.println(Question.renderCreateMode(t));
 	out.println("<button type=\"submit\" name=\"finished\" value=\"false\">Submit and Continue</button><br>");
 	out.println("<button type=\"submit\" name=\"finished\" value=\"true\">Submit and Finish</button><br>");

@@ -34,7 +34,7 @@ public class CreateQuestionServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// do nothing
 	}
 
 	/**
@@ -47,9 +47,9 @@ public class CreateQuestionServlet extends HttpServlet {
 		if (type == Question.QUESTION_TYPE.MULTI_CHOICE.value) {
 			String prompt = request.getParameter("prompt");
 			String answer = request.getParameter("correct");
-			String[] corrects = answer.split("\n");
+			String[] corrects = answer.split(QuizConstants.TEXTAREA_NEWLINE_REGEX);
 			String wrong = request.getParameter("wrong");
-			String[] wrongs = wrong.split("\n");
+			String[] wrongs = wrong.split(QuizConstants.TEXTAREA_NEWLINE_REGEX);
 			quiz.addQuestion(new MultiChoiceQuestion(quiz, number, prompt, Arrays.asList(corrects), Arrays.asList(wrongs)));
 
 		} else if (type == Question.QUESTION_TYPE.FILL_IN.value) {

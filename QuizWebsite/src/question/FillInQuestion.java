@@ -45,12 +45,11 @@ public class FillInQuestion extends Question {
 
 	public static String renderCreateMode() {
 		String HTML = "";
-		HTML += "<input type=\"hidden\" name=\"type\" value=\"" + Question.QUESTION_TYPE.FILL_IN + "\">" + '\n';
+		HTML += "<input type=\"hidden\" name=\"type\" value=\"" + Question.QUESTION_TYPE.FILL_IN.value + "\">" + '\n';
 		HTML += "<p>Text prompt (indicate blank location using \"" + QuizConstants.FILL_IN_DELIMITER + "\" without the quotes):</p>" + '\n';
 		HTML += "<textarea cols=\"40\" rows=\"5\" name=\"prompt\">Enter question prompt here</textarea>" + '\n';
 		HTML += "<p>Correct answer:</p>" + '\n';
 		HTML += "<input type=\"text\" name=\"answer\"><br>" + '\n';
-		//HTML += "<input type=\"submit\" value=\"Submit\">" + '\n';
 		return HTML;
 	}
 }

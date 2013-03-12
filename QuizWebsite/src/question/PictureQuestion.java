@@ -54,7 +54,6 @@ public class PictureQuestion extends Question {
 		HTML += "<textarea cols=\"40\" rows=\"5\" name=\"prompt\">Enter question prompt here</textarea>" + '\n';
 		HTML += "<p>Correct answer:</p>" + '\n';
 		HTML += "<input type=\"text\" name=\"answer\"><br>" + '\n';
-		//HTML += "<input type=\"submit\" value=\"Submit\">" + '\n';
 		return HTML;
 	}
 }
