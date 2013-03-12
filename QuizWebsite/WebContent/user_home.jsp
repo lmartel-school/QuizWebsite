@@ -25,6 +25,7 @@
 	List<Announcement> announce = (List<Announcement>) request.getAttribute("announcements");
 	for (int i = 0; i < announce.size(); i++) {
 		out.println(announce.get(i).getMsg());
+		%> <br><br> <%
 	}
 	
 	out.println("<h3>Recently Made Quizzes</h3>");
@@ -32,6 +33,7 @@
 	for (int i = 0; i < recents.size(); i++) {
 		Quiz quiz = recents.get(i);
 		out.println("<a href=\"QuizServlet?id=" + quiz.getID() + "\">" + quiz.getName() + "</a>");
+		%> <br> <%
 	}
 	
 	
@@ -41,9 +43,11 @@
 	for (int i = 0; i < popular.size(); i++) {
 		Quiz quiz = popular.get(i);
 		out.println("<a href=\"QuizServlet?id=" + quiz.getID() + "\">" + quiz.getName() + "</a>");
+		%> <br><br> <%
 	}
 	
 	out.println("<p> Need to sort quizzes by number of QuizResult fields referring to it: this should be complete</p>");
+	
 	
 	out.println("<h3>Your Recently Taken Quizzes</h3>");
 	List<QuizResult> usrRecents = (List<QuizResult>) request.getAttribute("userRecent");
@@ -51,9 +55,9 @@
 	for (int i = 0; i < usrRecents.size(); i++) {
 		QuizResult result = usrRecents.get(i);
 		out.println("<a href=\"QuizResultServlet?id=" + result.getID() + "\">" + result.getQuiz().getName() + " Result</a>");
-		
+		%> <br><br> <%
 	}
-	
+	out.println("<a href=\"HistoryServlet\">View Complete History</a>");
 	
 	out.println("<h3>Quizzes You Authored</h3>");
 	List<Quiz> authored = (List<Quiz>) request.getAttribute("authored");
@@ -61,7 +65,7 @@
 	for (int i = 0; i < authored.size(); i++) {
 		Quiz quiz = authored.get(i);
 		out.println("<a href=\"QuizServlet?id=" + quiz.getID() + "\">" + quiz.getName() + "</a>");
-		
+		%> <br><br> <%
 	}
 	
 	
@@ -75,6 +79,7 @@
 		out.println("<a href=\"UserServlet?id=" + usr.getID() + "\">" + usr.getName() + "'s Profile Page" + "</a>");
 		if (act.getQuizID() != -1) {
 			out.println("<a href=\"QuizServlet?id=" + act.getQuizID() + "\">Go to the Quiz</a>");
+			%> <br><br> <%
 		}
 		out.println();
 	}

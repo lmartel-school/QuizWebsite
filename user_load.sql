@@ -9,14 +9,6 @@ create table User (
 	isAdmin boolean
 );
 
-DROP TABLE if exists Friendship;
-
-/*create table Friendship (
-	id integer unique,
-	req_user text,
-	acc_user text
-); */
-
 DROP TABLE if exists Message;
 
 create table Message (
@@ -37,7 +29,7 @@ DROP TABLE if exists Challenge;
 
 create table Challenge (
 	id integer PRIMARY KEY,
-	result_id integer references Quiz_Result(id);
+	result_id integer references Quiz_Result(id)
 );
 
 DROP TABLE if exists Friend_Request;
@@ -49,8 +41,16 @@ create table Friend_Request (
 
 DROP TABLE if exists Announcement;
 
-create table Announcement {
+create table Announcement (
 	id integer PRIMARY KEY,
 	msg text
-};
+);
+
+DROP TABLE if exists Achievement;
+
+create table Achievement (
+	id integer PRIMARY KEY,
+	username text references User(username),
+	award text
+);
 

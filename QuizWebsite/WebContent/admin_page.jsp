@@ -9,11 +9,18 @@
 </head>
 <body>
 
+<% List<String> users = (List<String>) request.getAttribute("all_users"); %>
+There are <%= users.size() %> users on this site. </br>
+<% int numTaken = (Integer) request.getAttribute("num_taken"); 
+	out.println("There are " + numTaken + " Quiz Results.");
+%>
+	
+
 <h2>Modify Users</h2>
 	<form action="ModifyUser" method="post">
 	<select name="user">
 <%
-		List<String> users = (List<String>) request.getAttribute("all_users");
+		
 		for (String name : users){
 			out.println("<option value=\"" + name + "\">" + name + "</option>");
 		}

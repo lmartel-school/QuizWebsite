@@ -1,9 +1,10 @@
 package quiz;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Date;
 
 import database.DataBaseObject;
 
@@ -14,6 +15,8 @@ public final class QuizResult extends DataBaseObject {
 	private String timeTaken;
 	private String elapsedTime;
 	private Quiz quiz;
+	
+	private long startTime;
 	
 	public QuizResult(String username, int score, String timeTaken, String elapsedTime, Quiz quiz){
 		this.username = username;
@@ -32,10 +35,18 @@ public final class QuizResult extends DataBaseObject {
 		quiz = getQuiz(Integer.parseInt(attrs[5]), conn);
 	}
 	
+	
 	@Override
 	public void saveToDataBase(Connection conn) {
-		// TODO Auto-generated method stub
-		
+		try {
+			Statement stmt = conn.createStatement();
+			generateID(conn, "Quiz_Result");
+			String query = "Insert into Quiz_Result values (" + dbID + ", '" + username + "', " + score + ", '" + timeTaken + "', '" + elapsedTime + "', " + quiz.getID() + ";";
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public String getUsername() {
@@ -52,6 +63,12 @@ public final class QuizResult extends DataBaseObject {
 
 	public String getElapsedTime() {
 		return elapsedTime;
+	}
+	
+	public String getTimeTakenFormatted() {
+		Date date = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+		return formatter.format(date);
 	}
 
 	public Quiz getQuiz() {
@@ -71,6 +88,19 @@ public final class QuizResult extends DataBaseObject {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public void setTimeTaken(long startTime) {
+		this.startTime = startTime;
+		Date date = new Date(startTime);
+		SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+		timeTaken = formatter.format(date);
+	}
+	
+	public void setElapsed(long endTime) {
+		elapsedTime = "";
+		long result = endTime - startTime;
+		elapsedTime += result;
 	}
 	
 

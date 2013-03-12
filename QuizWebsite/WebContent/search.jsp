@@ -13,6 +13,8 @@
 	for (String name : users){
 		out.println("<a href=\"UserProfileServlet?username=" + name + "\">" + name + "</a> <br>");
 	}
+	
+	out.println("<br/> <br/> <a href=\"CurrentUserProfileServlet\"> Go to your Profile</a>");
 
 %>
 </body>

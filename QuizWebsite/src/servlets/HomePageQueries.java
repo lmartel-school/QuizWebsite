@@ -112,7 +112,7 @@ public class HomePageQueries {
 		return friends;
 	}
 	
-	public static void getUserRecentQuizzes(HttpServletRequest request, Connection conn, User user) {
+	public static void getUserRecentQuizzes(HttpServletRequest request, Connection conn, User user, int upperBound) {
 		List<QuizResult> recents = new ArrayList<QuizResult>();
 		try {
 			Statement stmt = conn.createStatement();
@@ -121,7 +121,7 @@ public class HomePageQueries {
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs != null) {
 				int count = 0;
-				while (rs.next() && count < QuizConstants.N_TOP_RATED) {
+				while (rs.next() && count < upperBound) {
 					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
 					QuizResult quiz = new QuizResult(attrs, conn);
 					recents.add(quiz);

@@ -27,20 +27,20 @@
 		case 2: %>
 			<form action="FriendRequestResponse" method="post">
 	
-			<% out.println("<input name=confirmation type=hidden value=true/>");  %>
+			<% out.println("<input name=confirmation type=hidden value=true />");  %>
 			<input type="submit" value="Accept Friend Request"/>
 			</form>
 			<% break;
 		case 3: %>
 			<form action="SendFriendRequest" method="post">
-			<input name=friend type=hidden value=<%= name %>/>
+			<input name=friend type=hidden value=<%= name %> />
 			<input type="submit" value="Request as Friend"/>
 			</form>
 	<%		 break;
 	default: out.println("You are friends with " + name); %>
 			<form action="FriendRequestResponse" method="post">
 	
-			<% out.println("<input name=confirmation type=hidden value=false/>");  %>
+			<% out.println("<input name=confirmation type=hidden value=false />");  %>
 			<input type="submit" value="Remove From Friends"/>
 			</form>
 	<% break;
@@ -83,6 +83,7 @@
 	%>
 	
 	<a href=SearchServlet>Search All Users</a>
+	out.println("<a href="CurrentUserProfileServlet"> Go to your Profile </a>");
 
 </body>
 </html>

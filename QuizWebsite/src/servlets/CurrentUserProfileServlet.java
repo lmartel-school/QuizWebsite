@@ -137,7 +137,7 @@ public class CurrentUserProfileServlet extends HttpServlet {
 		
 		RequestDispatcher dispatch;
 		User user = (User) request.getSession().getAttribute("user");
-		HomePageQueries.getUserRecentQuizzes(request, conn, user);
+		HomePageQueries.getUserRecentQuizzes(request, conn, user, QuizConstants.N_TOP_RATED);
 		getMessages(request, conn, user);
 		HomePageQueries.getPopQuizzes(request, conn);
 		HomePageQueries.getRecentQuizzes(request, conn);

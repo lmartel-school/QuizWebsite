@@ -64,7 +64,7 @@ public class UserProfileServlet extends HttpServlet {
 				if (!sameUser)
 					setFriendStatus(usr, curUser, request);
 				
-				HomePageQueries.getUserRecentQuizzes(request, conn, usr);
+				HomePageQueries.getUserRecentQuizzes(request, conn, usr, QuizConstants.N_TOP_RATED);
 				HomePageQueries.getAuthoring(request, conn, usr);
 				getActivity(usr, request);
 				
@@ -100,6 +100,9 @@ public class UserProfileServlet extends HttpServlet {
 			if (rs.next()) {
 				if (rs.getBoolean("isAccepted")) {
 					request.setAttribute("friend_status", 4);
+					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.MSG_FRIEND_N_COLS);
+					FriendRequest req = new FriendRequest(attrs, conn);
+					request.getSession().setAttribute("friend", req);
 				} else {
 					request.setAttribute("friend_status", 1); //you sent a friend request to this person
 				}
@@ -112,6 +115,9 @@ public class UserProfileServlet extends HttpServlet {
 			if (rs.next()) {
 				if (rs.getBoolean("isAccepted")) {
 					request.setAttribute("friend_status", 4);
+					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.MSG_FRIEND_N_COLS);
+					FriendRequest req = new FriendRequest(attrs, conn);
+					request.getSession().setAttribute("friend", req);
 				} else {
 					request.setAttribute("friend_status", 2); //this person sent a friend request to you				}
 				}
@@ -119,7 +125,6 @@ public class UserProfileServlet extends HttpServlet {
 				return;
 			}
 			request.setAttribute("friend_status", 3); //no friend relationship with this person
-			
 			
 			
 		} catch (SQLException e) {

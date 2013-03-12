@@ -50,8 +50,7 @@ public class FriendRequest extends Message {
 	@Override
 	public void saveToDataBase(Connection conn) {
 		saveToFriends(conn);
-		saveToMsg(conn);
-		
+
 	}
 	
 	
@@ -81,8 +80,12 @@ public class FriendRequest extends Message {
 				generateID(conn, "Message");
 				query = "Insert into Friend_Request VALUES (" + dbID + ", " + isAccepted + ");";
 				stmt.executeUpdate(query);
+				query = "Insert into Message VALUES (" + dbID + ", '" + sender + "', '" + recipient + "', " + beenRead + ");";
+				stmt.executeUpdate(query);
 			} else {
 				query = "UPDATE Friend_Request set isAccepted=" + isAccepted + " WHERE id=" + dbID + ";";
+				stmt.executeUpdate(query);
+				query = "UPDATE Message set beenRead="+ beenRead +" WHERE id=" + dbID + ";";
 				stmt.executeUpdate(query);
 			}
 			

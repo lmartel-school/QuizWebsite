@@ -57,8 +57,8 @@ public class Challenge extends Message {
 		try {
 			Statement stmt = conn.createStatement();
 			String query;
-			generateID(conn, "Challenge");
-			query = "Insert into Note VALUES (" + dbID + ", " + result.getID() + ");";
+			//generateID(conn, "Challenge"); bad code
+			query = "Insert into Challenge VALUES (" + dbID + ", " + result.getID() + ");";
 			stmt.executeUpdate(query);
 			
 			stmt.close();

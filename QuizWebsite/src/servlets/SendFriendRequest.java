@@ -32,7 +32,7 @@ public class SendFriendRequest extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		doPost(request, response);
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class SendFriendRequest extends HttpServlet {
 		req.saveToDataBase(conn);
 		
 		
-		RequestDispatcher disp = request.getRequestDispatcher("UserProfileServlet?username=" + recipient);
+		RequestDispatcher disp = request.getRequestDispatcher("CurrentUserProfileServlet?username=" + recipient);
 		disp.forward(request, response);
 	}
 
