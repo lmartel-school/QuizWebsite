@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ page import="quiz.Quiz.*,user.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,9 +9,21 @@
 </head>
 <body>
 <h1>Welcome to QUIZ CREATION.</h1>
-<form action="NewAccountServlet" method="POST">
+<form action="CreateQuizServlet" method="POST">
+<input type="hidden" name="author" value="<%= ((User) session.getAttribute("user")).getName() %>">
 <p>Name your quiz: <input type="text" name="name" /></p>
-<p>
+<p>Enter a description: <textarea cols="40" rows="5" name="description"></textarea></p>
+<p>What type of user experience do you want? <br>
+<% 
+for(PAGE_TYPE t : PAGE_TYPE.values()){
+	out.println("<input type=\"radio\" name=\"type\" value=\"" + t.value + "\"> " + t.description + "<br>");
+}
+%>
+<p>Do you want the questions to appear in...<br>
+<input type="radio" name="inOrder" value="true"> the order you create them,<br>
+<input type="radio" name="inOrder" value="false"> or in a randomized order?<br>
+</p>
+<input type="submit" value="Start creating questions!">
 </form>
 </body>
 </html>

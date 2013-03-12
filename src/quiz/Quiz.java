@@ -27,9 +27,17 @@ public class Quiz extends DataBaseObject {
 	 */
 	
 	public static enum PAGE_TYPE {
-		SINGLE_PAGE,
-		MULTI_IMMEDIATE,
-		MULTI_PAGE;
+		SINGLE_PAGE(0, "All questions on a single page, corrected after submit"),
+		MULTI_IMMEDIATE(1, "Each question on its own page, with immediate feedback for the user"),
+		MULTI_PAGE(2, "Each question on its own page, with no correction until the end");
+		
+		private PAGE_TYPE(final int value, final String description){
+			this.value = value;
+			this.description = description;
+		}
+		
+		public final String description;
+		public final int value;
 	}
 	
 	/*
