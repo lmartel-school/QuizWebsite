@@ -123,12 +123,12 @@ public class Quiz extends DataBaseObject {
 				generateID(conn, "Quiz");
 				saveTags(conn);
 				query = "Insert into Quiz VALUES (" + dbID + ", '" + name + "', " + 
-					inOrder + ", " + type + ", '" + author + "', '" + description + "');";
+					inOrder + ", " + type + ", '" + author + "', '" + description + "', '" + category + "');";
 				
 			} else {
 				query = "UPDATE Quiz set name='" + name + "', inOrder=" + 
 					inOrder + ", type=" + type + ", author ='" + author + "', description='" + 
-					description + "' WHERE id=" + dbID + ";";
+					description + "', category='" + category + "' WHERE id=" + dbID + ";";
 			}
 			
 			stmt.executeUpdate(query);
