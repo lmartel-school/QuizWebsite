@@ -6,21 +6,16 @@
 <head>
 <%
 Quiz quiz = (Quiz) session.getAttribute("quiz");
-List<Question> questions = (List<Question>) session.getAttribute("questions");
+Question question = (Question) session.getAttribute("question");
+String feedback = (String) session.getAttribute("feedback");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title><%= quiz.getName() %></title>
 </head>
 <body>
-<h1><%= quiz.getName() %></h1>
-<h3>by <%= quiz.getAuthor() %></h3>
-<p><%= quiz.getDescription() %></p>
-<form action="SubmitSinglePageQuizServlet" method="POST">
-<%
-for(Question q : questions){
-	out.println(q.renderQuizMode());
-}
-%>
+<% if(feedback != null){ out.println("<h3>" + feedback + "</h3>"); }%>
+<form action="SubmitMultiPageQuizServlet" method="POST">
+<%= question.renderQuizMode() %>
 <input type="submit" value="submit">
 </form>
 </body>
