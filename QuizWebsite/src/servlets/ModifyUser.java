@@ -20,6 +20,8 @@ import user.User;
 import database.DataBaseObject;
 import database.MyDB;
 
+import java.util.*;
+
 /**
  * Servlet implementation class ModifyUser
  */
@@ -74,6 +76,30 @@ public class ModifyUser extends HttpServlet {
 				stmt = conn.createStatement();
 				String query = "DELETE FROM User WHERE username='" + user + "';";
 				stmt.executeUpdate(query);
+				query = "DELTE FROM Achievement WHERE username='" + user + "';";
+				stmt.executeUpdate(query);
+				
+				query = "SELECT id FROM Message WHERE sender='" + user + "' OR recipient='" + user +"';";
+				ResultSet rs = stmt.executeQuery(query);
+				List<Integer> ids = new ArrayList<Integer>();
+				while (rs.next()) {
+					ids.add(rs.getInt(1));
+				}
+				query = "DELETE FROM Message WHERE sender='" + user + "' OR recipient='" + user +"';";
+				stmt.executeUpdate(query);
+				
+				for (int i = 0; i < ids.size(); i++) {
+					query = "DELETE FROM Note where id=" + ids.get(i) + ";";
+					stmt.executeUpdate(query);
+					
+					query = "DELETE FROM Challenge where id=" + ids.get(i) + ";";
+					stmt.executeUpdate(query);
+					
+					query = "DELETE FROM Friend_Request where id=" + ids.get(i) + ";";
+					stmt.executeUpdate(query);
+					
+				}
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
