@@ -9,7 +9,8 @@ create table Quiz (
 	inOrder boolean,
 	pageType integer, /* single page, multi immediate, multi at end */
 	author text references User(username),
-	description text
+	description text,
+	category text
 );
 
 DROP TABLE if exists Question;

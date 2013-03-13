@@ -45,7 +45,15 @@
 			</form>
 	<% break;
 	}
-		
+	
+	out.println("<h3>" + name + "'s Achievements</h3><br>");
+	List<Achievement> achieve = (List<Achievement>) request.getAttribute("achievements");
+	for (int i = 0; i < achieve.size(); i++) {
+		out.println(achieve.get(i).getAward());
+		%> <br> <%
+	}
+	
+	%> <br> <%
 	
 	out.println("<h3>" + name + "'s Recently Taken Quizzes</h3>");
 	List<QuizResult> usrRecents = (List<QuizResult>) request.getAttribute("userRecent");

@@ -54,3 +54,11 @@ create table Achievement (
 	award text
 );
 
+DROP TABLE if exists Tag;
+
+create table Tag (
+	id integer PRIMARY KEY,
+	quiz_id integer references Quiz(id),
+	tag text
+);
+

@@ -14,6 +14,8 @@ import database.MyDB;
 import question.*;
 import quiz.*;
 import java.util.*;
+import user.*;
+import java.sql.*;
 
 /**
  * Servlet implementation class CreateQuestionServlet
@@ -68,6 +70,7 @@ public class CreateQuestionServlet extends HttpServlet {
 		RequestDispatcher dispatch;
 		String finish = request.getParameter("finished");
 		if (finish.equals("true")) {
+			checkAchievement(request);
 			quiz.saveToDataBase(MyDB.getConnection());
 			dispatch = request.getRequestDispatcher("QuizServlet?id=" + quiz.getID());
 			request.getSession().setAttribute("quiz", null);
@@ -76,6 +79,36 @@ public class CreateQuestionServlet extends HttpServlet {
 		}
 		dispatch.forward(request, response);
 
+	}
+	
+	private void checkAchievement(HttpServletRequest request) {
+		User cur = (User) request.getSession().getAttribute("user");
+		Statement stmt;
+		try {
+			stmt = MyDB.getConnection().createStatement();
+			String query = "SELECT count(*) FROM Quiz WHERE author='" + cur.getName() + "';";
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs.next()) {
+				int count = rs.getInt(1);
+				switch (count) {
+					case 0: createAchieve(cur, "Amateur Author"); break;
+					case 4: createAchieve(cur, "Prolific Author"); break;
+					case 9: createAchieve(cur, "Prodigious Author"); break;
+					default: break;
+				}
+			} else {
+				createAchieve(cur, "Amateur Author");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void createAchieve(User user, String title) {
+		Achievement achieve = new Achievement(user.getName(), title);
+		achieve.saveToDataBase(MyDB.getConnection());
 	}
 
 }
