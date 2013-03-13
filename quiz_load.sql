@@ -1,6 +1,13 @@
 
 USE c_cs108_jfneff;
 
+DROP TABLE if exists Category;
+
+create table Category (
+	id integer PRIMARY KEY,
+	name text
+);
+
 DROP TABLE if exists Quiz;
 
 create table Quiz (

@@ -34,7 +34,7 @@ There are <%= users.size() %> users on this site. </br>
 	
 <h2>Modify Quizzes</h2>
 
-	<form action="ModifyQuiz" method="post">
+	<form action="ModifyQuiz" method="POST">
 	<select name="quiz">
 <%
 		List<Quiz> quizzes = (List<Quiz>) request.getAttribute("all_quizzes");
@@ -49,6 +49,15 @@ There are <%= users.size() %> users on this site. </br>
 	</form>
 	
 	<br> <br>
+	
+<h2>Add Categories</h2>
+
+	<form action="AddCategory" method="POST">
+		<textarea rows="10" cols="30" name="text">Category name...</textarea>
+		<input type="submit" value="Submit">
+	</form>
+	
+	<br><br>
 	
 	<h2> All Listed Announcements: </h2><br>
 	<% List<Announcement> announce = (List<Announcement>) request.getAttribute("announcements");
