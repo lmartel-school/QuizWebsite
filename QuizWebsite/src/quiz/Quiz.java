@@ -19,6 +19,8 @@ public class Quiz extends DataBaseObject {
 	private String author;
 	private String description;
 	private List<Question> questions;
+	private List<String> tags;
+	private String category;
 	
 	/**
 	 * Enumerations
@@ -44,7 +46,7 @@ public class Quiz extends DataBaseObject {
 	 * Constructs new Quiz object,
 	 * sets id to "does not exist yet" value
 	 */
-	public Quiz(String name, boolean inOrder, int type, String author, String description){
+	public Quiz(String name, boolean inOrder, int type, String author, String description, String categ, String[] tags){
 		super(); //set dbid = -1
 		this.name = name;
 		this.inOrder = inOrder;
@@ -52,6 +54,8 @@ public class Quiz extends DataBaseObject {
 		this.author = author;
 		this.description = description;
 		this.questions = new ArrayList<Question>();
+		category = categ;
+		this.tags = Arrays.asList(tags);
 	}
 	
 	/*
@@ -66,8 +70,26 @@ public class Quiz extends DataBaseObject {
 		setAuthor(attrs[4]);
 		description = attrs[5];
 		questions = findQuestions(conn);
+		category = attrs[6];
+		getTags(conn);
 	}
 	
+	private void getTags(Connection conn) {
+		tags = new ArrayList<String>();
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			String query = "SELECT tag from Tag where quiz_id=" + dbID + ";";
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				tags.add(rs.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 	private List<Question> findQuestions(Connection conn){
 		List<Question> questions = new ArrayList<Question>();
@@ -99,13 +121,14 @@ public class Quiz extends DataBaseObject {
 			String query;
 			if (dbID == -1) {
 				generateID(conn, "Quiz");
+				saveTags(conn);
 				query = "Insert into Quiz VALUES (" + dbID + ", '" + name + "', " + 
-					inOrder + ", " + type + ", '" + author + "', '" + description + "');";
+					inOrder + ", " + type + ", '" + author + "', '" + description + "', '" + category + "');";
 				
 			} else {
 				query = "UPDATE Quiz set name='" + name + "', inOrder=" + 
 					inOrder + ", type=" + type + ", author ='" + author + "', description='" + 
-					description + "' WHERE id=" + dbID + ";";
+					description + "', category='" + category + "' WHERE id=" + dbID + ";";
 			}
 			
 			stmt.executeUpdate(query);
@@ -120,6 +143,30 @@ public class Quiz extends DataBaseObject {
 			q.saveToDataBase(conn);
 		}
 	}
+	
+	private void saveTags(Connection conn) {
+		try {
+			Statement stmt = conn.createStatement();
+			String query = "SELECT MAX(id) from Tag;";     
+			ResultSet rs = stmt.executeQuery(query);   
+			rs.next();
+			int id = rs.getInt(1) + 1; 
+			
+			query = "INSERT into Tag VALUES (";
+			for (int i = 0; i < tags.size(); i++) {
+				String sql = query + id + ", " + dbID + ", '" + tags.get(i) + "');"; 
+				stmt.executeUpdate(sql);
+				id++;
+			}
+				
+		} catch (SQLException e) {     
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	
 	
 	/* Begin setters/getters */
 	
@@ -199,6 +246,14 @@ public class Quiz extends DataBaseObject {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public String getCategory() {
+		return category;
+	}
+	
+	public List<String> getTags() {
+		return tags;
 	}
 	
 }

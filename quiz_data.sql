@@ -3,7 +3,7 @@ USE c_cs108_jfneff;
 
 
  INSERT INTO Quiz VALUES
-	(1, "States and Cities", false, 1, "test_1", "Testing you on states and their cities");
+	(1, "States and Cities", false, 1, "test_1", "Testing you on states and their cities", "Geography");
 
 INSERT INTO Question VALUES
 	(1, 1, 1, 0),
