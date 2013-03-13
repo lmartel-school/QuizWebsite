@@ -9,10 +9,13 @@
 </head>
 <body>
 
+	
 	<% 
 		
 	QuizSummary summary = (QuizSummary) request.getAttribute("summary");
 	Quiz quiz = summary.getQuiz();
+	
+	out.println("<a href=\"BeginQuizServlet\"?id=" + quiz.getID() + "\">Take this Quiz!</a>");
 	
 	out.println("<h1>" + quiz.getName() + "</h1>");
 	out.println("<h2>By: <a href=\"UserProfileServlet?username=" + quiz.getAuthor() + "\">" + quiz.getAuthor() + "</a></h2>");
@@ -25,6 +28,7 @@
 		out.println("<li>" + name + "</li>");
 	}
 	out.println("</ul>");
+	
 	
 	
 	//out.println(quiz.getDescription());
