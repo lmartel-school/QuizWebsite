@@ -123,6 +123,9 @@ public class Quiz extends DataBaseObject {
 	
 	/* Begin setters/getters */
 	
+	public Question getQuestionByNumber(int n){
+		return questions.get(n - 1);
+	}
 	
 	/**
 	 * If we don't want the ordered list, clone the list of questions, then shuffle and return the clone.
