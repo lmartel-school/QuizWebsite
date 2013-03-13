@@ -47,7 +47,7 @@ public class BeginQuizServlet extends HttpServlet {
 				String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
 				Quiz quiz = new Quiz(attrs, conn);
 				InProgressQuiz progress = new InProgressQuiz(quiz, conn);
-				request.getSession().setAttribute("current_quiz", progress);
+				request.getSession().setAttribute("in_progress_quiz", progress);
 				RequestDispatcher dispatch;
 				
 				if (quiz.getType() == Quiz.PAGE_TYPE.SINGLE_PAGE.value) {

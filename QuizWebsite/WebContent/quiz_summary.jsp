@@ -22,6 +22,8 @@
 	
 	out.println("<p>" + quiz.getDescription() + "<p>");
 	
+	out.println("<h3><a href=\"BeginQuizServlet?id=" + quiz.getID() + "\">Take this quiz!</a></h3>");
+	
 	out.println("<h3> All time High Scores: </h3>");
 	out.println("<ul>");
 	for (String name : summary.getTopAll()) {

@@ -5,8 +5,9 @@
 <html>
 <head>
 <%
-Quiz quiz = (Quiz) session.getAttribute("quiz");
-List<Question> questions = (List<Question>) session.getAttribute("questions");
+InProgressQuiz progress = (InProgressQuiz) session.getAttribute("in_progress_quiz");
+List<Question> questions = progress.getQuestions();
+Quiz quiz = progress.getQuiz();
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title><%= quiz.getName() %></title>

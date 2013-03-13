@@ -20,16 +20,18 @@ public class InProgressQuiz {
 		this.quiz = quiz;
 		this.questions = quiz.getQuestions();
 		activeQuestion = null;
+		userAnswers = new HashMap<Integer, String>();
 		questionIterator = questions.iterator();
 		score = 0;
+		if(hasNextQuestion()) moveToNextQuestion(); //Start at first question, if there is at least one question
 	}
 	
-	boolean hasNextQuestion(){
+	public boolean hasNextQuestion(){
 		return questionIterator.hasNext();
 	}
 	
-	Question getNextQuestion(){
-		return activeQuestion = questionIterator.next();
+	public void moveToNextQuestion(){
+		activeQuestion = questionIterator.next();
 	}
 	
 	/**
@@ -40,17 +42,13 @@ public class InProgressQuiz {
 		userAnswers.put(activeQuestion.getQuestionNumber(), submission);
 	}
 	
-	/**
-	 * This is an int so that we can add multi point scoring later.
-	 * @param qNum
-	 * @param guess
-	 * @return
-	 */
-	public int gradeActiveQuestion() {
-		if (activeQuestion.checkAnswer(userAnswers.get(activeQuestion.getQuestionNumber()))){
-			return 1;
-		}
-		return 0;
+	public boolean checkQuestionByNumber(int n){
+		Question q = quiz.getQuestionByNumber(n);
+		return q.checkAnswer(userAnswerForQuestion(q));
+	}
+	
+	public boolean checkActiveQuestion() {
+		return checkQuestionByNumber(activeQuestion.getQuestionNumber());
 	}
 	
 	
@@ -65,6 +63,30 @@ public class InProgressQuiz {
 	
 	public int getScore() {
 		return score;
+	}
+
+	public Quiz getQuiz() {
+		return quiz;
+	}
+
+	public List<Question> getQuestions() {
+		return questions;
+	}
+
+	public Question getActiveQuestion() {
+		return activeQuestion;
+	}
+	
+	public String userAnswerForQuestion(Question q){
+		return userAnswers.get(q.getQuestionNumber());
+	}
+	
+	public String getFeedback() {
+		String feedback;
+		String userAnswer = userAnswerForQuestion(getActiveQuestion());
+		if(checkActiveQuestion()) feedback = "\"" + userAnswer + "\" was correct! Nice job!";
+		else feedback = "\"" + userAnswer + "\" wasn't quite right, sorry... we were looking for something like \"" + getActiveQuestion().getAnAnswer() + "\"";
+		return feedback;
 	}
 
 }
