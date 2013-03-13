@@ -19,9 +19,11 @@ Quiz quiz = progress.getQuiz();
 <form action="SubmitSinglePageQuizServlet" method="POST">
 <%
 for(Question q : questions){
+	out.println("<br><hr><br>");
 	out.println(q.renderQuizMode());
 }
 %>
+<br><hr><br>
 <input type="submit" value="submit">
 </form>
 </body>

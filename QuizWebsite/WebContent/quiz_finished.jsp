@@ -6,7 +6,6 @@
 <head>
 <%
 InProgressQuiz progress = (InProgressQuiz) session.getAttribute("in_progress_quiz");
-progress.gradeAll();
 List<Question> questions = progress.getQuestions();
 Quiz quiz = progress.getQuiz();
 String feedback = (String) session.getAttribute("feedback");
@@ -30,6 +29,8 @@ for(Question q : questions){
 }
 %>
 </ol>
+Your score was <%= progress.getScore() %> out of <%= progress.getMaxPossibleScore() %>.
 </p>
+TODO: generate and save QuizResult object.
 </body>
 </html>

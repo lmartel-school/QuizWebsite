@@ -10,20 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import question.Question;
 import quiz.InProgressQuiz;
-import quiz.Quiz;
 
 /**
- * Servlet implementation class SubmitMultiPageQuizServlet
+ * Servlet implementation class SubmitSinglePageQuizServlet
  */
-@WebServlet("/SubmitMultiPageQuizServlet")
-public class SubmitMultiPageQuizServlet extends HttpServlet {
+@WebServlet("/SubmitSinglePageQuizServlet")
+public class SubmitSinglePageQuizServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SubmitMultiPageQuizServlet() {
+    public SubmitSinglePageQuizServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,24 +41,17 @@ public class SubmitMultiPageQuizServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		InProgressQuiz progress = (InProgressQuiz) session.getAttribute("in_progress_quiz");
-		String userAnswer = request.getParameter("answer" + progress.getActiveQuestion().getQuestionNumber());
-		progress.submitAnswer(userAnswer);
-		
-		boolean giveFeedback = progress.getQuiz().getType() == Quiz.PAGE_TYPE.MULTI_IMMEDIATE.value;
-		if(giveFeedback){
-			String feedback = progress.getFeedback();
-			session.setAttribute("feedback", feedback);
-		}
-		
-		RequestDispatcher dispatch;
-		if(progress.hasNextQuestion()){
+		while(true){
+			Question q = progress.getActiveQuestion();
+			int n = q.getQuestionNumber();
+			String userAnswer = request.getParameter("answer" + n);
+			progress.submitAnswer(userAnswer);
+			if(!progress.hasNextQuestion()) break;
 			progress.moveToNextQuestion();
-			dispatch = request.getRequestDispatcher("paged_quiz.jsp");
-		} else {
-			progress.gradeAll();
-			dispatch = request.getRequestDispatcher("quiz_finished.jsp");
 		}
-			
+		progress.gradeAll();
+		
+		RequestDispatcher dispatch = request.getRequestDispatcher("quiz_finished.jsp");	
 		dispatch.forward(request, response);
 	}
 

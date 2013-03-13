@@ -95,7 +95,7 @@ public class Quiz extends DataBaseObject {
 		List<Question> questions = new ArrayList<Question>();
 		try {
 			Statement stmt = conn.createStatement();      
-			String query = "SELECT * from Question WHERE id=" + dbID + ";";     
+			String query = "SELECT * from Question WHERE quiz_id=" + dbID + ";";     
 			
 			ResultSet rs = stmt.executeQuery(query);     
 			while (rs.next()) {
@@ -170,8 +170,16 @@ public class Quiz extends DataBaseObject {
 	
 	/* Begin setters/getters */
 	
+	/**
+	 * Dumb way to do it but it doesn't matter and I just want this to always work
+	 * @param n
+	 * @return
+	 */
 	public Question getQuestionByNumber(int n){
-		return questions.get(n - 1);
+		for(Question q : questions){
+			if(q.getQuestionNumber() == n) return q;
+		}
+		return null;
 	}
 	
 	/**

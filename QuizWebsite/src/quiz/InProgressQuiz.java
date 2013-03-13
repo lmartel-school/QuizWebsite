@@ -64,6 +64,10 @@ public class InProgressQuiz {
 	public int getScore() {
 		return score;
 	}
+	
+	public int getMaxPossibleScore(){
+		return questions.size() * 1;
+	}
 
 	public Quiz getQuiz() {
 		return quiz;

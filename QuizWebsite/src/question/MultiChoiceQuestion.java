@@ -25,11 +25,11 @@ public class MultiChoiceQuestion extends Question {
 	}
 	
 	/**
-	 * Defaults to ordered rather than random.
+	 * Defaults to random rather than sorted.
 	 * @return
 	 */
 	public List<String> getChoices(){
-		return getChoices(false);
+		return getChoices(true);
 	}
 	
 	/**
