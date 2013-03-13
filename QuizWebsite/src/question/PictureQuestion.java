@@ -55,4 +55,5 @@ public class PictureQuestion extends Question {
 		HTML += "<input type=\"text\" name=\"answer\"><br>" + '\n';
 		return HTML;
 	}
+
 }

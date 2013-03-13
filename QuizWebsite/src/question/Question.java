@@ -213,9 +213,19 @@ public abstract class Question extends DataBaseObject{
 		this.type = type;
 	}
 	
-	//Temporary getter for testing
-	public AttributeMap getAttrs(){
-		return attributes;
+	/**
+	 * Returns a correct answer to the question.
+	 * If multiple correct answers are defined, it will return one of them.
+	 * Choosing behavior undefined.
+	 * @return
+	 */
+	public String getAnAnswer(){
+		return attributes.getFirst(QUESTION_ATTRIBUTE.CORRECT).getAttrValue();
 	}
+	
+	//Temporary getter for testing
+		public AttributeMap getAttrs(){
+			return attributes;
+		}
 
 }
