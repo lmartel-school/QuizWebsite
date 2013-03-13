@@ -15,12 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import quiz.Quiz;
-import quiz.QuizConstants;
-import quiz.QuizResult;
-import user.Activity;
-import user.PasswordHash;
-import user.User;
+import quiz.*;
+import user.*;
 import database.DataBaseObject;
 
 /**
@@ -128,6 +124,8 @@ public class CurrentUserProfileServlet extends HttpServlet {
 		}
 		return null;
 	}
+	
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -144,7 +142,7 @@ public class CurrentUserProfileServlet extends HttpServlet {
 		HomePageQueries.getAuthoring(request, conn, user);
 		HomePageQueries.getAnnouncements(request);
 		getFriendActivity(request, conn, user);
-
+		HomePageQueries.getAchievements(request, conn, user);
 		dispatch = request.getRequestDispatcher("user_home.jsp");
 		dispatch.forward(request, response);
 	}

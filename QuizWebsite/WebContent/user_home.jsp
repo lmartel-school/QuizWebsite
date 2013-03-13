@@ -12,7 +12,7 @@
 	<%
 	User user = (User) session.getAttribute("user");
 	
-	out.println("<h1>Welcome to the Dashboard, " + user.getName() + "!</h1>");
+	out.println("<h1>Welcome to your Dashboard, " + user.getName() + "!</h1>");
 	
 	
 	int numMsg = (Integer) request.getAttribute("unreadMsg");
@@ -67,6 +67,13 @@
 		Quiz quiz = authored.get(i);
 		out.println("<a href=\"QuizServlet?id=" + quiz.getID() + "\">" + quiz.getName() + "</a>");
 		%> <br><br> <%
+	}
+	
+	out.println("<h3>Your Achievements</h3><br>");
+	List<Achievement> achieve = (List<Achievement>) request.getAttribute("achievements");
+	for (int i = 0; i < achieve.size(); i++) {
+		out.println(achieve.get(i).getAward());
+		%> <br> <%
 	}
 	
 	

@@ -136,6 +136,22 @@ public class HomePageQueries {
 		
 	}
 	
+	public static void getAchievements(HttpServletRequest request, Connection conn, User user) {
+		List<Achievement> achieve = new ArrayList<Achievement>();
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			String query = "SELECT * FROM Achievement WHERE username='" + user.getName() + "';";
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				achieve.add(new Achievement(DataBaseObject.getRow(rs, QuizConstants.ACHIEVEMENT_N_COL), conn));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		request.setAttribute("achievements", achieve);
+	}
+	
 	public static void getAuthoring(HttpServletRequest request, Connection conn, User user) {
 		List<Quiz> authored = new ArrayList<Quiz>();
 		try {
