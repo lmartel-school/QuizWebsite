@@ -20,6 +20,7 @@ public class QuizConstants {
 	
 	
 	public static final int N_TOP_SCORERS = 5;
+	public static final long RECENT_INTERVAL = 900000;
 	
 	public static final String FILL_IN_DELIMITER = "[_]";
 	public static final String TEXTAREA_NEWLINE_REGEX = "(\\r|\\n)+"; //newlines in <textarea> boxes are handled differently in Unix, Mac, and PC; this should shut them all the fuck up

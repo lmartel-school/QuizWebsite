@@ -15,7 +15,7 @@
 /tmp
 
 # Ignore eclipse config and build-related files
-.org.eclipse.*
+*.org.eclipse.*
 *.class
 *.classpath
 /bin
