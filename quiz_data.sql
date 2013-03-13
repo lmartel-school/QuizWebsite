@@ -15,7 +15,7 @@ INSERT INTO Question_Attribute VALUES
 
 	(1, 1, "prompt", "What is the capital of California?"),
 	(2, 2, "prompt", "What is the largest land mass state?"),
-	(3, 3, "prompt", "** is the capital of the United States."),
+	(3, 3, "prompt", "[_] is the capital of the United States."),
 	(4, 4, "prompt", "http://events.stanford.edu/events/252/25201/Memchu_small.jpg"),
 	(5, 1, "wrong", "Los Angeles"),
 	(6, 1, "wrong", "San Francisco"),
