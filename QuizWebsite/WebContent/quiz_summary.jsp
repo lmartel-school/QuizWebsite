@@ -22,6 +22,11 @@
 	
 	out.println("<p>" + quiz.getDescription() + "<p>");
 	
+	out.println("<h3>Quiz Statistics:</h3>");
+	out.println("<table> <tr> <td> Mean </td> <td> Median </td> </tr> <tr> <td> " + 
+				summary.getMean() + "</td> <td> "+ summary.getMedian()+ "</td> </tr> </table>");
+	
+	
 	out.println("<h3><a href=\"BeginQuizServlet?id=" + quiz.getID() + "\">Take this quiz!</a></h3>");
 	
 	out.println("<h3> All time High Scores: </h3>");
@@ -31,9 +36,20 @@
 	}
 	out.println("</ul>");
 	
+	out.println("<h3> Recent High Scores: </h3>");
+	out.println("<ul>");
+	for (String name : summary.getRecentTop()) {
+		out.println("<li>" + name + "</li>");
+	}
+	out.println("</ul>");
 	
-	
-	//out.println(quiz.getDescription());
+	out.println("<h3> Most recent results: </h3>");
+	out.println("<ul>");
+	for (QuizResult res : summary.getRecentResults()) {
+		out.println("<li><a href=\"UserProfileServlet?username=" + res.getUsername() 
+					+ "\">" + res.getUsername() + "</a> got " + res.getScore() + "</li>");
+	}
+	out.println("</ul>");
 	
 	
 	%>
