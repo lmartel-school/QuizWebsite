@@ -42,7 +42,7 @@ public class Achievement extends DataBaseObject {
 			Statement stmt = conn.createStatement();
 			if (dbID == -1) {
 				generateID(conn, "Achievement");
-				String query = "Insert into Achievement VALUES (" + dbID + ", '" + username + "', '" + award + "';";
+				String query = "Insert into Achievement VALUES (" + dbID + ", '" + username + "', '" + award + "');";
 				stmt.executeUpdate(query);
 			} else {
 				/* no way to update */
