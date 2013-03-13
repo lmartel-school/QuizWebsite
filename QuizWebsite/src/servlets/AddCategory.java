@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,21 +12,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-import user.*;
-import quiz.*;
+import database.MyDB;
+import java.sql.*;
 
 /**
- * Servlet implementation class CreateQuizServlet
+ * Servlet implementation class AddCategory
  */
-@WebServlet("/CreateQuizServlet")
-public class CreateQuizServlet extends HttpServlet {
+@WebServlet("/AddCategory")
+public class AddCategory extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreateQuizServlet() {
+    public AddCategory() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,19 +41,24 @@ public class CreateQuizServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		User author = (User) request.getSession().getAttribute("user");
-		int type = Integer.parseInt(request.getParameter("type"));
-		boolean inOrder = Boolean.parseBoolean(request.getParameter("inOrder"));
-		String description = request.getParameter("description");
-		String name = request.getParameter("name");
-		String category = request.getParameter("category");
-		String tag = request.getParameter("tags");
-		String[] tags = tag.split(QuizConstants.TEXTAREA_NEWLINE_REGEX);
-		
-		Quiz quiz = new Quiz(name, inOrder, type, author.getName(), description, category, tags);
-		request.getSession().setAttribute("quiz", quiz);
-		
-		RequestDispatcher dispatch = request.getRequestDispatcher("create_question.jsp");
+		String categ = request.getParameter("text");
+		Connection conn = MyDB.getConnection();
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			String query = "SELECT MAX(id) from Category;";     
+			ResultSet rs = stmt.executeQuery(query);   
+			rs.next();
+			int id = rs.getInt(1) + 1;
+			
+			query = "INSERT into Category VALUES (" + id + ", '" + categ + "');"; 
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		RequestDispatcher dispatch = request.getRequestDispatcher("AdminServlet");
 		dispatch.forward(request, response);
 	}
 
