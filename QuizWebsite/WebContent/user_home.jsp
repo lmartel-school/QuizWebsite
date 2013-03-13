@@ -45,9 +45,7 @@
 		out.println("<a href=\"QuizServlet?id=" + quiz.getID() + "\">" + quiz.getName() + "</a>");
 		%> <br><br> <%
 	}
-	
-	out.println("<p> Need to sort quizzes by number of QuizResult fields referring to it: this should be complete</p>");
-	
+		
 	
 	out.println("<h3>Your Recently Taken Quizzes</h3>");
 	List<QuizResult> usrRecents = (List<QuizResult>) request.getAttribute("userRecent");
@@ -60,7 +58,7 @@
 	out.println("<a href=\"HistoryServlet\">View Complete History</a>");
 	
 	out.println("<h3>Quizzes You Authored</h3>");
-	out.println("<h4><a href=\"create_quiz.jsp\">Create a new quiz!</a></h4><br>");
+	out.println("<h4><a href=\"StartCreateQuizServlet\">Create a new quiz!</a></h4><br>");
 	List<Quiz> authored = (List<Quiz>) request.getAttribute("authored");
 	
 	for (int i = 0; i < authored.size(); i++) {

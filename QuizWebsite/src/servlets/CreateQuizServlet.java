@@ -44,7 +44,11 @@ public class CreateQuizServlet extends HttpServlet {
 		boolean inOrder = Boolean.parseBoolean(request.getParameter("inOrder"));
 		String description = request.getParameter("description");
 		String name = request.getParameter("name");
-		Quiz quiz = new Quiz(name, inOrder, type, author.getName(), description);
+		String category = request.getParameter("category");
+		String tag = request.getParameter("tags");
+		String[] tags = tag.split(QuizConstants.TEXTAREA_NEWLINE_REGEX);
+		
+		Quiz quiz = new Quiz(name, inOrder, type, author.getName(), description, category, tags);
 		request.getSession().setAttribute("quiz", quiz);
 		
 		RequestDispatcher dispatch = request.getRequestDispatcher("create_question.jsp");
