@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import question.Question;
+import quiz.Quiz;
 import quiz.QuizConstants;
 import user.User;
 import database.DataBaseObject;
@@ -64,7 +67,24 @@ public class ModifyQuiz extends HttpServlet {
 			Statement stmt;
 			try {
 				stmt = conn.createStatement();
-				String query = "DELETE FROM Quiz WHERE id=" + id + ";";
+				String query = "SELECT * from Quiz where id=" + id + ";";
+				ResultSet rs = stmt.executeQuery(query);
+				if (rs.next()) {
+					Quiz quiz = new Quiz(DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS), conn);
+					List<Question> questions = quiz.getQuestions();
+					query = "DELETE FROM Question_Attribute WHERE question_id=";
+					Statement deleter = conn.createStatement();
+					for (int i = 0; i < questions.size(); i++) {
+						query += questions.get(i).getID() + ";";
+						deleter.executeUpdate(query);
+					}
+					query = "DELETE FROM Question where quiz_id=" + quiz.getID() + ";";
+					deleter.executeUpdate(query);
+				}
+				
+				query = "DELETE FROM Quiz WHERE id=" + id + ";";
+				stmt.executeUpdate(query);
+				query = "DELETE FROM Quiz_Result where quiz_id=" + id + ";";
 				stmt.executeUpdate(query);
 			} catch (SQLException e) {
 				e.printStackTrace();

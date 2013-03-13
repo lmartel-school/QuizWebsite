@@ -53,7 +53,7 @@ There are <%= users.size() %> users on this site. </br>
 <h2>Add Categories</h2>
 
 	<form action="AddCategory" method="POST">
-		<textarea rows="10" cols="30" name="text">Category name...</textarea>
+		<textarea rows="1" cols="15" name="text">Category name...</textarea>
 		<input type="submit" value="Submit">
 	</form>
 	

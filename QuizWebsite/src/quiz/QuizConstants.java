@@ -19,6 +19,8 @@ public class QuizConstants {
 	public static final int ANNOUNCE_N_COL= 2;
 	public static final int ACHIEVEMENT_N_COL = 3;
 	
+	public static final int QUIZ_TAG_N_COL = 9;
+	
 	public static final int N_TOP_SCORERS = 5;
 	public static final long RECENT_INTERVAL = 900000;
 	

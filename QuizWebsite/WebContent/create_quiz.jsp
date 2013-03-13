@@ -37,7 +37,7 @@ for(PAGE_TYPE t : PAGE_TYPE.values()){
 </p>
 
 <p>Add some tags to your quiz...<br>
-	<textarea cols="40" rows="5" name="tags">Enter wrong answers to display here, one per line</textarea><br>
+	<textarea cols="40" rows="5" name="tags">Enter tags for this quiz, one per line</textarea><br>
 </p>
 
 

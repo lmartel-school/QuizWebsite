@@ -95,7 +95,7 @@
 	
 	%>
 	<br>
-	<a href=SearchServlet>Search All Users</a>
+	<a href=SearchServlet>Search All Users and Quizzes</a>
 
 </body>
 </html>

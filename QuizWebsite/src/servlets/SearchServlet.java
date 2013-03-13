@@ -10,9 +10,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import quiz.Quiz;
+import quiz.QuizConstants;
+
 import java.util.*;
 import java.sql.*;
 
+import database.DataBaseObject;
 import database.MyDB;
 
 /**
@@ -35,6 +40,7 @@ public class SearchServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HomePageQueries.getAllUsers(request);
+		HomePageQueries.getAllQuizzes(request);
 		RequestDispatcher dispatch = request.getRequestDispatcher("search.jsp");
 		dispatch.forward(request, response);
 	}
@@ -43,7 +49,8 @@ public class SearchServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		
 	}
 
 }

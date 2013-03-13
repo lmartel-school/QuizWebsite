@@ -66,6 +66,7 @@ public class UserProfileServlet extends HttpServlet {
 				
 				HomePageQueries.getUserRecentQuizzes(request, conn, usr, QuizConstants.N_TOP_RATED);
 				HomePageQueries.getAuthoring(request, conn, usr);
+				HomePageQueries.getAchievements(request, conn, usr);
 				getActivity(usr, request);
 				
 				dispatch = request.getRequestDispatcher("profile.jsp");

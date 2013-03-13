@@ -211,5 +211,23 @@ public class HomePageQueries {
 		}
 		request.setAttribute("announcements", announce);
 	}
+	
+	public static void getAllQuizzes(HttpServletRequest request) {
+		Connection conn = MyDB.getConnection();	
+		List<Quiz> quizzes = new ArrayList<Quiz>();
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			String query = "SELECT * from Quiz order by category;";
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String [] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
+				quizzes.add(new Quiz(attrs, conn));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		request.setAttribute("all_quizzes", quizzes); 
+	}
 }
 

@@ -91,7 +91,7 @@
 	%>
 	
 	<a href=SearchServlet>Search All Users</a>
-	out.println("<a href="CurrentUserProfileServlet"> Go to your Profile </a>");
+	<a href="CurrentUserProfileServlet"> Go to your Profile </a>
 
 </body>
 </html>

@@ -15,23 +15,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import quiz.*;
-import java.util.*;
-
+import quiz.Quiz;
+import quiz.QuizConstants;
 import database.DataBaseObject;
 import database.MyDB;
 
 /**
- * Servlet implementation class AdminServlet
+ * Servlet implementation class SearchTagServlet
  */
-@WebServlet("/AdminServlet")
-public class AdminServlet extends HttpServlet {
+@WebServlet("/SearchTagServlet")
+public class SearchTagServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminServlet() {
+    public SearchTagServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,35 +39,35 @@ public class AdminServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HomePageQueries.getAllUsers(request);
-		HomePageQueries.getAllQuizzes(request);
-		Connection conn = MyDB.getConnection();	
-		
-		
-		try {
-			Statement stmt = conn.createStatement();
-			String query = "SELECT count(*) from Quiz_Result;";
-			ResultSet rs = stmt.executeQuery(query);
-			if (rs.next()) {
-				int numTaken = rs.getInt(1);
-				request.setAttribute("num_taken", numTaken);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		HomePageQueries.getAnnouncements(request);
-		
-		RequestDispatcher dispatch = request.getRequestDispatcher("admin_page.jsp");
-		dispatch.forward(request, response);
-		
+		// TODO Auto-generated method stub
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		HomePageQueries.getAllUsers(request);
+		HomePageQueries.getAllQuizzes(request);
+		String tag = request.getParameter("text");
+		List<Quiz> matches = new ArrayList<Quiz>();
+		Connection conn = MyDB.getConnection();
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			String query = "SELECT * from Quiz inner join Tag on Tag.quiz_id = Quiz.id WHERE Tag.tag='" + tag + "';";
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String[] row = DataBaseObject.getRow(rs, QuizConstants.QUIZ_TAG_N_COL);
+				matches.add(new Quiz(row, conn));
+			}
+			request.setAttribute("tag", tag);
+			request.setAttribute("tagged", matches);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		RequestDispatcher dispatch = request.getRequestDispatcher("search.jsp");
+		dispatch.forward(request, response);
 	}
 
 }
