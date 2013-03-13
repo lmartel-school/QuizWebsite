@@ -41,8 +41,7 @@ public class PictureQuestion extends Question {
 		String HTML = "";
 		HTML += "<img src=\"" + getPictureURL() + "\">" + '\n';
 		HTML += "<p>" + getPrompt() + "</p><br>" + '\n';
-		HTML += "Your answer: <input type=\"text\" name=\"answer\"><br>" + '\n';
-		HTML += "<input type=\"submit\" value=\"Submit\">" + '\n';
+		HTML += "Your answer: <input type=\"text\" name=\"answer" + questionNumber + "\"><br>" + '\n';
 		return HTML;
 	}
 

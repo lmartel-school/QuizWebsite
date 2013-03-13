@@ -20,8 +20,8 @@ public abstract class Question extends DataBaseObject{
 	private Quiz parentQuiz;
 	//NOTE: access quizID only through getQuizID(), because sometimes you want quizID and sometimes you want parentQuiz
 	
-	private int questionNumber;
-	private QUESTION_TYPE type;
+	protected int questionNumber;
+	protected QUESTION_TYPE type;
 	protected AttributeMap attributes;
 	
 	

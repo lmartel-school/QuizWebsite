@@ -4,27 +4,40 @@ import question.*;
 
 import java.sql.*;
 import java.util.*;
+import java.util.Map.Entry;
 
 public class InProgressQuiz {
 	
 	private Quiz quiz;
 	private List<Question> questions;
-	private List<QuestionAttribute> answers;
-	private List<String> userAnswers;
+	private Question activeQuestion;
+	private Map<Integer, String> userAnswers;
 	
-	private int curQuestionNum;
+	private Iterator<Question> questionIterator;
 	private int score;
 	
 	public InProgressQuiz(Quiz quiz, Connection conn) {
 		this.quiz = quiz;
-		curQuestionNum = 1;
+		this.questions = quiz.getQuestions();
+		activeQuestion = null;
+		questionIterator = questions.iterator();
 		score = 0;
 	}
 	
+	boolean hasNextQuestion(){
+		return questionIterator.hasNext();
+	}
 	
+	Question getNextQuestion(){
+		return activeQuestion = questionIterator.next();
+	}
 	
-	public void incrementCurQuestion() {
-		curQuestionNum++;
+	/**
+	 * Submits an answer for the active question.
+	 * @param submission
+	 */
+	public void submitAnswer(String submission){
+		userAnswers.put(activeQuestion.getQuestionNumber(), submission);
 	}
 	
 	/**
@@ -33,8 +46,8 @@ public class InProgressQuiz {
 	 * @param guess
 	 * @return
 	 */
-	public int gradeOne(int qNum, String guess) {
-		if (answers.get(qNum).equals(guess)){
+	public int gradeActiveQuestion() {
+		if (activeQuestion.checkAnswer(userAnswers.get(activeQuestion.getQuestionNumber()))){
 			return 1;
 		}
 		return 0;
@@ -42,8 +55,11 @@ public class InProgressQuiz {
 	
 	
 	public void gradeAll() {
-		for (int i = 0; i < userAnswers.size(); i++) {
-			if (userAnswers.get(i).equals(answers.get(i))) score++;
+		score = 0;
+		for (Entry<Integer, String> e : userAnswers.entrySet()) {
+			if(quiz.getQuestionByNumber(e.getKey()).checkAnswer(e.getValue())){
+				score++;
+			}
 		}
 	}
 	

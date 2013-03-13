@@ -76,9 +76,8 @@ public class MultiChoiceQuestion extends Question {
 		String HTML = "";
 		HTML += "<p>" + getPrompt() + "</p><br>" + '\n';
 		for(String choice : getChoices()){
-			HTML += "<input type=\"radio\" name=\"answer\" value=\"" + choice + "\">" + choice + "<br>" + '\n';
+			HTML += "<input type=\"radio\" name=\"answer" + questionNumber + "\" value=\"" + choice + "\">" + choice + "<br>" + '\n';
 		}
-		HTML += "<input type=\"submit\" value=\"Submit\">" + '\n';
 		return HTML;
 	}
 	
