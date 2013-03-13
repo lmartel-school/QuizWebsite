@@ -39,7 +39,6 @@ public class FillInQuestion extends Question {
 		String prompt = getPrompt();
 		prompt = prompt.replaceFirst(Pattern.quote(QuizConstants.FILL_IN_DELIMITER), "<input type=\"text\" name=\"answer" + questionNumber +"\">");
 		HTML += "<p>" + prompt + "</p><br>" + '\n';
-		HTML += "<input type=\"submit\" value=\"Submit\">" + '\n';
 		return HTML;
 	}
 
