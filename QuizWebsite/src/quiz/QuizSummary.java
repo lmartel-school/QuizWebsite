@@ -111,7 +111,7 @@ public class QuizSummary {
 				while (rs.next()) {
 					int score = rs.getInt("score");
 					if (count >= QuizConstants.N_TOP_SCORERS && prevScore != score) break;
-					topPerformers.add(rs.getString("username"));
+					topPerformers.add(rs.getString("username") + " got " + rs.getString("score") + " points.");
 					prevScore = score;
 					count++;
 				}

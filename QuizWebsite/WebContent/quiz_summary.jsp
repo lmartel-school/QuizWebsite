@@ -11,13 +11,20 @@
 
 	<% 
 		
-	QuizSummary summary = (QuizSummary) request.getAttribute("quiz_summary");
+	QuizSummary summary = (QuizSummary) request.getAttribute("summary");
 	Quiz quiz = summary.getQuiz();
 	
-	//out.println("<h1>" + quiz.getName() + "</h1>");
+	out.println("<h1>" + quiz.getName() + "</h1>");
+	out.println("<h2>By: <a href=\"UserProfileServlet?username=" + quiz.getAuthor() + "\">" + quiz.getAuthor() + "</a></h2>");
 	
-	//out.println(quiz.getAuthor());
-	out.println("<h1> TODO: this page (quiz_summary.jsp)</h1>");
+	out.println("<p>" + quiz.getDescription() + "<p>");
+	
+	out.println("<h3> All time High Scores: </h3>");
+	out.println("<ul>");
+	for (String name : summary.getTopAll()) {
+		out.println("<li>" + name + "</li>");
+	}
+	out.println("</ul>");
 	
 	
 	//out.println(quiz.getDescription());

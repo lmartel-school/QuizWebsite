@@ -5,14 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title><%= ((User) session.getAttribute("user")).getName() %> 's Profile</title>
+<title><%= ((User) session.getAttribute("user")).getName() %> 's Dashboard</title>
 </head>
 <body>
 
 	<%
 	User user = (User) session.getAttribute("user");
 	
-	out.println("<h1>Welcome to your profile page, " + user.getName() + "!</h1>");
+	out.println("<h1>Welcome to the Dashboard, " + user.getName() + "!</h1>");
 	
 	
 	int numMsg = (Integer) request.getAttribute("unreadMsg");
