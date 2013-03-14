@@ -9,7 +9,7 @@
 <body>
 	<img src="http://i.imgur.com/NQmIwj9.png"><br>
 
-	<h1><b>Welcome to TheQuizBook</b></h1>
+	<h1><b>Welcome to the [thequizbook]</b></h1>
 	
 	Log in if you wish to accept the challenge.
 

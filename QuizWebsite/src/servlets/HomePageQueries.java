@@ -8,8 +8,7 @@ import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-import database.DataBaseObject;
-import database.MyDB;
+import database.*;
 import quiz.*;
 import user.*;
 
@@ -85,7 +84,6 @@ public class HomePageQueries {
 	
 	public static List<String> getFriends(String username, Connection conn) {
 		List<String> friends = new ArrayList<String>();
-		conn = MyDB.getConnection();
 		try {
 			Statement stmt = conn.createStatement();
 			String query = "SELECT sender FROM Message inner join Friend_Request on Message.id=Friend_Request.id WHERE recipient='"
@@ -173,7 +171,7 @@ public class HomePageQueries {
 	}
 	
 	public static void getAllUsers(HttpServletRequest request) {
-		Connection conn = MyDB.getConnection();	
+		Connection conn = (Connection) request.getServletContext().getAttribute("database");
 		List<String> users = new ArrayList<String>();
 		Statement stmt;
 		try {
@@ -191,7 +189,7 @@ public class HomePageQueries {
 	}
 	
 	public static void getAnnouncements(HttpServletRequest request) {
-		Connection conn = MyDB.getConnection();	
+		Connection conn = (Connection) request.getServletContext().getAttribute("database");	
 		List<Announcement> announce = new ArrayList<Announcement>();
 		Statement stmt;
 		try {
@@ -210,7 +208,7 @@ public class HomePageQueries {
 	}
 	
 	public static void getAllQuizzes(HttpServletRequest request) {
-		Connection conn = MyDB.getConnection();	
+		Connection conn = (Connection) request.getServletContext().getAttribute("database");
 		List<Quiz> quizzes = new ArrayList<Quiz>();
 		Statement stmt;
 		try {
@@ -233,7 +231,7 @@ public class HomePageQueries {
 	}
 	
 	public static void getPopQuizzesByRating(HttpServletRequest request) {
-		Connection conn = MyDB.getConnection();	
+		Connection conn = (Connection) request.getServletContext().getAttribute("database");
 		Map<Quiz, ArrayList<Review>> popular = new HashMap<Quiz, ArrayList<Review>>();
 		try {
 			Statement stmt = conn.createStatement();
@@ -266,6 +264,24 @@ public class HomePageQueries {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static List<String> existingAchieve(String usr) {
+		List<String> achievements = new ArrayList<String>();
+		Statement stmt;
+		try {
+			stmt = MyDB.getConnection().createStatement();
+			String query = "select award FROM Achievement WHERE username='" + usr + "';";
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				achievements.add(rs.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return achievements;
+		
 	}
 }
 

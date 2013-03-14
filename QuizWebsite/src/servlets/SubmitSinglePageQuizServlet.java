@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -65,19 +66,24 @@ public class SubmitSinglePageQuizServlet extends HttpServlet {
 	private void checkAchievements(User user, InProgressQuiz progress) {
 		Connection conn = MyDB.getConnection();
 		Statement stmt;
+		List<String> achieve = HomePageQueries.existingAchieve(user.getName());
+
 		try {
 			stmt = conn.createStatement();
 			String query = "SELECT count(*) from Quiz_Result WHERE username='" + user.getName() + "' GROUP BY username;";
-			ResultSet rs = stmt.executeQuery(query);
-			if (rs.next()) {
-				int count = rs.getInt(1);
-				if (count == 9) {
-					HomePageQueries.createAchieve(user, "Quiz Machine");
-				}
-			} 
+			if (!achieve.contains("Quiz Machine")) {
+				ResultSet rs = stmt.executeQuery(query);
+				if (rs.next()) {
+					int count = rs.getInt(1);
+					if (count == 9) {
+						HomePageQueries.createAchieve(user, "Quiz Machine");
+					}
+				} 
+			}
 			
+			if (achieve.contains("I am the Greatest")) return;
 			query = "SELECT max(score) from Quiz_Result WHERE quiz_id=" + progress.getQuiz().getID() + ";";
-			rs = stmt.executeQuery(query);
+			ResultSet rs = stmt.executeQuery(query);
 			if (rs.next()) {
 				int max = rs.getInt(1);
 				if (progress.getScore() > max) {
