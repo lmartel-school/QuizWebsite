@@ -81,7 +81,7 @@ public class CurrentUserProfileServlet extends HttpServlet {
 						String quizResults = "SELECT * from Quiz_Result WHERE username='" + friend.getName() + "' order by id DESC;";
 						ResultSet results = quizStmt.executeQuery(quizResults);
 						while (results.next() && infoCounter < QuizConstants.N_TOP_RATED) {
-							activities.add(new Activity(friend, friend.getName() + "recently took a quiz.", results.getInt("quiz_id")));
+							activities.add(new Activity(friend, friend.getName() + " recently took a quiz.", results.getInt("quiz_id")));
 							infoCounter++;
 						}
 						
