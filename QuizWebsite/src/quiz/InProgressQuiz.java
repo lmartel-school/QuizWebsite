@@ -74,7 +74,7 @@ public class InProgressQuiz {
 	}
 	
 	public int getMaxPossibleScore(){
-		return questions.size() * 1;
+		return quiz.getMaxScore();
 	}
 
 	public Quiz getQuiz() {

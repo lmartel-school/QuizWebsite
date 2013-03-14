@@ -105,7 +105,7 @@ public class QuizSummary {
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();
-			String query = "SELECT * from Quiz_Result where quiz_id=" + quiz.getID() + " order by score DESC;";
+			String query = "SELECT * from Quiz_Result where quiz_id=" + quiz.getID() + " order by score DESC, time_taken ASC;";
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs != null) {
 				int count = 0;

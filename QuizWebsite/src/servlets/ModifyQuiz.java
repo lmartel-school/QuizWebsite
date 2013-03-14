@@ -86,6 +86,8 @@ public class ModifyQuiz extends HttpServlet {
 				stmt.executeUpdate(query);
 				query = "DELETE FROM Quiz_Result where quiz_id=" + id + ";";
 				stmt.executeUpdate(query);
+				query = "DELETE FROM Review where quiz_id=" + id + ";";
+				stmt.executeUpdate(query);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

@@ -50,4 +50,14 @@ create table Quiz_Result (
 	
 );
 
+DROP TABLE if exists Review;
+
+create table Review (
+	id integer PRIMARY KEY, 
+	quiz_id integer references Quiz(id), 
+	reviewer text references User(username),
+	rating integer,
+	review text
+);
+
 
