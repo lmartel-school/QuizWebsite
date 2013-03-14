@@ -14,6 +14,11 @@ String feedback = (String) session.getAttribute("feedback");
 <title><%= quiz.getName() %></title>
 </head>
 <body>
+
+<a href="CurrentUserProfileServlet"> Go to your Profile </a>
+<a href="LogoutServlet">Logout</a>
+	
+	
 <% if(feedback != null){ out.println("<h3>" + feedback + "</h3>"); }%>
 <form action="SubmitMultiPageQuizServlet" method="POST">
 <%= question.renderQuizMode() %>

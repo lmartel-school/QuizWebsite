@@ -9,6 +9,9 @@
 </head>
 <body>
 
+	<a href="CurrentUserProfileServlet"> Go to your Profile </a>
+	<a href="LogoutServlet">Logout</a>
+
 <%
 	List<QuizResult> results = (ArrayList<QuizResult>) request.getAttribute("userRecent");
 	for (int i = 0; i < results.size(); i++) {
@@ -24,8 +27,6 @@
 		out.println("<br /><hr /><br />");
 	}
 %>
-
-	<a href="CurrentUserProfileServlet"> <h2> Go to your Profile </h2> </a>
 
 </body>
 </html>

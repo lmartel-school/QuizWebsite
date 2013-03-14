@@ -8,6 +8,8 @@
 <title><%= ((User) request.getAttribute("user")).getName()%> 's Profile Page</title>
 </head>
 <body>
+	<a href="CurrentUserProfileServlet"> Go to your Profile </a>
+	<a href="LogoutServlet">Logout</a>
 
 <%
 	User user = (User) request.getAttribute("user");
@@ -91,7 +93,6 @@
 	%>
 	
 	<a href=SearchServlet>Search All Users</a>
-	<a href="CurrentUserProfileServlet"> Go to your Profile </a>
 
 </body>
 </html>

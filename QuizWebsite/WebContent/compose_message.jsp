@@ -8,6 +8,11 @@
 <title>New Message</title>
 </head>
 <body>
+
+<a href="CurrentUserProfileServlet"> Go to your Profile </a>
+<a href="LogoutServlet">Logout</a> <br><br>
+
+
 <h1> Compose a new message:</h1>
 
 <form action="CreateMessageServlet" method="post">

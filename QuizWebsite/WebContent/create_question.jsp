@@ -9,6 +9,11 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 </head>
 <body>
+
+<a href="CurrentUserProfileServlet"> Go to your Profile </a>
+<a href="LogoutServlet">Logout</a> <br><br>
+
+
 <h1>Add a question to your quiz!</h1>
 <% 
 for(QUESTION_TYPE t : QUESTION_TYPE.values()){
