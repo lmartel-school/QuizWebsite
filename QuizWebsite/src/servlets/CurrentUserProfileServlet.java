@@ -143,6 +143,7 @@ public class CurrentUserProfileServlet extends HttpServlet {
 		HomePageQueries.getAnnouncements(request);
 		getFriendActivity(request, conn, user);
 		HomePageQueries.getAchievements(request, conn, user);
+		HomePageQueries.getPopQuizzesByRating(request);
 		dispatch = request.getRequestDispatcher("user_home.jsp");
 		dispatch.forward(request, response);
 	}

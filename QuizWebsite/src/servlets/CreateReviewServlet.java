@@ -46,7 +46,7 @@ public class CreateReviewServlet extends HttpServlet {
 		int radioVal = Integer.parseInt(request.getParameter("group1"));
 		int quizID = Integer.parseInt(request.getParameter("quizID"));
 		
-		Rating review = new Rating(quizID, ((User) request.getSession().getAttribute("user")).getName(), radioVal, text);
+		Review review = new Review(quizID, ((User) request.getSession().getAttribute("user")).getName(), radioVal, text);
 		review.saveToDataBase(conn);
 		
 		RequestDispatcher dispatch = request.getRequestDispatcher("CurrentUserProfileServlet");

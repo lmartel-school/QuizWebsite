@@ -7,21 +7,21 @@ import java.sql.Statement;
 import database.*;
 import user.*;
 
-public class Rating extends DataBaseObject {
+public class Review extends DataBaseObject {
 	
 	private int quizID;
 	private String reviewer;
 	private int rating;
 	private String review;
 
-	public Rating(int quizID, String reviewer, int rating, String review) {
+	public Review(int quizID, String reviewer, int rating, String review) {
 		this.quizID = quizID;
 		this.reviewer = reviewer;
 		this.rating = rating;
 		this.review = review;
 	}
 	
-	public Rating(String[] attrs, Connection conn) {
+	public Review(String[] attrs, Connection conn) {
 		quizID = Integer.parseInt(attrs[1]);
 		reviewer = attrs[2];
 		rating = Integer.parseInt(attrs[3]);
@@ -35,8 +35,8 @@ public class Rating extends DataBaseObject {
 			Statement stmt = conn.createStatement();
 			String query;
 			if (dbID == -1) {
-				generateID(conn, "Rating");
-				query = "Insert into Rating VALUES (" + dbID + ", " + quizID + ", '" + 
+				generateID(conn, "Review");
+				query = "Insert into Review VALUES (" + dbID + ", " + quizID + ", '" + 
 					reviewer + "', " + rating + ", '" + review + "');";
 				stmt.executeUpdate(query);
 			}

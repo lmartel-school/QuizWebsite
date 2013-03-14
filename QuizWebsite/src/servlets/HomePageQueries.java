@@ -4,8 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -160,12 +159,10 @@ public class HomePageQueries {
 			"';";
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs != null) {
-				int count = 0;
-				while (rs.next() && count < QuizConstants.N_TOP_RATED) {
+				while (rs.next()) {
 					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
 					Quiz quiz = new Quiz(attrs, conn);
 					authored.add(quiz);
-					count++;
 				}
 			}
 			request.setAttribute("authored", authored);
@@ -233,6 +230,41 @@ public class HomePageQueries {
 	public static void createAchieve(User user, String title) {
 		Achievement achieve = new Achievement(user.getName(), title);
 		achieve.saveToDataBase(MyDB.getConnection());
+	}
+	
+	public static void getPopQuizzesByRating(HttpServletRequest request) {
+		Connection conn = MyDB.getConnection();	
+		Map<Quiz, ArrayList<Review>> popular = new HashMap<Quiz, ArrayList<Review>>();
+		try {
+			Statement stmt = conn.createStatement();
+			String query = "SELECT avg(rating), quiz_id " +
+					"FROM Review " +
+					"GROUP by quiz_id " + 
+					"ORDER by avg(rating) DESC;";
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs != null) {
+				int count = 0;
+				while (rs.next() && count < QuizConstants.N_TOP_RATED) {
+					int quizId = rs.getInt(2);
+					Quiz quiz = getQuizFromId(quizId, conn);
+					query = "SELECT * FROM Review where quiz_id=" + quiz.getID() + ";";
+					ResultSet reviews = stmt.executeQuery(query);
+					ArrayList<Review> revList = new ArrayList<Review>();
+					while (reviews.next()) {
+						String [] row = DataBaseObject.getRow(rs, QuizConstants.REVIEW_N_COL);
+						Review review = new Review(row, conn);
+						revList.add(review);
+						
+					}
+					
+					popular.put(quiz, revList);
+					count++;
+				}
+			}	
+			request.setAttribute("popular_rating", popular);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
 

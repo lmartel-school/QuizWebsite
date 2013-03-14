@@ -12,7 +12,7 @@
 
 <form action="CreateReviewServlet" method="post">
 
-	<input type="hidden" name="quizID" value="<% request.getAttribute("quizID"); %>">
+	<input type="hidden" name="quizID" value="<% request.getParameter("quizID"); %>">
 	Give it a Rating...<br>
 	<input type="radio" name="group1" value="1"> 1
 	<input type="radio" name="group1" value="2"> 2

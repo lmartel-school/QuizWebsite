@@ -48,6 +48,18 @@
 		%> <br><br> <%
 	}
 		
+	out.println("<h3>Popular Quizzes, as Voted by Peers</h3>");
+	Map<Quiz, ArrayList<Review>> rated = (Map<Quiz, ArrayList<Review>>) request.getAttribute("popular_rating");
+	
+	for (Quiz quiz : rated.keySet()) {
+		ArrayList<Review> reviews = rated.get(quiz);
+		out.println("<a href=\"QuizServlet?id=" + quiz.getID() + "\">" + quiz.getName() + "</a>");
+		%> <ul> 
+			<% for (int i = 0; i < reviews.size(); i++) {
+				out.println("<li> " + reviews.get(i).renderReview() + " </li>");
+			}  
+		%> </ul> <%
+	}
 	
 	out.println("<h3>Your Recently Taken Quizzes</h3>");
 	List<QuizResult> usrRecents = (List<QuizResult>) request.getAttribute("userRecent");

@@ -18,6 +18,7 @@ public class QuizConstants {
 	public static final int MSG_FRIEND_N_COLS = 5;
 	public static final int ANNOUNCE_N_COL= 2;
 	public static final int ACHIEVEMENT_N_COL = 3;
+	public static final int REVIEW_N_COL = 5;
 	
 	public static final int QUIZ_TAG_N_COL = 9;
 	
