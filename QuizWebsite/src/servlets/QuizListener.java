@@ -46,8 +46,6 @@ public class QuizListener implements ServletContextListener, HttpSessionListener
     public void sessionCreated(HttpSessionEvent arg0) {
     	HttpSession session = arg0.getSession();    	
     	
-//        session.setAttribute("isLoggedIn", false);
-//        session.setAttribute("isAdmin", false);
     	session.setAttribute("user", null);
         session.setAttribute("currentQuiz", null);
     }

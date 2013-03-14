@@ -57,11 +57,6 @@ public class MultiChoiceQuestion extends Question {
 	public boolean checkAnswer(String answer){
 		 return AnswerChecker.check(answer, getCorrectChoices());
 	}
-	
-	private String getPrompt(){
-		QuestionAttribute prompt = attributes.getFirst(Question.QUESTION_ATTRIBUTE.PROMPT);
-		return prompt.getAttrValue();
-	}
 	 
 	private List<QuestionAttribute> getCorrectChoices(){
 			return attributes.get(Question.QUESTION_ATTRIBUTE.CORRECT);
@@ -91,5 +86,10 @@ public class MultiChoiceQuestion extends Question {
 		HTML += "<p>Wrong answers:</p>" + '\n';
 		HTML += "<textarea cols=\"40\" rows=\"5\" name=\"wrong\">Enter wrong answers to display here,\n one per line</textarea><br>" + '\n';
 		return HTML;
+	}
+
+	@Override
+	public String getCompleteAnswer() {
+		return getAnAnswer();
 	}
 }

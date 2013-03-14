@@ -97,7 +97,7 @@ public class InProgressQuiz {
 		String feedback;
 		String userAnswer = userAnswerForQuestion(getActiveQuestion());
 		if(checkActiveQuestion()) feedback = "\"" + userAnswer + "\" was correct! Nice job!";
-		else feedback = "\"" + userAnswer + "\" wasn't quite right, sorry... we were looking for something like \"" + getActiveQuestion().getAnAnswer() + "\"";
+		else feedback = "\"" + userAnswer + "\" wasn't quite right, sorry... we were looking for something like \"" + getActiveQuestion().getCompleteAnswer() + "\"";
 		return feedback;
 	}
 	
