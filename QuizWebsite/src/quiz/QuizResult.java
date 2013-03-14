@@ -66,9 +66,7 @@ public final class QuizResult extends DataBaseObject {
 	}
 	
 	public String getTimeTakenFormatted() {
-		Date date = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
-		return formatter.format(date);
+		return timeTaken;
 	}
 
 	public Quiz getQuiz() {
