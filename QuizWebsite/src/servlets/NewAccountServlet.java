@@ -75,7 +75,7 @@ public class NewAccountServlet extends HttpServlet {
 				request.setAttribute("userRecent", new ArrayList<QuizResult>());
 				request.setAttribute("activities", new ArrayList<Activity>());
 				
-				dispatch = request.getRequestDispatcher("user_home.jsp");
+				dispatch = request.getRequestDispatcher("index.jsp");
 			}
 			dispatch.forward(request, response);
 			
