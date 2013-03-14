@@ -22,6 +22,7 @@ public class Review extends DataBaseObject {
 	}
 	
 	public Review(String[] attrs, Connection conn) {
+		super(attrs, conn);
 		quizID = Integer.parseInt(attrs[1]);
 		reviewer = attrs[2];
 		rating = Integer.parseInt(attrs[3]);

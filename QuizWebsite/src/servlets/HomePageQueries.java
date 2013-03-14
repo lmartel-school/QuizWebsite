@@ -251,7 +251,7 @@ public class HomePageQueries {
 					ResultSet reviews = stmt.executeQuery(query);
 					ArrayList<Review> revList = new ArrayList<Review>();
 					while (reviews.next()) {
-						String [] row = DataBaseObject.getRow(rs, QuizConstants.REVIEW_N_COL);
+						String [] row = DataBaseObject.getRow(reviews, QuizConstants.REVIEW_N_COL);
 						Review review = new Review(row, conn);
 						revList.add(review);
 						

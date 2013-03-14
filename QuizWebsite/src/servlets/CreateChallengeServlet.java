@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,14 +36,6 @@ public class CreateChallengeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String sender = request.getParameter("sender");
-		String recip = request.getParameter("recipient");
-		QuizResult res = (QuizResult)request.getSession().getAttribute("result");
-		
-		Challenge ch = new Challenge(sender, recip, res);
-		ch.saveToDataBase(MyDB.getConnection());
-		
-		
 		
 	}
 
@@ -49,7 +43,19 @@ public class CreateChallengeServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
+		String sender = request.getParameter("sender");
+		String recip = request.getParameter("recipient");
+		QuizResult res = (QuizResult)request.getSession().getAttribute("result");
+		
+		Challenge ch = new Challenge(sender, recip, res);
+		ch.saveToDataBase(MyDB.getConnection());
+		
+
+		RequestDispatcher disp = request.getRequestDispatcher("index.jsp");
+		disp.forward(request, response);
+		
+		
 	}
 
 }
