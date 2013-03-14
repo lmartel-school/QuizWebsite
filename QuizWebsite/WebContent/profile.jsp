@@ -72,7 +72,7 @@
 	
 	for (int i = 0; i < authored.size(); i++) {
 		Quiz quiz = authored.get(i);
-		out.println("<a href=\"QuizServlet?id=" + quiz.getID() + "\">" + quiz.getName() + "</a>");
+		out.println("<a href=\"QuizServlet?id=" + quiz.getID() + "\">" + quiz.getName() + "</a><br>");
 		
 	}
 	
@@ -85,7 +85,7 @@
 		User usr = act.getUser();
 		out.println(usr.getName() + ": " + act.getActivity());
 		if (act.getQuizID() != -1) {
-			out.println("<a href=\"QuizServlet?id=" + act.getQuizID() + "\">Go to the Quiz</a>");
+			out.println("<a href=\"QuizServlet?id=" + act.getQuizID() + "\">Go to the Quiz</a><br>");
 		}
 		out.println();
 	}
