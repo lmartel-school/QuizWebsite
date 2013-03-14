@@ -9,9 +9,7 @@
 </head>
 <body>
 
-<a href="CurrentUserProfileServlet"> Go to your Profile </a>
-<a href="LogoutServlet">Logout</a> <br><br>
-
+<%@ include file="_header.jsp" %>
 
 <h1>Welcome to QUIZ CREATION.</h1>
 <form action="CreateQuizServlet" method="POST">

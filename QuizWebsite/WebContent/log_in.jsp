@@ -7,6 +7,7 @@
 <title>Log In</title>
 </head>
 <body>
+	<img src="http://i.imgur.com/NQmIwj9.png"><br>
 
 	<h1><b>Welcome to the [thequizbook]</b></h1>
 	

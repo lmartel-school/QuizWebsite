@@ -9,9 +9,7 @@
 </head>
 <body>
 
-<a href="CurrentUserProfileServlet"> Go to your Profile </a>
-<a href="LogoutServlet">Logout</a> <br><br>
-
+<%@ include file="_header.jsp" %>
 
 <h1> Compose a new message:</h1>
 

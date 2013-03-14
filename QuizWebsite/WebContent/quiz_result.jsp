@@ -8,6 +8,9 @@
 <title>Quiz Result</title>
 </head>
 <body>
+
+<%@ include file="_header.jsp" %>
+  
 <%
 QuizResult res = (QuizResult)request.getAttribute("result");
 User viewer = (User)session.getAttribute("user");

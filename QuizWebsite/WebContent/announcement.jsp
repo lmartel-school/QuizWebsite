@@ -8,8 +8,7 @@
 </head>
 <body>
 
-<a href="CurrentUserProfileServlet"> Go to your Profile </a>
-<a href="LogoutServlet">Logout</a> <br><br>
+<%@ include file="_header.jsp" %>
 
 <form action="CreateAnnouncement" method="post">
 <textarea rows="10" cols="30" name="text">Compose here...</textarea>

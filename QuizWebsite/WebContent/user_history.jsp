@@ -9,11 +9,11 @@
 </head>
 <body>
 
-	<a href="CurrentUserProfileServlet"> Go to your Profile </a>
-	<a href="LogoutServlet">Logout</a>
+	<%@ include file="_header.jsp" %>
 
 <%
 	List<QuizResult> results = (ArrayList<QuizResult>) request.getAttribute("userRecent");
+	if(results.isEmpty()) out.println("No results found :(");
 	for (int i = 0; i < results.size(); i++) {
 		QuizResult result = results.get(i);
 		Quiz quiz = result.getQuiz();

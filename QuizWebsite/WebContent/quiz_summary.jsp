@@ -8,8 +8,7 @@
 <title>Quiz Summary</title>
 </head>
 <body>
-	<a href="CurrentUserProfileServlet"> Go to your Profile </a>
-	<a href="LogoutServlet">Logout</a> <br><br>
+	<%@ include file="_header.jsp" %>
 	
 	<% 
 		
