@@ -27,11 +27,6 @@ public class FillInQuestion extends Question {
 	public boolean checkAnswer(String answer) {
 		return AnswerChecker.check(answer, getCorrectAnswer());
 	}
-	
-	private String getPrompt(){
-		QuestionAttribute prompt = attributes.getFirst(Question.QUESTION_ATTRIBUTE.PROMPT);
-		return prompt.getAttrValue();
-	}
 
 	@Override
 	public String renderQuizMode() {
@@ -50,5 +45,10 @@ public class FillInQuestion extends Question {
 		HTML += "<p>Correct answer:</p>" + '\n';
 		HTML += "<input type=\"text\" name=\"answer\"><br>" + '\n';
 		return HTML;
+	}
+
+	@Override
+	public String getCompleteAnswer() {
+		return getAnAnswer();
 	}
 }

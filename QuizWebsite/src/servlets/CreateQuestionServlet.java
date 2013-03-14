@@ -74,6 +74,12 @@ public class CreateQuestionServlet extends HttpServlet {
 			String prompt = request.getParameter("prompt"); //being null may break it
 			PictureQuestion pQ = new PictureQuestion(quiz, number, url, prompt, answer);
 			quiz.addQuestion(pQ);
+		} else if (type == Question.QUESTION_TYPE.MULTI_TEXT_ANSWER.value) {
+			String prompt = request.getParameter("prompt");
+			//the "correct" param contains textarea input, needs to be split into a list
+			List<String> answersList = Arrays.asList(request.getParameter("correct").split(QuizConstants.TEXTAREA_NEWLINE_REGEX));
+			boolean inOrder = Boolean.parseBoolean(request.getParameter("inOrder"));
+			quiz.addQuestion(new MultiTextAnswerQuestion(quiz, number, prompt, answersList, inOrder));
 		}
 		
 		RequestDispatcher dispatch;
