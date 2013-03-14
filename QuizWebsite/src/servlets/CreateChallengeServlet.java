@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Connection;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,12 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import database.MyDB;
 
 import quiz.QuizResult;
 
 import user.Challenge;
-import user.User;
 
 /**
  * Servlet implementation class CreateChallengeServlet
@@ -49,7 +48,7 @@ public class CreateChallengeServlet extends HttpServlet {
 		QuizResult res = (QuizResult)request.getSession().getAttribute("result");
 		
 		Challenge ch = new Challenge(sender, recip, res);
-		ch.saveToDataBase(MyDB.getConnection());
+		ch.saveToDataBase((Connection) getServletContext().getAttribute("database"));
 		
 
 		RequestDispatcher disp = request.getRequestDispatcher("index.jsp");

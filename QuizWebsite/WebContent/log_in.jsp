@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<h1><b>Welcome to Quiz Master Extraordinaire</b></h1>
+	<h1><b>Welcome to the [thequizbook]</b></h1>
 	
 	Log in if you wish to accept the challenge.
 

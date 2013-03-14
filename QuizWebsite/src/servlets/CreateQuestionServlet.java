@@ -101,18 +101,26 @@ public class CreateQuestionServlet extends HttpServlet {
 		Statement stmt;
 		try {
 			stmt = MyDB.getConnection().createStatement();
+			List<String> curAchieve = HomePageQueries.existingAchieve(cur.getName());
 			String query = "SELECT count(*) FROM Quiz WHERE author='" + cur.getName() + "';";
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs.next()) {
 				int count = rs.getInt(1);
 				switch (count) {
-					case 0: HomePageQueries.createAchieve(cur, "Amateur Author"); break;
-					case 4: HomePageQueries.createAchieve(cur, "Prolific Author"); break;
-					case 9: HomePageQueries.createAchieve(cur, "Prodigious Author"); break;
+					case 0: 
+						if (!curAchieve.contains("Amateur Author"))
+							HomePageQueries.createAchieve(cur, "Amateur Author"); break;
+					case 4: 
+						if (!curAchieve.contains("Prolific Author"))
+							HomePageQueries.createAchieve(cur, "Prolific Author"); break;
+					case 9: 
+						if (!curAchieve.contains("Prodigious Author"))
+						HomePageQueries.createAchieve(cur, "Prodigious Author"); break;
 					default: break;
 				}
 			} else {
-				HomePageQueries.createAchieve(cur, "Amateur Author");
+				if (!curAchieve.contains("Amateur Author"))
+					HomePageQueries.createAchieve(cur, "Amateur Author");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -120,7 +128,5 @@ public class CreateQuestionServlet extends HttpServlet {
 		}
 		
 	}
-	
-	
 
 }
