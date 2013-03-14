@@ -3,7 +3,9 @@ package quiz;
 import question.*;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 import java.util.Map.Entry;
 
 public class InProgressQuiz {
@@ -15,6 +17,8 @@ public class InProgressQuiz {
 	
 	private Iterator<Question> questionIterator;
 	private int score;
+	private long startTimeMillis;
+	private String start;
 	
 	public InProgressQuiz(Quiz quiz, Connection conn) {
 		this.quiz = quiz;
@@ -24,6 +28,10 @@ public class InProgressQuiz {
 		questionIterator = questions.iterator();
 		score = 0;
 		if(hasNextQuestion()) moveToNextQuestion(); //Start at first question, if there is at least one question
+		startTimeMillis = System.currentTimeMillis();
+		Date date = new Date(startTimeMillis);
+		SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+		start = formatter.format(date);
 	}
 	
 	public boolean hasNextQuestion(){
@@ -91,6 +99,14 @@ public class InProgressQuiz {
 		if(checkActiveQuestion()) feedback = "\"" + userAnswer + "\" was correct! Nice job!";
 		else feedback = "\"" + userAnswer + "\" wasn't quite right, sorry... we were looking for something like \"" + getActiveQuestion().getAnAnswer() + "\"";
 		return feedback;
+	}
+	
+	public String getStartTimeFormatted() {
+		return start;
+	}
+	
+	public long getStartTimeMillis() {
+		return startTimeMillis;
 	}
 
 }
