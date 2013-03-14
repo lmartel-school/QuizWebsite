@@ -13,6 +13,7 @@ import database.MyDB;
 
 import question.*;
 import quiz.*;
+
 import java.util.*;
 import user.*;
 import java.sql.*;
@@ -44,6 +45,14 @@ public class CreateQuestionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int type = Integer.parseInt(request.getParameter("type"));
+		
+		//this is a dumbshit hack to implement simple response questions without actually creating a subclass.
+		boolean appendBlank = false;
+		if(type == Question.QUESTION_TYPE.SIMPLE_RESPONSE.value){
+			appendBlank = true;
+			type = Question.QUESTION_TYPE.FILL_IN.value;
+		}
+			
 		Quiz quiz = (Quiz) request.getSession().getAttribute("quiz"); //make sure this alters the one in the session
 		int number = quiz.countQuestions() + 1;
 		if (type == Question.QUESTION_TYPE.MULTI_CHOICE.value) {
@@ -56,9 +65,9 @@ public class CreateQuestionServlet extends HttpServlet {
 
 		} else if (type == Question.QUESTION_TYPE.FILL_IN.value) {
 			String prompt = request.getParameter("prompt");
+			if(appendBlank) prompt += " " + QuizConstants.FILL_IN_DELIMITER;
 			String answer = request.getParameter("answer");
 			quiz.addQuestion(new FillInQuestion(quiz, number, prompt, answer));
-			
 		} else if (type == Question.QUESTION_TYPE.PICTURE.value) {
 			String url = request.getParameter("picture_url");
 			String answer = request.getParameter("answer");
