@@ -94,14 +94,9 @@
 	
 	for (int i = 0; i < activities.size(); i++) {
 		Activity act = activities.get(i);
-		User usr = act.getUser();
-		out.println(usr.getName() + ": " + act.getActivity());
-		out.println("<a href=\"UserProfileServlet?username=" + usr.getName() + "\">" + usr.getName() + "'s Profile Page" + "</a>");
-		if (act.getQuizID() != -1) {
-			out.println("<a href=\"QuizServlet?id=" + act.getQuizID() + "\">Go to the Quiz</a>");
-			%> <br><br> <%
-		}
-		out.println();
+		out.println(act.getMsg() + act.getLink());
+		
+		%> <br><br> <%
 	}
 	if (user.isAdmin()) {
 		out.println("<a href=\"AdminServlet\">Administration</a>");

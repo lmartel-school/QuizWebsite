@@ -145,13 +145,13 @@ public class UserProfileServlet extends HttpServlet {
 			while (rs.next()) {
 				String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS); //
 				Quiz quiz = new Quiz(attrs, conn);
-				activities.add(new Activity(profile, profile.getName() + " authored a quiz: " + quiz.getName(), rs.getInt("id")));
+				activities.add(new Activity(profile, rs.getInt("id"), true, quiz.getName()));
 			}
 			
 			query = "SELECT * FROM Quiz_Result WHERE username='" + profile.getName() + "';";
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				activities.add(new Activity(profile, profile.getName() + " took a quiz.", rs.getInt("quiz_id")));
+				activities.add(new Activity(profile, rs.getInt("id"), false , ""));
 			}
 			
 			request.setAttribute("activities", activities); 

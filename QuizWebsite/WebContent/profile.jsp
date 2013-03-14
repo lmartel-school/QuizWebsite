@@ -82,12 +82,12 @@
 	
 	for (int i = 0; i < activities.size(); i++) {
 		Activity act = activities.get(i);
-		User usr = act.getUser();
-		out.println(usr.getName() + ": " + act.getActivity());
-		if (act.getQuizID() != -1) {
-			out.println("<a href=\"QuizServlet?id=" + act.getQuizID() + "\">Go to the Quiz</a><br>");
+		
+		out.println(act.getMsg());
+		if (!act.isAuthoring()) {
+			out.println(act.getLink());
 		}
-		out.println();
+		%> <br> <%
 	}
 	
 	%>

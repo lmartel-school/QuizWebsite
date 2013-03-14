@@ -81,7 +81,7 @@ public class CurrentUserProfileServlet extends HttpServlet {
 						String quizResults = "SELECT * from Quiz_Result WHERE username='" + friend.getName() + "' order by id DESC;";
 						ResultSet results = quizStmt.executeQuery(quizResults);
 						while (results.next() && infoCounter < QuizConstants.N_TOP_RATED) {
-							activities.add(new Activity(friend, friend.getName() + " recently took a quiz.", results.getInt("quiz_id")));
+							activities.add(new Activity(friend, results.getInt("id"), false, ""));
 							infoCounter++;
 						}
 						
@@ -93,8 +93,7 @@ public class CurrentUserProfileServlet extends HttpServlet {
 							String[] attrs = DataBaseObject.getRow(results, QuizConstants.QUIZ_N_COLS);
 							Quiz quiz = new Quiz(attrs, conn);
 							
-							String msg = friend.getName() + " recently authored " + quiz.getName();
-							Activity act = new Activity(friend, msg, quiz.getID());
+							Activity act = new Activity(friend, quiz.getID(), true, quiz.getName());
 							activities.add(act);
 							infoCounter++;
 						}

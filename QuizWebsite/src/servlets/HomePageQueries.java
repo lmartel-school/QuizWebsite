@@ -64,12 +64,11 @@ public class HomePageQueries {
 		List<Quiz> recents = new ArrayList<Quiz>();
 		try {
 			Statement stmt = conn.createStatement();
-			String query = "SELECT * FROM Quiz;";
+			String query = "SELECT * FROM Quiz order by id DESC;";
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs != null) {
 				int count = 0;
-				rs.afterLast();
-				while (rs.previous() && count < QuizConstants.N_TOP_RATED) {
+				while (rs.next() && count < QuizConstants.N_TOP_RATED) {
 					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
 					Quiz quiz = new Quiz(attrs, conn);
 					recents.add(quiz);
