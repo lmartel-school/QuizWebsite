@@ -44,6 +44,15 @@ qRes.saveToDataBase(MyDB.getConnection());
 </ol>
 Your score was <%= progress.getScore() %> out of <%= progress.getMaxPossibleScore() %>.
 </p>
-TODO: generate and save QuizResult object.
+
+
+<form action="CreateReviewServlet" method="post">
+<input type="hidden" name="quizID" value="<%out.print(progress.getQuiz().getID()); %>">
+<input type="submit" value="Post a review?">
+</form>
+
+
+
+
 </body>
 </html>
