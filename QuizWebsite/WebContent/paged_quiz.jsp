@@ -15,9 +15,7 @@ String feedback = (String) session.getAttribute("feedback");
 </head>
 <body>
 
-<a href="CurrentUserProfileServlet"> Go to your Profile </a>
-<a href="LogoutServlet">Logout</a>
-	
+<%@ include file="_header.jsp" %>
 	
 <% if(feedback != null){ out.println("<h3>" + feedback + "</h3>"); }%>
 <form action="SubmitMultiPageQuizServlet" method="POST">

@@ -7,6 +7,7 @@
 <title>Create Account</title>
 </head>
 <body>
+	<img src="http://i.imgur.com/NQmIwj9.png"><br>
 
 	<h1>The Name <%= request.getParameter("username") %> is Already in Use.</h1>
 	

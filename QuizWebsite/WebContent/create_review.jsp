@@ -7,8 +7,7 @@
 <title>Write a Review</title>
 </head>
 <body>
-<a href="CurrentUserProfileServlet"> Go to your Profile </a>
-<a href="LogoutServlet">Logout</a>
+<%@ include file="_header.jsp" %>
 
 <form action="CreateReviewServlet" method="post">
 

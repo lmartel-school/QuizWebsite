@@ -5,8 +5,7 @@
 <html>
 <head>
 
-<a href="CurrentUserProfileServlet"> Go to your Profile </a>
-<a href="LogoutServlet">Logout</a> <br><br>
+<%@ include file="_header.jsp" %>
 
 <%
 InProgressQuiz progress = (InProgressQuiz) session.getAttribute("in_progress_quiz");

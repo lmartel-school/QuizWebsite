@@ -9,7 +9,7 @@
 </head>
 <body>
 
-	<a href="LogoutServlet">Logout</a>
+	<%@ include file="_header.jsp" %>
 
 	<%
 	User user = (User) session.getAttribute("user");

@@ -8,8 +8,7 @@
 <title><%= ((User) request.getAttribute("user")).getName()%> 's Profile Page</title>
 </head>
 <body>
-	<a href="CurrentUserProfileServlet"> Go to your Profile </a>
-	<a href="LogoutServlet">Logout</a>
+	<%@ include file="_header.jsp" %>
 
 <%
 	User user = (User) request.getAttribute("user");
