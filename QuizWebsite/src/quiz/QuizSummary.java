@@ -87,7 +87,9 @@ public class QuizSummary {
 			int count = 0;
 			if (rs != null) {
 				while (rs.next() && count < QuizConstants.N_TOP_SCORERS) {
-					recentTopPerformers.add(rs.getString("username"));
+					topPerformers.add("<a href=\"UserProfileServlet?username=" + rs.getString("username") + "\">" +
+										rs.getString("username") + "</a> got " + rs.getString("score") + " points.\n" +
+										"Taken at " + rs.getString("time_taken") + "\n");
 					count++;
 				}
 			}
@@ -111,7 +113,9 @@ public class QuizSummary {
 				while (rs.next()) {
 					int score = rs.getInt("score");
 					if (count >= QuizConstants.N_TOP_SCORERS && prevScore != score) break;
-					topPerformers.add(rs.getString("username") + " got " + rs.getString("score") + " points.");
+					topPerformers.add("<a href=\"UserProfileServlet?username=" + rs.getString("username") + "\">" +
+										rs.getString("username") + "</a> got " + rs.getString("score") + " points.\n" +
+									  "Taken at " + rs.getString("time_taken") + "\n");
 					prevScore = score;
 					count++;
 				}
