@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import quiz.Quiz;
 
@@ -29,13 +31,26 @@ public abstract class Question extends DataBaseObject{
 		MULTI_CHOICE(0, "Multiple Choice"),
 		FILL_IN(1, "Fill-in-the-Blank"),
 		PICTURE(2, "Picture Prompt"),
-		SIMPLE_RESPONSE(3, "Simple text response");
+		SIMPLE_RESPONSE(3, "Simple text response"),
+		MULTI_TEXT_ANSWER(4, "Multiple text answers");
 		
 		private QUESTION_TYPE(final int value, final String text){
 			this.value = value;
 			this.text = text;
 		}
 		
+		private static Map<Integer, QUESTION_TYPE> serializer;
+		
+		static {
+			serializer = new HashMap<Integer, QUESTION_TYPE>();
+			for(QUESTION_TYPE t : QUESTION_TYPE.values()){
+				serializer.put(t.value, t);
+			}
+		}
+		
+		public static QUESTION_TYPE serialize(int t){
+			return serializer.get(t);
+		}
 		public final String text;
 		public final int value;
 	}
@@ -44,7 +59,8 @@ public abstract class Question extends DataBaseObject{
 		CORRECT("correct"),
 		WRONG("wrong"),
 		PROMPT("prompt"),
-		PICTURE_URL("picture_url");
+		PICTURE_URL("picture_url"),
+		ORDERED_ANSWERS("require_ordered_answers");
 		
 		private QUESTION_ATTRIBUTE(final String text) {
 			this.text = text;
@@ -62,13 +78,14 @@ public abstract class Question extends DataBaseObject{
 	 * @return a new Question object
 	 */
 	public static Question build(String[] attrs, Connection conn){
-		QUESTION_TYPE type = serializeType(attrs[3]);
+		QUESTION_TYPE type = QUESTION_TYPE.serialize(Integer.parseInt(attrs[3]));
 		switch(type){
 		case MULTI_CHOICE: return new MultiChoiceQuestion(attrs, conn);
 		case FILL_IN: return new FillInQuestion(attrs, conn);
 		case PICTURE: return new PictureQuestion(attrs, conn);
+		case MULTI_TEXT_ANSWER: return new MultiTextAnswerQuestion(attrs, conn);
+		default: assert(false);
 		}
-		assert(false);
 		return null;
 	}
 
@@ -84,7 +101,7 @@ public abstract class Question extends DataBaseObject{
 		super(attrs, conn);
 		quizID = Integer.parseInt(attrs[1]);
 		questionNumber = Integer.parseInt(attrs[2]);
-		type = serializeType(attrs[3]);
+		type = QUESTION_TYPE.serialize(Integer.parseInt(attrs[3]));
 		
 		attributes = new AttributeMap();
 		getAttributes(conn);
@@ -122,18 +139,6 @@ public abstract class Question extends DataBaseObject{
 		
 		
 	}
-	
-	
-	private static QUESTION_TYPE serializeType(String attr){
-		int val = Integer.parseInt(attr);
-		switch(val){ 
-		case 0: return QUESTION_TYPE.MULTI_CHOICE; 
-		case 1: return QUESTION_TYPE.FILL_IN;
-		case 2: return QUESTION_TYPE.PICTURE;
-		}
-		return null;
-	}
-
 
 	@Override
 	public void saveToDataBase(Connection conn) {
@@ -175,15 +180,20 @@ public abstract class Question extends DataBaseObject{
 	
 	/**
 	 * This is an HTML rendering factory-style method.
-	 * Basically a workaround/accessor for the inherited static method problem
+	 * Basically a workaround/accessor for the inherited static method problem.
+	 * There's an assert at the bottom to remind you to add every question type to this method.
 	 * @param t
 	 * @return
 	 */
 	public final static String renderCreateMode(QUESTION_TYPE t){
-		if(t.value == QUESTION_TYPE.MULTI_CHOICE.value) return MultiChoiceQuestion.renderCreateMode();
-		if(t.value == QUESTION_TYPE.FILL_IN.value) return FillInQuestion.renderCreateMode();
-		if(t.value == QUESTION_TYPE.PICTURE.value) return PictureQuestion.renderCreateMode();
-		if(t.value == QUESTION_TYPE.SIMPLE_RESPONSE.value) return SimpleResponseQuestion.renderCreateMode();
+		switch(t){
+		case MULTI_CHOICE: return MultiChoiceQuestion.renderCreateMode();
+		case FILL_IN: return FillInQuestion.renderCreateMode();
+		case PICTURE: return PictureQuestion.renderCreateMode();
+		case SIMPLE_RESPONSE: return SimpleResponseQuestion.renderCreateMode();
+		case MULTI_TEXT_ANSWER: return MultiTextAnswerQuestion.renderCreateMode();
+		default: assert(false);
+		}
 		return null;
 	}
 	
@@ -222,6 +232,13 @@ public abstract class Question extends DataBaseObject{
 	 */
 	public String getAnAnswer(){
 		return attributes.getFirst(QUESTION_ATTRIBUTE.CORRECT).getAttrValue();
+	}
+	
+	public abstract String getCompleteAnswer();
+	
+	protected String getPrompt(){
+		QuestionAttribute prompt = attributes.getFirst(Question.QUESTION_ATTRIBUTE.PROMPT);
+		return prompt.getAttrValue();
 	}
 	
 	//Temporary getter for testing

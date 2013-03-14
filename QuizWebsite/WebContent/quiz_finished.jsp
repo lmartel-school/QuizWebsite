@@ -28,7 +28,7 @@ session.setAttribute("feedback", null); //ensures the feedback doesn't leak onto
 for(Question q : questions){
 	String HTML = "<li>\"" + progress.userAnswerForQuestion(q) + "\"";
 	if(progress.checkQuestionByNumber(q.getQuestionNumber())) HTML += " was correct!";
-	else HTML += " was incorrect. Correct answer: \"" + q.getAnAnswer() + "\".";
+	else HTML += " was incorrect. Correct answer: \"" + q.getCompleteAnswer() + "\".";
 	HTML += "</li>";
 	out.println(HTML);
 }

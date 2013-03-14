@@ -17,11 +17,6 @@ public class PictureQuestion extends Question {
 		attributes.putNew(this, Question.QUESTION_ATTRIBUTE.CORRECT, answer);
 	}
 	
-	private String getPrompt(){
-		QuestionAttribute prompt = attributes.getFirst(Question.QUESTION_ATTRIBUTE.PROMPT);
-		return prompt.getAttrValue();
-	}
-	
 	private String getPictureURL(){
 		QuestionAttribute url = attributes.getFirst(Question.QUESTION_ATTRIBUTE.PICTURE_URL);
 		return url.getAttrValue();
@@ -54,6 +49,11 @@ public class PictureQuestion extends Question {
 		HTML += "<p>Correct answer:</p>" + '\n';
 		HTML += "<input type=\"text\" name=\"answer\"><br>" + '\n';
 		return HTML;
+	}
+
+	@Override
+	public String getCompleteAnswer() {
+		return getAnAnswer();
 	}
 
 }
