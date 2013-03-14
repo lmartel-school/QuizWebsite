@@ -91,13 +91,13 @@ public class CreateQuestionServlet extends HttpServlet {
 			if (rs.next()) {
 				int count = rs.getInt(1);
 				switch (count) {
-					case 0: createAchieve(cur, "Amateur Author"); break;
-					case 4: createAchieve(cur, "Prolific Author"); break;
-					case 9: createAchieve(cur, "Prodigious Author"); break;
+					case 0: HomePageQueries.createAchieve(cur, "Amateur Author"); break;
+					case 4: HomePageQueries.createAchieve(cur, "Prolific Author"); break;
+					case 9: HomePageQueries.createAchieve(cur, "Prodigious Author"); break;
 					default: break;
 				}
 			} else {
-				createAchieve(cur, "Amateur Author");
+				HomePageQueries.createAchieve(cur, "Amateur Author");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -106,9 +106,6 @@ public class CreateQuestionServlet extends HttpServlet {
 		
 	}
 	
-	private void createAchieve(User user, String title) {
-		Achievement achieve = new Achievement(user.getName(), title);
-		achieve.saveToDataBase(MyDB.getConnection());
-	}
+	
 
 }

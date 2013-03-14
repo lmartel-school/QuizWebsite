@@ -229,5 +229,10 @@ public class HomePageQueries {
 		}
 		request.setAttribute("all_quizzes", quizzes); 
 	}
+	
+	public static void createAchieve(User user, String title) {
+		Achievement achieve = new Achievement(user.getName(), title);
+		achieve.saveToDataBase(MyDB.getConnection());
+	}
 }
 
