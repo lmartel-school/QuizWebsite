@@ -246,12 +246,13 @@ public class HomePageQueries {
 				int count = 0;
 				while (rs.next() && count < QuizConstants.N_TOP_RATED) {
 					int quizId = rs.getInt(2);
+					Statement next = conn.createStatement();
 					Quiz quiz = getQuizFromId(quizId, conn);
-					query = "SELECT * FROM Review where quiz_id=" + quiz.getID() + ";";
-					ResultSet reviews = stmt.executeQuery(query);
+					String sql = "SELECT * FROM Review where quiz_id=" + quiz.getID() + ";";
+					ResultSet reviews = next.executeQuery(sql);
 					ArrayList<Review> revList = new ArrayList<Review>();
 					while (reviews.next()) {
-						String [] row = DataBaseObject.getRow(rs, QuizConstants.REVIEW_N_COL);
+						String [] row = DataBaseObject.getRow(reviews, QuizConstants.REVIEW_N_COL);
 						Review review = new Review(row, conn);
 						revList.add(review);
 						

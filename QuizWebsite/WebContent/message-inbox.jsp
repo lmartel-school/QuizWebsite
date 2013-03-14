@@ -10,7 +10,7 @@
 <body>
 
 	<a href="CurrentUserProfileServlet"> Go to your Profile </a>
-	<a href="LogoutServlet">Logout</a>
+	<a href="LogoutServlet">Logout</a><br><br>
 	
 	<%
 	List<Message> messages = (List<Message>) request.getAttribute("messages");
