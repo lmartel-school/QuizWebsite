@@ -28,7 +28,8 @@ public abstract class Question extends DataBaseObject{
 	public static enum QUESTION_TYPE {
 		MULTI_CHOICE(0, "Multiple Choice"),
 		FILL_IN(1, "Fill-in-the-Blank"),
-		PICTURE(2, "Picture Prompt");
+		PICTURE(2, "Picture Prompt"),
+		SIMPLE_RESPONSE(3, "Simple text response");
 		
 		private QUESTION_TYPE(final int value, final String text){
 			this.value = value;
@@ -182,9 +183,9 @@ public abstract class Question extends DataBaseObject{
 		if(t.value == QUESTION_TYPE.MULTI_CHOICE.value) return MultiChoiceQuestion.renderCreateMode();
 		if(t.value == QUESTION_TYPE.FILL_IN.value) return FillInQuestion.renderCreateMode();
 		if(t.value == QUESTION_TYPE.PICTURE.value) return PictureQuestion.renderCreateMode();
+		if(t.value == QUESTION_TYPE.SIMPLE_RESPONSE.value) return SimpleResponseQuestion.renderCreateMode();
 		return null;
 	}
-	// the above isn't possible because I hate java. Just... make sure not to forget to implement renderCreateMode()!
 	
 	/**
 	 * Questions must be able to check whether an answer is correct or not.
