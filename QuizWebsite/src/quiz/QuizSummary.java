@@ -151,7 +151,7 @@ public class QuizSummary {
 			int numEntries;
 			if (rs.last()) {
 				numEntries = rs.getRow();
-				rs.beforeFirst();
+				rs.First();
 				rs.relative(numEntries / 2);
 				median = rs.getInt("score");
 			} 
