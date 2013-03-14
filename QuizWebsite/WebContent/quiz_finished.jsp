@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="quiz.*, question.*, java.util.List" %>
+<%@ page import="database.*, quiz.*, question.*, java.util.List, user.*, java.util.Date, java.text.SimpleDateFormat;" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -32,6 +32,14 @@ for(Question q : questions){
 	HTML += "</li>";
 	out.println(HTML);
 }
+String username = ( (User)session.getAttribute("user")).getName();
+int score = progress.getScore();
+long elapsed = (System.currentTimeMillis() - progress.getStartTimeMillis());
+String duration = String.format("%d:%02d:%02d", elapsed/3600, (elapsed%3600)/60, (elapsed%60));
+
+QuizResult qRes  = new QuizResult(username, progress.getScore(), 
+		progress.getStartTimeFormatted(), duration, quiz);
+qRes.saveToDataBase(MyDB.getConnection());
 %>
 </ol>
 Your score was <%= progress.getScore() %> out of <%= progress.getMaxPossibleScore() %>.

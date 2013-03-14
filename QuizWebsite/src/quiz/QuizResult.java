@@ -41,7 +41,7 @@ public final class QuizResult extends DataBaseObject {
 		try {
 			Statement stmt = conn.createStatement();
 			generateID(conn, "Quiz_Result");
-			String query = "Insert into Quiz_Result values (" + dbID + ", '" + username + "', " + score + ", '" + timeTaken + "', '" + elapsedTime + "', " + quiz.getID() + ";";
+			String query = "Insert into Quiz_Result values (" + dbID + ", '" + username + "', " + score + ", '" + timeTaken + "', '" + elapsedTime + "', " + quiz.getID() + ");";
 			stmt.executeUpdate(query);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
