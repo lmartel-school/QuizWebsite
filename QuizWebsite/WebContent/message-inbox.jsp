@@ -8,6 +8,10 @@
 <title>Message Inbox</title>
 </head>
 <body>
+
+	<a href="CurrentUserProfileServlet"> Go to your Profile </a>
+	<a href="LogoutServlet">Logout</a>
+	
 	<%
 	List<Message> messages = (List<Message>) request.getAttribute("messages");
 	if (messages.isEmpty()) {
@@ -20,9 +24,7 @@
 		out.println("<hr/>");
 	}
 	
-	out.println("<a href=\"compose_message.jsp\"> <h2> Compose a new message </h2> </a>");
-	out.println("<a href=\"CurrentUserProfileServlet\"> <h2> Go to your Profile </h2> </a>");
-	
+	out.println("<a href=\"compose_message.jsp\"> <h2> Compose a new message </h2> </a>");	
 	%>
 
 

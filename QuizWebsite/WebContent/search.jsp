@@ -8,6 +8,10 @@
 <title>All Users and Quizzes</title>
 </head>
 <body>
+
+<a href="CurrentUserProfileServlet"> Go to your Profile </a>
+<a href="LogoutServlet">Logout</a> <br><br>
+	
 <% 
 	List<String> users = (List<String>) request.getAttribute("all_users");
 	for (String name : users){
@@ -60,6 +64,5 @@
 		<input type="submit" value="Submit">
 	</form>
 	</p>
-	<br/> <br/> <a href="CurrentUserProfileServlet"> Go to your Profile</a>
 </body>
 </html>

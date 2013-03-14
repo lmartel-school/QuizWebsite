@@ -9,6 +9,9 @@
 </head>
 <body>
 
+<a href="CurrentUserProfileServlet"> Go to your Profile </a>
+<a href="LogoutServlet">Logout</a> <br><br>
+
 <% List<String> users = (List<String>) request.getAttribute("all_users"); %>
 There are <%= users.size() %> users on this site. </br>
 <% int numTaken = (Integer) request.getAttribute("num_taken"); 
@@ -67,9 +70,7 @@ There are <%= users.size() %> users on this site. </br>
 		}
 		
 	%>
-	<a href=announcement.jsp> <h2> Compose an announcement </h2> </a>
-	<a href=CurrentUserProfileServlet><h2> Go to your Profile</h2> </a>
-	
+	<a href=announcement.jsp> <h2> Compose an announcement </h2> </a>	
 
 </body>
 </html>

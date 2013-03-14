@@ -9,6 +9,9 @@
 </head>
 <body>
 
+	<a href="CurrentUserProfileServlet"> Go to your Profile </a>
+	<a href="LogoutServlet">Logout</a> <br><br>
+
 	<%
 	Challenge chal = (Challenge) request.getAttribute("challenge");
 	FriendRequest req = (FriendRequest) request.getAttribute("friend");
@@ -48,8 +51,6 @@
 		out.println("<a href=\"UserProfileServlet?username=" + note.getSender() + "\">View " + note.getSender() + "'s Profile</a>");
 	}
 	
-	out.println("<a href=\"CurrentUserProfileServlet\"> <h2> Go to your Profile </h2> </a>");
-
 	
 	%>
 

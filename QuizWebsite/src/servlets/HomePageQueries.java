@@ -122,7 +122,7 @@ public class HomePageQueries {
 			if (rs != null) {
 				int count = 0;
 				while (rs.next() && count < upperBound) {
-					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_N_COLS);
+					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.QUIZ_RESULT_N_COLS);
 					QuizResult quiz = new QuizResult(attrs, conn);
 					recents.add(quiz);
 					count++;
@@ -228,6 +228,11 @@ public class HomePageQueries {
 			e.printStackTrace();
 		}
 		request.setAttribute("all_quizzes", quizzes); 
+	}
+	
+	public static void createAchieve(User user, String title) {
+		Achievement achieve = new Achievement(user.getName(), title);
+		achieve.saveToDataBase(MyDB.getConnection());
 	}
 }
 

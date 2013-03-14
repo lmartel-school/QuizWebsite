@@ -87,7 +87,7 @@ public class QuizSummary {
 			int count = 0;
 			if (rs != null) {
 				while (rs.next() && count < QuizConstants.N_TOP_SCORERS) {
-					topPerformers.add("<a href=\"UserProfileServlet?username=" + rs.getString("username") + "\">" +
+					recentTopPerformers.add("<a href=\"UserProfileServlet?username=" + rs.getString("username") + "\">" +
 										rs.getString("username") + "</a> got " + rs.getString("score") + " points.\n" +
 										"Taken at " + rs.getString("time_taken") + "\n");
 					count++;
@@ -151,7 +151,7 @@ public class QuizSummary {
 			int numEntries;
 			if (rs.last()) {
 				numEntries = rs.getRow();
-				rs.beforeFirst();
+				rs.first();
 				rs.relative(numEntries / 2);
 				median = rs.getInt("score");
 			} 

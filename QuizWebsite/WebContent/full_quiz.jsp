@@ -4,6 +4,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
+<a href="CurrentUserProfileServlet"> Go to your Profile </a>
+<a href="LogoutServlet">Logout</a> <br><br>
+
 <%
 InProgressQuiz progress = (InProgressQuiz) session.getAttribute("in_progress_quiz");
 List<Question> questions = progress.getQuestions();

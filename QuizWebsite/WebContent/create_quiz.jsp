@@ -8,6 +8,11 @@
 <title>Want to create a quiz?</title>
 </head>
 <body>
+
+<a href="CurrentUserProfileServlet"> Go to your Profile </a>
+<a href="LogoutServlet">Logout</a> <br><br>
+
+
 <h1>Welcome to QUIZ CREATION.</h1>
 <form action="CreateQuizServlet" method="POST">
 <input type="hidden" name="author" value="<%= ((User) session.getAttribute("user")).getName() %>">
