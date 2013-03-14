@@ -34,7 +34,7 @@ for(Question q : questions){
 }
 String username = ( (User)session.getAttribute("user")).getName();
 int score = progress.getScore();
-long elapsed = (System.currentTimeMillis() - progress.getStartTimeMillis());
+long elapsed = (System.currentTimeMillis() - progress.getStartTimeMillis())/1000;
 String duration = String.format("%d:%02d:%02d", elapsed/3600, (elapsed%3600)/60, (elapsed%60));
 
 QuizResult qRes  = new QuizResult(username, progress.getScore(), 

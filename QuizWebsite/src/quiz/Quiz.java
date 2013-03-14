@@ -58,6 +58,10 @@ public class Quiz extends DataBaseObject {
 		this.tags = Arrays.asList(tags);
 	}
 	
+	public int getMaxScore() {
+		return questions.size();
+	}
+	
 	/*
 	 * Given an array of attributes from the Quiz table,
 	 * constructs a quiz object.
