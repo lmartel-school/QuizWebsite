@@ -96,6 +96,11 @@ public class UserProfileServlet extends HttpServlet {
 
 	private void setFriendStatus(User profile, User curUser, HttpServletRequest request) {
 		Connection conn = MyDB.getConnection();	
+		
+		if (profile.getName().equals(curUser.getName())) {
+			request.setAttribute("friend_status", 5);
+			return;
+		}
 
 		try {
 			Statement stmt = conn.createStatement();

@@ -54,17 +54,23 @@ public class Challenge extends Message {
 	}
 	
 	private void saveToChallenge(Connection conn) {
+		
+		String query;
 		try {
 			Statement stmt = conn.createStatement();
-			String query;
-			//generateID(conn, "Challenge"); bad code
-			query = "Insert into Challenge VALUES (" + dbID + ", " + result.getID() + ");";
-			stmt.executeUpdate(query);
+			if (dbID == -1) {
+				generateID(conn, "Message");
+				query = "Insert into Challenge VALUES (" + dbID + ", " + result.getID() + ");";
+				stmt.executeUpdate(query);
+				query = "Insert into Message VALUES ('" + dbID + "', '" + sender + "', '" + recipient + "', " + beenRead + ");";
+				stmt.executeUpdate(query);
+			} 
 			
 			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
 	public String getHTMLSummary() {
