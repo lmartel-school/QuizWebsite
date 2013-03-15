@@ -108,8 +108,8 @@ public class QuizSummary {
 			if (rs != null) {
 				while (rs.next() && count < QuizConstants.N_TOP_SCORERS) {
 					recentTopPerformers.add("<a href=\"UserProfileServlet?username=" + rs.getString("username") + "\">" +
-										rs.getString("username") + "</a> got " + rs.getString("score") + " points.\n" +
-										"Taken at " + rs.getString("time_taken") + "\n");
+										rs.getString("username") + "</a> <a href=\"QuizResultServlet?id=" + rs.getString("id") + "\"> got " + rs.getString("score") + " points.\n" +
+										"Taken at " + rs.getString("time_taken") + "</a>\n");
 					count++;
 				}
 			}
@@ -134,8 +134,9 @@ public class QuizSummary {
 					int score = rs.getInt("score");
 					if (count >= QuizConstants.N_TOP_SCORERS && prevScore != score) break;
 					topPerformers.add("<a href=\"UserProfileServlet?username=" + rs.getString("username") + "\">" +
-										rs.getString("username") + "</a> got " + rs.getString("score") + " points.\n" +
-									  "Taken at " + rs.getString("time_taken") + "\n");
+							rs.getString("username") + "</a> <a href=\"QuizResultServlet?id=" + rs.getString("id") + "\"> got " + rs.getString("score") + " points.\n" +
+							"Taken at " + rs.getString("time_taken") + "</a>\n");
+
 					prevScore = score;
 					count++;
 				}
