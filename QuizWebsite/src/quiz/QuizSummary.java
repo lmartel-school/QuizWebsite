@@ -125,17 +125,17 @@ public class QuizSummary {
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();
-			String query = "SELECT * from Quiz_Result where quiz_id=" + quiz.getID() + " order by score DESC, time_taken ASC;";
+			String query = "SELECT * from Quiz_Result where quiz_id=" + quiz.getID() + " order by score DESC, elapsed_time ASC;";
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs != null) {
 				int count = 0;
 				int prevScore = 0;
 				while (rs.next()) {
 					int score = rs.getInt("score");
-					if (count >= QuizConstants.N_TOP_SCORERS && prevScore != score) break;
+					if (count >= QuizConstants.N_TOP_SCORERS ) break;
 					topPerformers.add("<a href=\"UserProfileServlet?username=" + rs.getString("username") + "\">" +
 							rs.getString("username") + "</a> <a href=\"QuizResultServlet?id=" + rs.getString("id") + "\"> got " + rs.getString("score") + " points.\n" +
-							"Taken at " + rs.getString("time_taken") + "</a>\n");
+							"Taken at " + rs.getString("time_taken") + " in " + rs.getString("elapsed_time") + "</a>\n");
 
 					prevScore = score;
 					count++;
