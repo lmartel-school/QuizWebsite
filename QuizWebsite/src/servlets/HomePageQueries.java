@@ -84,7 +84,7 @@ public class HomePageQueries {
 	public static List<String> getFriends(String username, Connection conn) {
 		List<String> friends = new ArrayList<String>();
 		try {
-			Statement stmt = conn.createStatement();
+			Statement stmt = MyDB.getConnection().createStatement();
 			String query = "SELECT sender FROM Message inner join Friend_Request on Message.id=Friend_Request.id WHERE recipient='"
 				+ username + "' AND isAccepted=true;";
 			ResultSet rs = stmt.executeQuery(query);
