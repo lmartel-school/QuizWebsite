@@ -49,7 +49,7 @@ public abstract class Message extends DataBaseObject {
 				query = "Insert into Message VALUES ('" + dbID + "', '" + sender + "', '" + recipient + "', " + beenRead + ");";
 				stmt.executeUpdate(query);
 			} else {
-				query = "UPDATE Message set beenRead='"+ beenRead +"' WHERE id='" + dbID + "';";
+				query = "UPDATE Message set beenRead="+ beenRead +" WHERE id=" + dbID + ";";
 				stmt.executeUpdate(query);
 			}
 			stmt.close();

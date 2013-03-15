@@ -38,13 +38,15 @@
 			<input type="submit" value="Request as Friend"/>
 			</form>
 	<%		 break;
-	default: out.println("You are friends with " + name); %>
+		case 4: out.println("You are friends with " + name); %>
 			<form action="FriendRequestResponse" method="post">
 	
 			<% out.println("<input name=confirmation type=hidden value=false />");  %>
 			<input type="submit" value="Remove From Friends"/>
 			</form>
 	<% break;
+	
+	default: break;
 	}
 	
 	out.println("<h3>" + name + "'s Achievements</h3><br>");
