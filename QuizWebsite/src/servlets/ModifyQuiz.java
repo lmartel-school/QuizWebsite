@@ -75,8 +75,8 @@ public class ModifyQuiz extends HttpServlet {
 					query = "DELETE FROM Question_Attribute WHERE question_id=";
 					Statement deleter = conn.createStatement();
 					for (int i = 0; i < questions.size(); i++) {
-						query += questions.get(i).getID() + ";";
-						deleter.executeUpdate(query);
+						String newQuery = query + questions.get(i).getID() + ";";
+						deleter.executeUpdate(newQuery);
 					}
 					query = "DELETE FROM Question where quiz_id=" + quiz.getID() + ";";
 					deleter.executeUpdate(query);
