@@ -15,12 +15,14 @@ public class QuizSummary {
 	private List<String> topPerformers;
 	private List<String> recentTopPerformers;
 	private List<QuizResult> recentResults;
+	private List<Review> reviews;
 	private double mean;
 	private int median;
 	
 	public QuizSummary(Quiz quiz, User usr, Connection conn) {
 		this.quiz = quiz;
 		
+		findReviews(conn);
 		recentResults(conn);
 		recentUsernames(conn);
 		topAllTime(conn);
@@ -28,6 +30,24 @@ public class QuizSummary {
 		mean(conn);
 		median(conn);
 		
+	}
+	
+	private void findReviews(Connection conn){
+		reviews = new ArrayList<Review>();
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			String query = "SELECT * from Review where quiz_id=" + quiz.getID() + ";";
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs != null) {
+				while (rs.next()) {
+					reviews.add(new Review(rs.getInt(2), rs.getString(3), rs.getInt(4), rs.getString(5)));
+				}
+			}	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 	
 	private void usersResults(Connection conn, User user) {
@@ -187,5 +207,9 @@ public class QuizSummary {
 
 	public Quiz getQuiz() {
 		return quiz;
+	}
+
+	public List<Review> getReviews() {
+		return reviews;
 	}
 }

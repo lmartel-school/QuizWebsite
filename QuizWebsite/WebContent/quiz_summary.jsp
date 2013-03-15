@@ -15,12 +15,12 @@
 	QuizSummary summary = (QuizSummary) request.getAttribute("summary");
 	Quiz quiz = summary.getQuiz();
 	
-	out.println("<a href=\"BeginQuizServlet?id=" + quiz.getID() + "\">Take this Quiz!</a>");
-	
 	out.println("<h1>" + quiz.getName() + "</h1>");
 	out.println("<h2>By: <a href=\"UserProfileServlet?username=" + quiz.getAuthor() + "\">" + quiz.getAuthor() + "</a></h2>");
 	
 	out.println("<p>" + quiz.getDescription() + "<p>");
+	
+	out.println("<a href=\"BeginQuizServlet?id=" + quiz.getID() + "\">Take this Quiz!</a>");
 	
 	out.println("<h3>Quiz Statistics:</h3>");
 	out.println("<table> <tr> <td> Mean </td> <td> Median </td> </tr> <tr> <td> " + 
@@ -51,6 +51,11 @@
 	}
 	out.println("</ul>");
 	
+	out.println("<h3> User reviews: </h3>");
+	out.println("<ul>");
+	for (Review r : summary.getReviews()){
+		out.println("<li>" + r.renderReview() + "</li>");
+	}
 	
 	%>
 	

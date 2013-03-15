@@ -43,7 +43,7 @@ public class CreateReviewServlet extends HttpServlet {
 		Connection conn = MyDB.getConnection();
 
 		String text = request.getParameter("text");
-		int radioVal = Integer.parseInt(request.getParameter("group1"));
+		int radioVal = Integer.parseInt(request.getParameter("rating"));
 		int quizID = Integer.parseInt(request.getParameter("quizID"));
 		
 		Review review = new Review(quizID, ((User) request.getSession().getAttribute("user")).getName(), radioVal, text);

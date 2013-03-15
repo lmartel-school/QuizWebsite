@@ -46,11 +46,12 @@ Your score was <%= progress.getScore() %> out of <%= progress.getMaxPossibleScor
 
 <form action="CreateReviewServlet" method="post">
 <input type="hidden" name="quizID" value="<%out.print(progress.getQuiz().getID()); %>">
-<input type="radio" name="group1" value="1">
-<input type="radio" name="group1" value="2">
-<input type="radio" name="group1" value="3">
-<input type="radio" name="group1" value="4">
-<input type="radio" name="group1" value="5">
+1 <input type="radio" name="rating" value="1"> | 
+2 <input type="radio" name="rating" value="2"> | 
+3 <input type="radio" name="rating" value="3"> | 
+4 <input type="radio" name="rating" value="4"> | 
+5 <input type="radio" name="rating" value="5">
+<br><textarea name="text"></textarea><br>
 <input type="submit" value="Post a review?">
 </form>
 

@@ -53,9 +53,9 @@ public class Review extends DataBaseObject {
 		
 		String review = "<a href=\"UserProfileServlet?username=" + reviewer + "\">" + reviewer + "</a> ";
 		if (review != null && !review.equals("")) {
-			review +=  " says: " + review + " and"; 
+			review +=  " says: \"" + this.review + "\" and"; 
 		} 
-		review += " gave this quiz a score of " + rating;
+		review += " gave this quiz a score of " + rating + " out of 5.";
 		
 		return review;
 	}
