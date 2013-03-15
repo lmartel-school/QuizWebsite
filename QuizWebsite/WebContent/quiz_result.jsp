@@ -25,6 +25,7 @@ res.getScore() + " out of " + quiz.getMaxScore() + "</h2>");
 session.setAttribute("result", res);
 %>
 
+<h2>Send a challenge to one of your friends!</h2>
 <form action="CreateChallengeServlet" method="post">
 <input type="hidden" name="sender" value="<%User u = (User)session.getAttribute("user"); out.print(u.getName()); %>">
 <select name="recipient">
@@ -36,8 +37,7 @@ for (String name : friendsList){
 %>
 </select>
 <br/>
-<textarea rows="10" cols="30" name="text">Compose here...</textarea>
-<input type="submit" value="Submit">
+<input type="submit" value="Challenge">
 </form>
 </body>
 </html>
