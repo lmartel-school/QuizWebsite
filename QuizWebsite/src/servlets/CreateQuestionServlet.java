@@ -52,16 +52,22 @@ public class CreateQuestionServlet extends HttpServlet {
 			appendBlank = true;
 			type = Question.QUESTION_TYPE.FILL_IN.value;
 		}
+		
+		//TODO: implement MultiAnswerMultiChoiceQuestion creation (same as MULTI_CHOICE except constructor)
 			
 		Quiz quiz = (Quiz) request.getSession().getAttribute("quiz"); //make sure this alters the one in the session
 		int number = quiz.countQuestions() + 1;
-		if (type == Question.QUESTION_TYPE.MULTI_CHOICE.value) {
+		if (type == Question.QUESTION_TYPE.MULTI_CHOICE.value || type == Question.QUESTION_TYPE.MULTI_CHOICE_MULTI_ANSWER.value) {
 			String prompt = request.getParameter("prompt");
 			String answer = request.getParameter("correct");
 			String[] corrects = answer.split(QuizConstants.TEXTAREA_NEWLINE_REGEX);
 			String wrong = request.getParameter("wrong");
 			String[] wrongs = wrong.split(QuizConstants.TEXTAREA_NEWLINE_REGEX);
-			quiz.addQuestion(new MultiChoiceQuestion(quiz, number, prompt, Arrays.asList(corrects), Arrays.asList(wrongs)));
+			if(type == Question.QUESTION_TYPE.MULTI_CHOICE.value){
+				quiz.addQuestion(new MultiChoiceQuestion(quiz, number, prompt, Arrays.asList(corrects), Arrays.asList(wrongs)));
+			} else {
+				quiz.addQuestion(new MultiAnswerMultiChoiceQuestion(quiz, number, prompt, Arrays.asList(corrects), Arrays.asList(wrongs)));
+			}
 
 		} else if (type == Question.QUESTION_TYPE.FILL_IN.value) {
 			String prompt = request.getParameter("prompt");

@@ -28,11 +28,12 @@ public abstract class Question extends DataBaseObject{
 	
 	
 	public static enum QUESTION_TYPE {
-		MULTI_CHOICE(0, "Multiple Choice"),
+		MULTI_CHOICE(0, "Multiple Choice, user must give one correct answer"),
 		FILL_IN(1, "Fill-in-the-Blank"),
 		PICTURE(2, "Picture Prompt"),
 		SIMPLE_RESPONSE(3, "Simple text response"),
-		MULTI_TEXT_ANSWER(4, "Multiple text answers");
+		MULTI_TEXT_ANSWER(4, "Multiple text answers"),
+		MULTI_CHOICE_MULTI_ANSWER(5, "Multiple Choice, user must give all correct answers");
 		
 		private QUESTION_TYPE(final int value, final String text){
 			this.value = value;
@@ -84,6 +85,7 @@ public abstract class Question extends DataBaseObject{
 		case FILL_IN: return new FillInQuestion(attrs, conn);
 		case PICTURE: return new PictureQuestion(attrs, conn);
 		case MULTI_TEXT_ANSWER: return new MultiTextAnswerQuestion(attrs, conn);
+		case MULTI_CHOICE_MULTI_ANSWER: return new MultiAnswerMultiChoiceQuestion(attrs, conn);
 		default: assert(false);
 		}
 		return null;
@@ -192,6 +194,7 @@ public abstract class Question extends DataBaseObject{
 		case PICTURE: return PictureQuestion.renderCreateMode();
 		case SIMPLE_RESPONSE: return SimpleResponseQuestion.renderCreateMode();
 		case MULTI_TEXT_ANSWER: return MultiTextAnswerQuestion.renderCreateMode();
+		case MULTI_CHOICE_MULTI_ANSWER: return MultiAnswerMultiChoiceQuestion.renderCreateMode();
 		default: assert(false);
 		}
 		return null;
@@ -241,9 +244,9 @@ public abstract class Question extends DataBaseObject{
 		return prompt.getAttrValue();
 	}
 	
-	//Temporary getter for testing
-		public AttributeMap getAttrs(){
-			return attributes;
-		}
+	//don't abuse this
+	public AttributeMap getAttrs(){
+		return attributes;
+	}
 
 }

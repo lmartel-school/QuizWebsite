@@ -17,8 +17,10 @@ import javax.servlet.http.HttpSession;
 
 import database.MyDB;
 
+import question.MultiAnswerMultiChoiceQuestion;
 import question.Question;
 import quiz.InProgressQuiz;
+import quiz.QuizConstants;
 import user.User;
 
 /**
@@ -50,10 +52,23 @@ public class SubmitSinglePageQuizServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		InProgressQuiz progress = (InProgressQuiz) session.getAttribute("in_progress_quiz");
 		while(true){
-			Question q = progress.getActiveQuestion();
-			int n = q.getQuestionNumber();
-			String userAnswer = request.getParameter("answer" + n);
-			progress.submitAnswer(userAnswer);
+			Question active = progress.getActiveQuestion();
+			String userAnswer;
+			
+			//this is a hack that assembles a textbox-like answer from the user's many answers,
+			//in order to avoid changing the Question interface at the last minute.
+			if(active.getType() == Question.QUESTION_TYPE.MULTI_CHOICE_MULTI_ANSWER){
+				MultiAnswerMultiChoiceQuestion q = (MultiAnswerMultiChoiceQuestion) active;
+				userAnswer = "";
+				for(int i = 0; i < q.getChoices().size(); i++){
+					String nextAnswer = request.getParameter("answer" + q.getQuestionNumber() + "_" + i);
+					if(nextAnswer != null) userAnswer += nextAnswer + '\n'; //newline character allows parsing answers by line
+				}
+			} else {
+				userAnswer = request.getParameter("answer" + active.getQuestionNumber());
+			}
+			
+			progress.submitAnswer(userAnswer.trim());
 			if(!progress.hasNextQuestion()) break;
 			progress.moveToNextQuestion();
 		}

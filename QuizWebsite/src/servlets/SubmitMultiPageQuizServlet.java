@@ -12,8 +12,11 @@ import javax.servlet.http.HttpSession;
 
 import database.MyDB;
 
+import question.MultiAnswerMultiChoiceQuestion;
+import question.Question;
 import quiz.InProgressQuiz;
 import quiz.Quiz;
+import quiz.QuizConstants;
 import user.*;
 import java.sql.*;
 import java.util.List;
@@ -46,8 +49,22 @@ public class SubmitMultiPageQuizServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		InProgressQuiz progress = (InProgressQuiz) session.getAttribute("in_progress_quiz");
-		String userAnswer = request.getParameter("answer" + progress.getActiveQuestion().getQuestionNumber());
-		progress.submitAnswer(userAnswer);
+		Question active = progress.getActiveQuestion();
+		String userAnswer;
+		
+		//this is a hack that assembles a textbox-like answer from the user's many answers,
+		//in order to avoid changing the Question interface at the last minute.
+		if(active.getType() == Question.QUESTION_TYPE.MULTI_CHOICE_MULTI_ANSWER){
+			MultiAnswerMultiChoiceQuestion q = (MultiAnswerMultiChoiceQuestion) active;
+			userAnswer = "";
+			for(int i = 0; i < q.getChoices().size(); i++){
+				String nextAnswer = request.getParameter("answer" + q.getQuestionNumber() + "_" + i);
+				if(nextAnswer != null) userAnswer += nextAnswer + '\n'; //newline character allows parsing answers by line
+			}
+		} else {
+			userAnswer = request.getParameter("answer" + active.getQuestionNumber());
+		}
+		progress.submitAnswer(userAnswer.trim());
 		
 		boolean giveFeedback = progress.getQuiz().getType() == Quiz.PAGE_TYPE.MULTI_IMMEDIATE.value;
 		if(giveFeedback){
