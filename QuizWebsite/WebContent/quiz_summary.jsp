@@ -23,6 +23,7 @@
 	out.println("<a href=\"BeginQuizServlet?id=" + quiz.getID() + "\">Take this Quiz!</a>");
 	
 	out.println("<h3>Quiz Statistics:</h3>");
+	out.println("<h4> Max score: " + quiz.getMaxScore() + "</h4>");
 	out.println("<table> <tr> <td> Mean </td> <td> Median </td> </tr> <tr> <td> " + 
 				summary.getMean() + "</td> <td> "+ summary.getMedian()+ "</td> </tr> </table>");
 	

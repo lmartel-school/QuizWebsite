@@ -30,7 +30,12 @@
 		Quiz quiz = quizzes.get(i);
 		if (!quiz.getCategory().equals(prevCateg)) {
 			prevCateg = quiz.getCategory();
-			out.println("<br>" + prevCateg + " Quizzes: <br>");
+			if (prevCateg == null) {
+				out.println("<br>Quizzes without a Category: <br>");
+			} else {
+				out.println("<br>" + prevCateg + " Quizzes: <br>");
+			}
+			
 		}
 		out.println("<a href=\"QuizServlet?id=" + quiz.getID() + "\">" + quiz.getName() + "</a> <br>");
 	}
