@@ -76,7 +76,7 @@ public class ModifyUser extends HttpServlet {
 				stmt = conn.createStatement();
 				String query = "DELETE FROM User WHERE username='" + user + "';";
 				stmt.executeUpdate(query);
-				query = "DELTE FROM Achievement WHERE username='" + user + "';";
+				query = "DELETE FROM Achievement WHERE username='" + user + "';";
 				stmt.executeUpdate(query);
 				
 				query = "SELECT id FROM Message WHERE sender='" + user + "' OR recipient='" + user +"';";

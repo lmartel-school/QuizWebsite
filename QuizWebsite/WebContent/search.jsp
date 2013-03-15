@@ -30,7 +30,7 @@
 		Quiz quiz = quizzes.get(i);
 		if (!quiz.getCategory().equals(prevCateg)) {
 			prevCateg = quiz.getCategory();
-			if (prevCateg == null) {
+			if (prevCateg == null || prevCateg.equals("null")) {
 				out.println("<br>Quizzes without a Category: <br>");
 			} else {
 				out.println("<br>" + prevCateg + " Quizzes: <br>");
