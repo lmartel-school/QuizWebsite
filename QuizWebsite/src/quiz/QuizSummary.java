@@ -109,7 +109,7 @@ public class QuizSummary {
 				while (rs.next() && count < QuizConstants.N_TOP_SCORERS) {
 					recentTopPerformers.add("<a href=\"UserProfileServlet?username=" + rs.getString("username") + "\">" +
 										rs.getString("username") + "</a> <a href=\"QuizResultServlet?id=" + rs.getString("id") + "\"> got " + rs.getString("score") + " points.\n" +
-										"Taken at " + rs.getString("time_taken") + "</a>\n");
+										"Taken at " + rs.getString("time_taken") + "in " + rs.getString("elapsed_time") + "</a>\n");
 					count++;
 				}
 			}
