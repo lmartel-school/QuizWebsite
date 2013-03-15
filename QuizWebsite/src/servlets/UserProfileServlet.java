@@ -114,15 +114,15 @@ public class UserProfileServlet extends HttpServlet {
 			" WHERE recipient='" + curUser.getName() + "' AND sender='" + profile.getName() + "';";
 			rs = stmt.executeQuery(query);
 			if (rs.next()) {
+				String[] attrs = DataBaseObject.getRow(rs, QuizConstants.MSG_FRIEND_N_COLS);
+				FriendRequest req = new FriendRequest(attrs, conn);
 				if (rs.getBoolean("isAccepted")) {
 					request.setAttribute("friend_status", 4);
-					String[] attrs = DataBaseObject.getRow(rs, QuizConstants.MSG_FRIEND_N_COLS);
-					FriendRequest req = new FriendRequest(attrs, conn);
-					request.getSession().setAttribute("friend", req);
+					
 				} else {
 					request.setAttribute("friend_status", 2); //this person sent a friend request to you				}
 				}
-				
+				request.getSession().setAttribute("friend", req);
 				return;
 			}
 			request.setAttribute("friend_status", 3); //no friend relationship with this person
