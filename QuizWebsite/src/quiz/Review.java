@@ -59,5 +59,9 @@ public class Review extends DataBaseObject {
 		
 		return review;
 	}
+	
+	public int getRating() {
+		return rating;
+	}
 
 }

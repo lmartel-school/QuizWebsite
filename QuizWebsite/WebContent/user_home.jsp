@@ -37,19 +37,39 @@
 		out.println("<a href=\"QuizServlet?id=" + quiz.getID() + "\">" + quiz.getName() + "</a>");
 		%> <br> <%
 	}
-	
-	
-	out.println("<h3>Popular Quizzes</h3>");
-	List<Quiz> popular = (List<Quiz>) request.getAttribute("popular");
-	
-	for (int i = 0; i < popular.size(); i++) {
-		Quiz quiz = popular.get(i);
+	out.println("<h3>Popular Quizzes:</h3>");
+	List<Quiz> popQuiz = (List<Quiz>)request.getAttribute("popular");
+	for (int i = 0; i < popQuiz.size(); i++) {
+		Quiz quiz = popQuiz.get(i);
 		out.println("<a href=\"QuizServlet?id=" + quiz.getID() + "\">" + quiz.getName() + "</a>");
+		%> <br> <%
+	}
+	
+	
+	out.println("<h3>Popular Quizzes, by Average Review:</h3>");
+
+	Map<Quiz, ArrayList<Review>> quizAndReviews = (Map<Quiz, ArrayList<Review>>)request.getAttribute("popular_rating");
+	List<String> popular = new ArrayList<String>();
+
+	for (Quiz q : quizAndReviews.keySet()) {
+		double average = 0.0;
+		int n = 0;
+		for (Review rev : quizAndReviews.get(q)) {
+			average += rev.getRating();
+			n++;
+		}
+		popular.add("" + average/n + "<a href=\"QuizServlet?id=" + q.getID() + "\">" + q.getName() + "</a>");
+	}
+	
+	Collections.sort(popular);
+	
+	for (int i = popular.size() -1; i >= 0; i--) {
+		out.println(popular.get(i));
 		%> <br><br> <%
 	}
 		
-	out.println("<h3>Popular Quizzes, as Voted by Peers</h3>");
-	Map<Quiz, ArrayList<Review>> rated = new HashMap<Quiz, ArrayList<Review>>();//(Map<Quiz, ArrayList<Review>>) request.getAttribute("popular_rating");
+	out.println("<h3>Recently Reviewed Quizzes:</h3>");
+	Map<Quiz, ArrayList<Review>> rated = (Map<Quiz, ArrayList<Review>>) request.getAttribute("popular_rating");
 	
 	for (Quiz quiz : rated.keySet()) {
 		ArrayList<Review> reviews = rated.get(quiz);

@@ -232,6 +232,7 @@ public class HomePageQueries {
 	public static void getPopQuizzesByRating(HttpServletRequest request) {
 		Connection conn = (Connection) request.getServletContext().getAttribute("database");
 		Map<Quiz, ArrayList<Review>> popular = new HashMap<Quiz, ArrayList<Review>>();
+
 		try {
 			Statement stmt = conn.createStatement();
 			String query = "SELECT avg(rating), quiz_id " +
